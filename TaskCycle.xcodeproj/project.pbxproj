@@ -41,8 +41,9 @@
 		D0ED2EEC2A802EB000828887 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EEB2A802EB000828887 /* LogoView.swift */; };
 		D0ED2EEE2A80330D00828887 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EED2A80330D00828887 /* DailyView.swift */; };
 		D0ED2EF22A80333D00828887 /* DateSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF12A80333D00828887 /* DateSliderView.swift */; };
-		D0ED2EF42A816A9A00828887 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF32A816A9A00828887 /* SwiftUIView.swift */; };
+		D0ED2EF42A816A9A00828887 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF32A816A9A00828887 /* Task.swift */; };
 		D0ED2EF62A81A2D600828887 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF52A81A2D600828887 /* ColorExtension.swift */; };
+		D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF72A81A86600828887 /* ViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,8 +79,9 @@
 		D0ED2EEB2A802EB000828887 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		D0ED2EED2A80330D00828887 /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
 		D0ED2EF12A80333D00828887 /* DateSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSliderView.swift; sourceTree = "<group>"; };
-		D0ED2EF32A816A9A00828887 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		D0ED2EF32A816A9A00828887 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		D0ED2EF52A81A2D600828887 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		D0ED2EF72A81A86600828887 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +117,6 @@
 		D0DA8B952A7D7DAF00458284 /* TaskCycle */ = {
 			isa = PBXGroup;
 			children = (
-				D0ED2EF32A816A9A00828887 /* SwiftUIView.swift */,
 				D0ED2EA22A802AE300828887 /* App */,
 				D0ED2EE42A802D7800828887 /* Data */,
 				D0ED2EAD2A802B9B00828887 /* UI */,
@@ -236,11 +237,12 @@
 		D0ED2EDB2A802D4400828887 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D0ED2EDC2A802D4400828887 /* EncodableExtension.swift */,
 				D0ED2EDD2A802D4400828887 /* BindingExtension.swift */,
+				D0ED2EDC2A802D4400828887 /* EncodableExtension.swift */,
 				D0ED2EDE2A802D4400828887 /* AlignmentExtension.swift */,
 				D0ED2EDF2A802D4400828887 /* PreferenceKeyExtension.swift */,
 				D0ED2EF52A81A2D600828887 /* ColorExtension.swift */,
+				D0ED2EF72A81A86600828887 /* ViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -248,6 +250,7 @@
 		D0ED2EE42A802D7800828887 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D0ED2EF32A816A9A00828887 /* Task.swift */,
 				D0ED2EE52A802D7800828887 /* ToDoListModel.swift */,
 				D0ED2EE62A802D7800828887 /* User.swift */,
 				D0ED2EE72A802D7800828887 /* ToDoListItemModel.swift */,
@@ -376,9 +379,10 @@
 				D0ED2EBC2A802BA700828887 /* ToggleButton.swift in Sources */,
 				D0ED2EB92A802BA700828887 /* PlusButton.swift in Sources */,
 				D0ED2EE32A802D4400828887 /* PreferenceKeyExtension.swift in Sources */,
+				D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */,
 				D0ED2EE92A802D7800828887 /* User.swift in Sources */,
 				D0ED2ED52A802C4600828887 /* RegisterView.swift in Sources */,
-				D0ED2EF42A816A9A00828887 /* SwiftUIView.swift in Sources */,
+				D0ED2EF42A816A9A00828887 /* Task.swift in Sources */,
 				D0ED2EBB2A802BA700828887 /* PrimaryButton.swift in Sources */,
 				D0ED2EBA2A802BA700828887 /* HeaderView.swift in Sources */,
 			);
