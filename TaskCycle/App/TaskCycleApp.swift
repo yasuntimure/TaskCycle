@@ -29,8 +29,8 @@ struct TaskCycleApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            MainView()
-            DateSliderView()
+           MainView()
+                .preferredColorScheme(.light)
         }
     }
 }

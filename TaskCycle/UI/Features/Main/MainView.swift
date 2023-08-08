@@ -14,7 +14,7 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             if !viewModel.userId.isEmpty {
-                AccountView
+                AccountView()
             } else {
                 LoginView()
             }
@@ -23,8 +23,6 @@ struct MainView: View {
         .onUserIdChange { userId in
             self.viewModel.userId = userId
         }
-
-
     }
 }
 
@@ -32,9 +30,11 @@ struct MainView: View {
 
 extension MainView {
 
-    var AccountView: some View {
+    func AccountView() -> some View {
         TabView {
-            ContentView()
+            DailyView()
+                .background(Color.backgroundColor)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .tabItem {
                     Label("Daily", systemImage: "calendar")
                         .foregroundColor(.primary)

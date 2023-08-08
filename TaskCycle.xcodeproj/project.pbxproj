@@ -44,6 +44,8 @@
 		D0ED2EF42A816A9A00828887 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF32A816A9A00828887 /* Task.swift */; };
 		D0ED2EF62A81A2D600828887 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF52A81A2D600828887 /* ColorExtension.swift */; };
 		D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF72A81A86600828887 /* ViewExtension.swift */; };
+		D0ED2EFC2A81AA2500828887 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EFB2A81AA2500828887 /* DateExtension.swift */; };
+		D0ED2EFE2A81B20000828887 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EFD2A81B20000828887 /* ProfileImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +84,8 @@
 		D0ED2EF32A816A9A00828887 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		D0ED2EF52A81A2D600828887 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		D0ED2EF72A81A86600828887 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		D0ED2EFB2A81AA2500828887 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		D0ED2EFD2A81B20000828887 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +244,7 @@
 				D0ED2EDD2A802D4400828887 /* BindingExtension.swift */,
 				D0ED2EDC2A802D4400828887 /* EncodableExtension.swift */,
 				D0ED2EDE2A802D4400828887 /* AlignmentExtension.swift */,
+				D0ED2EFB2A81AA2500828887 /* DateExtension.swift */,
 				D0ED2EDF2A802D4400828887 /* PreferenceKeyExtension.swift */,
 				D0ED2EF52A81A2D600828887 /* ColorExtension.swift */,
 				D0ED2EF72A81A86600828887 /* ViewExtension.swift */,
@@ -271,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				D0ED2EF12A80333D00828887 /* DateSliderView.swift */,
+				D0ED2EFD2A81B20000828887 /* ProfileImage.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -363,6 +369,7 @@
 				D0ED2EEA2A802D7800828887 /* ToDoListItemModel.swift in Sources */,
 				D0ED2EE12A802D4400828887 /* BindingExtension.swift in Sources */,
 				D0ED2EC72A802BE900828887 /* LoginViewModel.swift in Sources */,
+				D0ED2EFC2A81AA2500828887 /* DateExtension.swift in Sources */,
 				D0ED2EF62A81A2D600828887 /* ColorExtension.swift in Sources */,
 				D0ED2ECD2A802C1200828887 /* ScreenSize.swift in Sources */,
 				D0ED2EEE2A80330D00828887 /* DailyView.swift in Sources */,
@@ -372,6 +379,7 @@
 				D0ED2ED92A802C8C00828887 /* MainViewModel.swift in Sources */,
 				D0ED2EE22A802D4400828887 /* AlignmentExtension.swift in Sources */,
 				D0DA8B972A7D7DAF00458284 /* TaskCycleApp.swift in Sources */,
+				D0ED2EFE2A81B20000828887 /* ProfileImage.swift in Sources */,
 				D0ED2EE82A802D7800828887 /* ToDoListModel.swift in Sources */,
 				D0ED2EC82A802BE900828887 /* LoginView.swift in Sources */,
 				D0ED2EE02A802D4400828887 /* EncodableExtension.swift in Sources */,
