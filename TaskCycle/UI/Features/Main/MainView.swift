@@ -33,7 +33,6 @@ extension MainView {
     func AccountView() -> some View {
         TabView {
             DailyView()
-                .background(Color.backgroundColor)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .tabItem {
                     Label("Daily", systemImage: "calendar")
