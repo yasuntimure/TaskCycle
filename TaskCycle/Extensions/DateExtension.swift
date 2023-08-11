@@ -20,11 +20,11 @@ extension Date {
         return Calendar.current.isDateInToday(self)
     }
     
-    func fetchWeek(_ date: Date = .init()) -> [WeekDay] {
+    func fetchWeek(_ date: Date = .init()) -> Week {
         let calendar = Calendar.current
         let startOfDate = calendar.startOfDay(for: date)
         
-        var week: [WeekDay] = []
+        var week: Week = []
         let weekForDate = calendar.dateInterval(of: .weekOfMonth, for: startOfDate)
         guard let starOfWeek = weekForDate?.start else {
             return []
@@ -38,14 +38,17 @@ extension Date {
 
         return week
     }
+
+    typealias Week = [Day]
     
-    struct WeekDay: Identifiable {
+    struct Day: Identifiable {
         var id: UUID = .init()
         var date: Date
+        var isSelected: Bool = false
     }
 
     /// Creating Next Week, based on the Last Current Week's Date
-    func createNextWeek() -> [WeekDay] {
+    func createNextWeek() -> Week {
         let calendar = Calendar.current
         let startOfLastDate = calendar.startOfDay(for: self)
         guard let nextDate = calendar.date(byAdding: .day, value: 1, to: startOfLastDate) else {
@@ -56,7 +59,7 @@ extension Date {
     }
 
     /// Creating Previous Week, based on the First Current Week's Date
-    func createPreviousWeek() -> [WeekDay] {
+    func createPreviousWeek() -> Week {
         let calendar = Calendar.current
         let startOfFirstDate = calendar.startOfDay(for: self)
         guard let previousDate = calendar.date(byAdding: .day, value: -1, to: startOfFirstDate) else {
@@ -64,5 +67,10 @@ extension Date {
         }
 
         return fetchWeek(previousDate)
+    }
+
+    /// Checking Two dates are same
+    func isSame(_ date: Date) -> Bool {
+        return Calendar.current.isDate(self, inSameDayAs: date)
     }
 }
