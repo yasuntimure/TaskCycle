@@ -35,6 +35,7 @@ class ToDoListItem: ObservableObject {
     @Published var description: String = ""
     @Published var date: Date = Date()
     @Published var isDone: Bool = false
+    @Published var isPresented: Bool = false
 
 
     func getStructModel() -> ToDoListItemModel {
@@ -51,6 +52,10 @@ class ToDoListItem: ObservableObject {
         self.description = ""
         self.date = Date()
         self.isDone = false
+    }
+
+    func canSave() -> Bool {
+        !title.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
 }

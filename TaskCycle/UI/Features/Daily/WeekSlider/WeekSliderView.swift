@@ -67,7 +67,7 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
         VStack (spacing: 8) {
             Text(date.format("E"))
                 .font(.callout).fontWeight(.medium)
-                .foregroundColor(.gray)
+                .foregroundColor(isSelected ? .white : .gray)
 
             Text(date.format("dd"))
                 .font(.callout).fontWeight(.bold)
@@ -75,32 +75,40 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
                 .frame(width: 35, height: 35)
                 .overlay(
                     Circle()
-                        .stroke(lineWidth: 1)
-                        .foregroundColor(.gray)
+                        .stroke(lineWidth: isSelected ? 3 : 1)
+                        .foregroundColor(isSelected ? .white : .gray)
                         .shadow(radius: 1).opacity(0.5)
                 )
-                .background {
-                    if isSelected {
-                        Circle()
-                        .fill(Color.darkBlue)
-                    }
-
-                    /// Indicator to Show Today's Date
-                    if date.isToday {
-                        Circle()
-                            .fill(.cyan)
-                            .frame(width: 5, height: 5)
-                            .vSpacing(.bottom)
-                            .offset(y: 12)
-                    }
-                }
         }
+        // MARK: Foreground Style
+        .foregroundStyle(date.isToday ? .primary : .secondary)
+        .foregroundColor(date.isToday ? .white : .black)
+        // MARK: Capsule Shape
+        .frame(width: 45, height: 90)
+        .background(
+
+            ZStack{
+                // MARK: Matched Geometry Effect
+                if isSelected {
+                    Capsule()
+                        .fill(Color.mTintColor)
+                }
+
+                /// Indicator to Show Today's Date
+                if date.isToday {
+                    Capsule()
+                        .stroke(lineWidth: 2)
+                        .foregroundColor(Color.mTintColor).opacity(0.6)
+                }
+            }
+        )
+        .contentShape(Capsule())
+
     }
 
 }
 
 struct WeekSliderView_Previews: PreviewProvider {
-
     static var previews: some View {
         WeekSliderView(viewModel: WeekSliderViewModel())
     }

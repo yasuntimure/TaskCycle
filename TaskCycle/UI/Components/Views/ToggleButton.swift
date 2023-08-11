@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ToggleButton: View {
 
-    @Environment (\.colorScheme) var color: ColorScheme
+//    @Environment (\.colorScheme) var color: ColorScheme
 
     @Binding var state: Bool
 
@@ -22,7 +22,8 @@ struct ToggleButton: View {
                 // Empty Circle
                 Circle()
                     .stroke(lineWidth: 2)
-                    .foregroundColor(color == .dark ? .white : .black)
+//                    .foregroundColor(color == .dark ? .white : .black)
+                    .foregroundColor(.mTintColor)
 
                 // Checked Circle
                 if state {
@@ -41,10 +42,12 @@ extension ToggleButton {
         GeometryReader { proxy in
             ZStack {
                 Circle()
-                    .foregroundColor(color == .dark ? .white : .black)
+//                    .foregroundColor(color == .dark ? .white : .black)
+                    .foregroundColor(.mTintColor)
 
                 Image(systemName: "checkmark")
-                    .foregroundColor(color == .dark ? .black : .white)
+//                    .foregroundColor(color == .dark ? .black : .white)
+                    .foregroundColor(.white)
                     .font(.system(size: proxy.size.width/2))
                     .bold()
             }

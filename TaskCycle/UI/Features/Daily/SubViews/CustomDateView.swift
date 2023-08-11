@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HeaderDateView: View {
+struct CustomDateView: View {
 
     @State var date: Date = .init()
 
@@ -15,7 +15,7 @@ struct HeaderDateView: View {
         VStack (alignment: .leading, spacing: 6) {
             HStack (spacing: 5) {
                 Text(date.format("MMMM"))
-                    .foregroundColor(.darkBlue)
+                    .foregroundColor(.mTintColor)
                 Text(date.format("YYYY"))
                     .foregroundColor(.gray)
             }
@@ -31,6 +31,6 @@ struct HeaderDateView: View {
 
 struct HeaderDateView_Previews: PreviewProvider {
     static var previews: some View {
-        HeaderDateView(date: .init())
+        CustomDateView(date: .init())
     }
 }

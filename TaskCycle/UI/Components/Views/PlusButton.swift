@@ -20,7 +20,7 @@ struct PlusButton: View {
             ZStack (alignment: .center) {
                 Circle()
                     .stroke(lineWidth: size/5)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.mTintColor)
                     .frame(width: size * 2,
                            height: size * 2)
                 Circle()
@@ -29,13 +29,13 @@ struct PlusButton: View {
                            height: size * 1.9)
 
                 Rectangle()
-                    .foregroundColor(.primary)
+                    .foregroundColor(.mTintColor)
                     .frame(width: size/6,
                            height: size)
                     .cornerRadius(5)
 
                 Rectangle()
-                    .foregroundColor(.primary)
+                    .foregroundColor(.mTintColor)
                     .frame(width: size,
                            height: size/6)
                     .cornerRadius(5)

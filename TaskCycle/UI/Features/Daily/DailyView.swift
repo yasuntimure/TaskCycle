@@ -12,31 +12,44 @@ struct DailyView<VM>: View where VM: DailyViewModelProtocol {
     @StateObject var viewModel: VM
 
     var body: some View {
-        VStack (alignment: .leading, spacing: 0) {
-            VStack (alignment: .leading, spacing: 6) {
-                HeaderDateView()
-
-                /// Week Slider
-                WeekSliderView(viewModel: WeekSliderViewModel())
-                    .padding(.horizontal, -15)
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    .frame(height: 90)
-                    .padding(.top)
-
+        NavigationView {
+            VStack (alignment: .leading, spacing: 0) {
+                VStack (alignment: .leading, spacing: 6) {
+                    CustomDateView()
+                        .hSpacing(.topLeading)
+                        .overlay(alignment: .topTrailing) { ProfileImage() }
+                        .padding(15)
+                    
+                    /// Week Slider
+                    WeekSliderView(viewModel: viewModel.weekSliderViewModel)
+                        .padding(.horizontal, -15)
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                        .frame(height: 100)
+                        .padding(.horizontal, 15)
+                    
+                    ToDoListView(viewModel: viewModel.toDoListViewModel)
+                    
+                }
+                .hSpacing(.leading)
+                .background(.white)
+                .vSpacing(.top)
             }
-            .hSpacing(.leading)
-            .overlay(alignment: .topTrailing) { ProfileImage() }
-            .padding(15)
-            .background(.white)
-            .vSpacing(.top)
+            .background(Color.backgroundColor)
         }
-        .background(Color.backgroundColor)
     }
 }
 
 
 struct DailyView_Previews: PreviewProvider {
+
+    static let list = ToDoListModel(id: "111", title: "My Lust", description: "LustLust",
+                                     items: [ToDoListItemModel(id: "120", title: "My Item", description: "", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "121", title: "My Item", description: "", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "122", title: "My Item", description: "", date: Date().timeIntervalSince1970),
+                                             ToDoListItemModel(id: "123", title: "My Item", description: "", date: Date().timeIntervalSince1970),
+                                             ToDoListItemModel(id: "124", title: "My Item", description: "", date: Date().timeIntervalSince1970)],
+                                     date: Date().timeIntervalSince1970)
+
+
     static var previews: some View {
-        DailyView(viewModel: DailyViewModel())
+        DailyView(viewModel: DailyViewModel(userId: "", list: list))
     }
 }
