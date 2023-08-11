@@ -17,7 +17,7 @@ struct DailyView<VM>: View where VM: DailyViewModelProtocol {
                 HeaderDateView()
 
                 /// Week Slider
-                WeekSliderView(viewModel: viewModel.weekSliderViewModel)
+                WeekSliderView(viewModel: WeekSliderViewModel())
                     .padding(.horizontal, -15)
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .frame(height: 90)

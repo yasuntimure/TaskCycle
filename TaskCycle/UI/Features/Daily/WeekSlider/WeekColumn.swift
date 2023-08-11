@@ -20,7 +20,7 @@ struct WeekColumn: View {
 
             Text(date.format("dd"))
                 .font(.callout).fontWeight(.bold)
-                .foregroundStyle(isSelected ? .white : .gray)
+                .foregroundColor(isSelected ? .white : .gray)
                 .frame(width: 35, height: 35)
                 .overlay(
                     Circle()
@@ -42,7 +42,7 @@ struct WeekColumn: View {
                 .fill(Color.darkBlue)
         }
 
-        /// Indicator to Show, Which is Today;s Date
+        /// Indicator to Show Today's Date
         if date.isToday {
             Circle()
                 .fill(.cyan)

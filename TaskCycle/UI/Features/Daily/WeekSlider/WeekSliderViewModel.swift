@@ -58,7 +58,7 @@ class WeekSliderViewModel: WeekSliderViewModelProtocol {
             }
         }
 
-        print(weeks.count)
+        print("Weeks Count: ", weeks.count)
     }
 
     // Returns if selectedDay date is same day with parameters date

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
 
-    @StateObject var viewModel: VM
+    @ObservedObject var viewModel: VM
 
     var body: some View {
         TabView(selection: $viewModel.weekIndex) {
@@ -31,7 +31,6 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
 
 
     /// Week View
-    @ViewBuilder
     func WeekView(_ week: Date.Week) -> some View {
         HStack(spacing: 10) {
             ForEach(week) { day in
