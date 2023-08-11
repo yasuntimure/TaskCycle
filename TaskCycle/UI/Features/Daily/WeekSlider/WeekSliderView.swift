@@ -22,27 +22,26 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
         }
         .onChange(of: viewModel.weekIndex) { newValue in
             /// Creating When it reaches first/last Page
-            if newValue == 0 || newValue == (viewModel.weeks.count - 1) {
-                viewModel.createWeek = true
-            }
+            viewModel.createWeek = (newValue == 0 || newValue == (viewModel.weeks.count - 1))
         }
         .onAppear { viewModel.setWeekData() }
     }
 
 
     /// Week View
+    @ViewBuilder
     func WeekView(_ week: Date.Week) -> some View {
         HStack(spacing: 10) {
             ForEach(week) { day in
                 WeekColumn(date: day.date, isSelected: viewModel.isSelected(day))
-                .hSpacing(.center)
-                .onTapGesture {
-                    /// Updating Selected Day
-                    withAnimation {
-                        viewModel.selectedDate = day.date
-                        print(day.date)
+                    .hSpacing(.center)
+                    .onTapGesture {
+                        /// Updating Selected Day
+                        withAnimation {
+                            viewModel.selectedDate = day.date
+                            print(day.date)
+                        }
                     }
-                }
 
             }
             .background {
@@ -60,6 +59,41 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
                         }
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    func WeekColumn(date: Date, isSelected: Bool) -> some View {
+        VStack (spacing: 8) {
+            Text(date.format("E"))
+                .font(.callout).fontWeight(.medium)
+                .foregroundColor(.gray)
+
+            Text(date.format("dd"))
+                .font(.callout).fontWeight(.bold)
+                .foregroundColor(isSelected ? .white : .gray)
+                .frame(width: 35, height: 35)
+                .overlay(
+                    Circle()
+                        .stroke(lineWidth: 1)
+                        .foregroundColor(.gray)
+                        .shadow(radius: 1).opacity(0.5)
+                )
+                .background {
+                    if isSelected {
+                        Circle()
+                        .fill(Color.darkBlue)
+                    }
+
+                    /// Indicator to Show Today's Date
+                    if date.isToday {
+                        Circle()
+                            .fill(.cyan)
+                            .frame(width: 5, height: 5)
+                            .vSpacing(.bottom)
+                            .offset(y: 12)
+                    }
+                }
         }
     }
 

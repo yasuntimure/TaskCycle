@@ -11,7 +11,6 @@
 		D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D81A2A843570005E534C /* DailyViewModel.swift */; };
 		D098D83B2A85A17C005E534C /* HeaderDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83A2A85A17C005E534C /* HeaderDateView.swift */; };
 		D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83C2A85A396005E534C /* WeekSliderView.swift */; };
-		D098D8412A85A5DF005E534C /* WeekColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8402A85A5DF005E534C /* WeekColumn.swift */; };
 		D098D8432A85B6F6005E534C /* WeekSliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8422A85B6F6005E534C /* WeekSliderViewModel.swift */; };
 		D0DA8B972A7D7DAF00458284 /* TaskCycleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA8B962A7D7DAF00458284 /* TaskCycleApp.swift */; };
 		D0DA8B992A7D7DAF00458284 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA8B982A7D7DAF00458284 /* ContentView.swift */; };
@@ -58,7 +57,6 @@
 		D098D81A2A843570005E534C /* DailyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewModel.swift; sourceTree = "<group>"; };
 		D098D83A2A85A17C005E534C /* HeaderDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDateView.swift; sourceTree = "<group>"; };
 		D098D83C2A85A396005E534C /* WeekSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderView.swift; sourceTree = "<group>"; };
-		D098D8402A85A5DF005E534C /* WeekColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekColumn.swift; sourceTree = "<group>"; };
 		D098D8422A85B6F6005E534C /* WeekSliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderViewModel.swift; sourceTree = "<group>"; };
 		D0DA8B932A7D7DAF00458284 /* TaskCycle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskCycle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0DA8B962A7D7DAF00458284 /* TaskCycleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCycleApp.swift; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 			children = (
 				D098D83C2A85A396005E534C /* WeekSliderView.swift */,
 				D098D8422A85B6F6005E534C /* WeekSliderViewModel.swift */,
-				D098D8402A85A5DF005E534C /* WeekColumn.swift */,
 			);
 			path = WeekSlider;
 			sourceTree = "<group>";
@@ -415,7 +412,6 @@
 				D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */,
 				D098D8192A84330D005E534C /* OffsetKey.swift in Sources */,
 				D0ED2EE92A802D7800828887 /* User.swift in Sources */,
-				D098D8412A85A5DF005E534C /* WeekColumn.swift in Sources */,
 				D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */,
 				D0ED2ED52A802C4600828887 /* RegisterView.swift in Sources */,
 				D0ED2EF42A816A9A00828887 /* Task.swift in Sources */,
