@@ -21,12 +21,13 @@ struct RegisterView: View {
 
                 VStack (alignment: .leading, spacing: 5) {
                     Text("Register")
-                        .font(.system(size: 45))
-                        .bold()
+                        .font(.system(size: 45)).bold()
+                        .foregroundColor(Color.mTintColor)
                     Text("Create a new Account!")
-                        .font(.system(size: 30))
-                        .bold()
+                        .font(.system(size: 30)).bold()
+                        .foregroundColor(Color.secondary)
                 }
+                .hSpacing(.leading)
                 .padding(.top, ScreenSize.width/4)
                 .frame(width: ScreenSize.defaultWidth)
                 
