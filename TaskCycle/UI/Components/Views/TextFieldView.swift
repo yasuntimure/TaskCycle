@@ -26,11 +26,11 @@ class InputField: ObservableObject, Equatable {
 
 struct TextFieldView: View {
 
-    @Environment (\.colorScheme) var colorScheme: ColorScheme
-    
     @Binding var input: InputField
 
     var isSecure: Bool = false
+
+    var cornerRadius: CGFloat = 20
 
     var body: some View {
         
@@ -45,8 +45,8 @@ struct TextFieldView: View {
                         .frame(height: ScreenSize.defaultHeight)
                         .padding(.horizontal)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color.primary, lineWidth: 2)
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .stroke(Color.mTintColor, lineWidth: 2)
                         )
                 } else {
                     TextField(input.placeholder, text: $input.text)
@@ -55,8 +55,8 @@ struct TextFieldView: View {
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color.primary, lineWidth: 2)
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .stroke(Color.mTintColor, lineWidth: 2)
                         )
                 }
 
