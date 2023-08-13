@@ -26,9 +26,15 @@ struct LoginView: View {
             VStack {
                 HeaderView()
 
+                Text("Sign In")
+                    .font(.system(size: 32)).bold()
+                    .foregroundColor(.secondary)
+                    .hSpacing(.leading)
+                    .padding([.leading], 30)
+                    .padding(.top)
+
                 TextFieldView(input: $viewModel.email)
                     .frame(width: ScreenSize.defaultWidth)
-                    .padding(.top, ScreenSize.width/8)
                     .focused($focusedField, equals: .email)
                     .onSubmit(of: .text) {
                         focusedField = (focusedField == .email) ? .password : nil

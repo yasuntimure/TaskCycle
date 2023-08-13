@@ -13,19 +13,22 @@ struct HeaderView: View {
 
     var body: some View {
 
-        HStack (spacing: 5) {
-            Text("Task")
-                .font(.system(size: 52)).bold()
-                .foregroundColor(.gray)
+        VStack (alignment: .leading, spacing: 30) {
+            HStack (spacing: 5) {
+                Text("Task")
+                    .font(.system(size: 52)).bold()
+                    .foregroundColor(.gray)
 
-            Text("/")
-                .font(.system(size: 32)).bold()
-                .foregroundColor(.gray)
+                Text("/")
+                    .font(.system(size: 32)).bold()
+                    .foregroundColor(.black)
 
-            Text("Cycle")
-                .font(.system(size: 52)).bold()
-                .foregroundColor(.mTintColor)
+                Text("Cycle")
+                    .font(.system(size: 52)).bold()
+                    .foregroundColor(.mTintColor)
+            }
         }
+        .hSpacing(.leading).padding(.leading, 30)
     }
 }
 
