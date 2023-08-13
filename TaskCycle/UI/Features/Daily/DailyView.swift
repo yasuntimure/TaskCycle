@@ -36,6 +36,30 @@ struct DailyView<VM>: View where VM: DailyViewModelProtocol {
             }
             .background(Color.backgroundColor)
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) { EditButton() }
+            ToolbarItem(placement: .navigationBarTrailing) { settingsViewNavigation }
+        }
+        .sheet(isPresented: $viewModel.settingsViewPresented) {
+            SettingsView()
+                .presentationDetents([.fraction(0.45)])
+        }
+    }
+}
+
+// MARK: - Settings View Navigation
+
+extension DailyView {
+
+    var settingsViewNavigation: some View {
+        Image(systemName: "gear")
+            .resizable()
+            .foregroundColor(.primary)
+            .frame(width: 25, height: 25)
+            .onTapGesture {
+                viewModel.settingsViewPresented = true
+            }
+
     }
 }
 

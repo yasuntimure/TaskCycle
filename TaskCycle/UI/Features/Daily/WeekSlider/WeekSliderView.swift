@@ -75,9 +75,9 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
                 .frame(width: 35, height: 35)
                 .overlay(
                     Circle()
-                        .stroke(lineWidth: isSelected ? 3 : 1)
+                        .stroke(lineWidth: isSelected ? 2 : 1)
                         .foregroundColor(isSelected ? .white : .gray)
-                        .shadow(radius: 1).opacity(0.5)
+//                        .shadow(radius: 1).opacity(0.5)
                 )
         }
         // MARK: Foreground Style

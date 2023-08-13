@@ -11,7 +11,9 @@ import FirebaseFirestore
 
 protocol ToDoListViewModelProtocol: ObservableObject {
     var items: [ToDoListItemModel] { get set }
+    var isEditing: Bool { get set }
     var newItem: ToDoListItem { get set }
+    var selectedItem: ToDoListItemModel? { get set }
     var showAlert: Bool { get set }
     var errorMessage: String { get set }
     var isLoading: Bool { get set }
@@ -31,11 +33,13 @@ class ToDoListViewModel: ToDoListViewModelProtocol {
     @Published var items: [ToDoListItemModel] = []
 
     @Published var newItem: ToDoListItem = ToDoListItem()
+    @Published var selectedItem: ToDoListItemModel? = nil
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
     @Published var isLoading: Bool = false
+    @Published var isEditing: Bool = false
 
     @Published var userId: String
     @Published var list: ToDoListModel

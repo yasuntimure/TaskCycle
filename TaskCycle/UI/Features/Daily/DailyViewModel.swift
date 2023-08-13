@@ -12,6 +12,7 @@ protocol DailyViewModelProtocol: ObservableObject {
     var toDoListViewModel: ToDoListViewModel { get set }
     var tasks: [Task] { get set }
     var createNewTask: Bool { get set }
+    var settingsViewPresented: Bool { get set }
 }
 
 class DailyViewModel: DailyViewModelProtocol {
@@ -21,6 +22,7 @@ class DailyViewModel: DailyViewModelProtocol {
     @Published var toDoListViewModel: ToDoListViewModel
     @Published var tasks: [Task] = sampleTasks.sorted(by: { $1.creationDate > $0.creationDate })
     @Published var createNewTask: Bool = false
+    @Published var settingsViewPresented = false
 
     init(userId: String, list: ToDoListModel) {
         weekSliderViewModel = WeekSliderViewModel()
