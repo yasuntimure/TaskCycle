@@ -12,16 +12,20 @@ struct HeaderView: View {
     @Environment (\.colorScheme) var colorScheme: ColorScheme
 
     var body: some View {
-            LogoView()
-                .frame(width: ScreenSize.width/3, height: ScreenSize.width/3)
-                .cornerRadius(ScreenSize.width)
-                .foregroundColor(colorScheme == .light ? .black : .white)
-                .aspectRatio(contentMode: .fill)
-                .padding(.top, ScreenSize.width/3.5)
-                .shadow(
-                    color: colorScheme == .light ? .black : .white,
-                    radius: 1
-                )
+
+        HStack (spacing: 5) {
+            Text("Task")
+                .font(.system(size: 52)).bold()
+                .foregroundColor(.gray)
+
+            Text("/")
+                .font(.system(size: 32)).bold()
+                .foregroundColor(.gray)
+
+            Text("Cycle")
+                .font(.system(size: 52)).bold()
+                .foregroundColor(.mTintColor)
+        }
     }
 }
 

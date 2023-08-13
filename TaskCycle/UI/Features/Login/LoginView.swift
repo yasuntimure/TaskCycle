@@ -50,7 +50,7 @@ struct LoginView: View {
                         viewModel.isRegisterPresented = true
                     }
                     .bold()
-                    .foregroundColor(Color.secondary)
+                    .foregroundColor(Color.mTintColor.opacity(0.9))
                 }
                 .padding(.bottom, 100)
                 
