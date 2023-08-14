@@ -8,24 +8,24 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import GoogleSignIn
 
 class MainViewModel: ObservableObject {
 
-    @Published var newListViewPresented = false
-
-    @Published var lists: [ToDoListModel] = []
-
-    @Published var newList: ToDoList = ToDoList()
+    @Published var userId: String = ""
+    @Published var userName: String = ""
+    @Published var isLoggedIn: Bool = false
+    @Published var joinDate: String = "22.07.2023"
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    @Published var userName: String = "Eyup Yasuntimur"
-    @Published var joinDate: String = "22.07.2023"
-
-    @Published var userId: String = ""
+    @Published var lists: [ToDoListModel] = []
+    @Published var newList: ToDoList = ToDoList()
 
     @Published var isLoading: Bool = false
+
+    @Published var newListViewPresented = false
 
     private var handler: AuthStateDidChangeListenerHandle?
 
@@ -33,8 +33,10 @@ class MainViewModel: ObservableObject {
         self.handler = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             if let uid = user?.uid, !uid.isEmpty {
                 self?.userId = uid
+                self?.userName = user?.displayName ?? ""
             }
         }
+
     }
 
     var canSave: Bool {

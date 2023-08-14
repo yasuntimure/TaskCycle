@@ -6,26 +6,43 @@
 //
 
 import Foundation
-import FirebaseCore
 import FirebaseAuth
+import Firebase
 import GoogleSignIn
-import GoogleSignInSwift
 import SwiftUI
 import Combine
 
-class LoginViewModel: ObservableObject {
+protocol LoginViewModelProtocol: ObservableObject {
+    var email: InputField { get set }
+    var password: InputField { get set }
+    var userId: String { get set }
+    var userName: String { get set }
+    var isLoggedIn: Bool { get set }
+    var showAlert: Bool { get set }
+    var errorMessage: String { get set }
+    var isRegisterPresented: Bool { get set }
+    func login()
+    func signInWithGoogle()
+}
+
+class LoginViewModel: LoginViewModelProtocol {
 
     private var subscription = Set<AnyCancellable>()
 
     @Published var email: InputField = InputField(placeholder: "Enter Email", text: "", validation: Validation.none)
     @Published var password: InputField = InputField(placeholder: "Enter Password", text: "", validation: Validation.none)
-    @Published var isRegisterPresented = false
+
     @Published var userId: String = ""
+    @Published var userName: String = ""
+    @Published var isLoggedIn: Bool = false
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
+    @Published var isRegisterPresented = false
+
     init() {
+        checkPreviousSignIn()
         $email
             .dropFirst(4)
             .sink { email in
@@ -62,6 +79,45 @@ class LoginViewModel: ObservableObject {
 
             self?.userId = userId
         }
+    }
+
+    func checkPreviousSignIn() {
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            if let error = error {
+                self.errorMessage = "error: \(error.localizedDescription)"
+            }
+
+            guard let userId = user?.userID else { return }
+            self.userId = userId
+        }
+    }
+
+    func signInWithGoogle() {
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+
+        GIDSignIn.sharedInstance.configuration = config
+
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScenes = scenes.first as? UIWindowScene
+        let window = windowScenes?.windows.first
+        guard let rootViewController = window?.rootViewController else { return }
+
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { signInResult, error in
+            if let error = error {
+                self.errorMessage = "error: \(error.localizedDescription)"
+                self.showAlert = true
+            }
+
+            guard let userId = signInResult?.user.userID else { return }
+            self.userId = userId
+        }
+    }
+
+    func signOut(){
+        GIDSignIn.sharedInstance.signOut()
     }
 
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
 
     @StateObject var viewModel = MainViewModel()
+    @StateObject var loginViewModel = LoginViewModel()
 
     let list = ToDoListModel(id: "111", title: "My Lust", description: "LustLust",
                              items: [ToDoListItemModel(id: "120", title: "My Item", description: "My description", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "121", title: "My Item", description: "", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "122", title: "My Item", description: "", date: Date().timeIntervalSince1970),
@@ -19,10 +20,10 @@ struct MainView: View {
 
     var body: some View {
         NavigationView {
-            if !viewModel.userId.isEmpty {
+            if !loginViewModel.userId.isEmpty {
                 AccountView()
             } else {
-                LoginView()
+                LoginView(viewModel: loginViewModel)
             }
         }
         .environmentObject(viewModel)

@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import Firebase
+import GoogleSignIn
+import GoogleSignInSwift
 
-struct LoginView: View {
+struct LoginView<VM>: View where VM: LoginViewModelProtocol {
 
     private enum Fields {
         case email, password
     }
 
-    @StateObject var viewModel = LoginViewModel()
+    @ObservedObject var viewModel: VM
 
     @FocusState private var focusedField: Fields?
 
@@ -70,7 +73,7 @@ struct LoginView: View {
 
                 // Sign In with Google
                 SignInWithButton(signInType: .google) {
-                    // TODO: Sign In action
+                    viewModel.signInWithGoogle()
                 }
                 .shadow(radius: 2)
                 .padding([.bottom], ScreenSize.width/10)
@@ -91,12 +94,15 @@ struct LoginView: View {
                     .presentationDetents([.large])
             }
             .userId(viewModel.userId)
+            .alert(isPresented: $viewModel.showAlert) {
+                Alert(title: Text(viewModel.errorMessage))
+            }
         }
     }
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(viewModel: LoginViewModel())
     }
 }
