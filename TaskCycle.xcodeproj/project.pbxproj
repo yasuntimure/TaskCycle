@@ -15,6 +15,8 @@
 		D098D8492A85E3BD005E534C /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8462A85E3BD005E534C /* ToDoListView.swift */; };
 		D098D84A2A85E3BD005E534C /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8472A85E3BD005E534C /* ToDoListViewModel.swift */; };
 		D0B3B0C12A88910C001B14D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0B3B0C02A88910C001B14D1 /* GoogleService-Info.plist */; };
+		D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */; };
+		D0B3B0C72A8A938C001B14D1 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */; };
 		D0C996912A86C4D80085481B /* ToDoListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996902A86C4D80085481B /* ToDoListRow.swift */; };
 		D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996922A86D74B0085481B /* KeyboardButton.swift */; };
 		D0C996962A886FF20085481B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996952A886FF20085481B /* SettingsView.swift */; };
@@ -113,7 +115,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0B3B0C72A8A938C001B14D1 /* GoogleSignInSwift in Frameworks */,
 				D0DA8BA82A7D80DE00458284 /* FirebaseAuth in Frameworks */,
+				D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */,
 				D0DA8BAA2A7D80DE00458284 /* FirebaseFirestore in Frameworks */,
 				D0DA8BAC2A7D80DE00458284 /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -355,6 +359,8 @@
 				D0DA8BA72A7D80DE00458284 /* FirebaseAuth */,
 				D0DA8BA92A7D80DE00458284 /* FirebaseFirestore */,
 				D0DA8BAB2A7D80DE00458284 /* FirebaseFirestoreSwift */,
+				D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */,
+				D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */,
 			);
 			productName = TaskCycle;
 			productReference = D0DA8B932A7D7DAF00458284 /* TaskCycle.app */;
@@ -386,6 +392,7 @@
 			mainGroup = D0DA8B8A2A7D7DAE00458284;
 			packageReferences = (
 				D0DA8BA62A7D80DE00458284 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D0B3B0C32A8A938C001B14D1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = D0DA8B942A7D7DAF00458284 /* Products */;
 			projectDirPath = "";
@@ -659,6 +666,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D0B3B0C32A8A938C001B14D1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		D0DA8BA62A7D80DE00458284 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -670,6 +685,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0B3B0C32A8A938C001B14D1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0B3B0C32A8A938C001B14D1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		D0DA8BA72A7D80DE00458284 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0DA8BA62A7D80DE00458284 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
