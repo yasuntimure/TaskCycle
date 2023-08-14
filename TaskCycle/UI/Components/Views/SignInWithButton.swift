@@ -41,15 +41,14 @@ struct SignInWithButton: View {
                     .font(.system(size: 20))
                     .foregroundColor(.secondary)
                     .hSpacing(.leading)
-                    .padding(.leading)
+                    .padding(.leading, 20)
                 Image(signInType.model.imageName)
                     .resizable()
                     .frame(width: 25, height: 25)
                     .padding(.leading, 5)
-                    .padding(.trailing)
+                    .padding(.trailing, 20)
             }
-            .padding()
-            .frame(width: ScreenSize.defaultWidth)
+            .frame(width: width, height: height)
             .background()
             .cornerRadius(20)
         }

@@ -24,15 +24,8 @@ struct LoginView: View {
             GradientView()
             
             VStack {
+
                 HeaderView()
-
-
-                // Sign In with Google
-                SignInWithButton(signInType: .google) {
-                    // TODO: Sign In action
-                }
-
-
 
                 Text("Sign In")
                     .font(.system(size: 32)).bold()
@@ -40,7 +33,6 @@ struct LoginView: View {
                     .hSpacing(.leading)
                     .padding([.leading], 30)
                     .padding(.top)
-
 
                 TextFieldView(input: $viewModel.email)
                     .frame(width: ScreenSize.defaultWidth)
@@ -57,8 +49,32 @@ struct LoginView: View {
                     viewModel.login()
                 }
                 .padding(.top, ScreenSize.width/12)
-                .padding(.bottom, ScreenSize.width/10)
-                
+                .shadow(radius: 2)
+
+                HStack (spacing: 12) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(height: 1.5)
+                        .foregroundColor(.secondary)
+                        .opacity(0.5)
+                        .padding(.leading, 30)
+                    Text("with")
+                        .font(.system(size: 16)).bold()
+                        .foregroundColor(.secondary)
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(height: 1.5)
+                        .foregroundColor(.secondary)
+                        .opacity(0.5)
+                        .padding(.trailing, 30)
+                }
+                .padding([.top, .bottom], ScreenSize.width/20)
+
+                // Sign In with Google
+                SignInWithButton(signInType: .google) {
+                    // TODO: Sign In action
+                }
+                .shadow(radius: 2)
+                .padding([.bottom], ScreenSize.width/10)
+
                 VStack (spacing: 5) {
                     Text("New around here?")
                     Button("Create An Account") {
