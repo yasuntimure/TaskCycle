@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseAuth
+import GoogleSignIn
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -26,8 +28,11 @@ struct TaskCycleApp: App {
 
     var body: some Scene {
         WindowGroup {
-           MainView()
+            MainView()
                 .preferredColorScheme(.light)
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
     }
 }

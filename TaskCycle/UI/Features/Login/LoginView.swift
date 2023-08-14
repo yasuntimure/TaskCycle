@@ -26,12 +26,21 @@ struct LoginView: View {
             VStack {
                 HeaderView()
 
+
+                // Sign In with Google
+                SignInWithButton(signInType: .google) {
+                    // TODO: Sign In action
+                }
+
+
+
                 Text("Sign In")
                     .font(.system(size: 32)).bold()
                     .foregroundColor(.secondary)
                     .hSpacing(.leading)
                     .padding([.leading], 30)
                     .padding(.top)
+
 
                 TextFieldView(input: $viewModel.email)
                     .frame(width: ScreenSize.defaultWidth)

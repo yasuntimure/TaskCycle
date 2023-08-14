@@ -6,7 +6,10 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseCore
+import FirebaseAuth
+import GoogleSignIn
+import GoogleSignInSwift
 import SwiftUI
 import Combine
 
@@ -60,7 +63,7 @@ class LoginViewModel: ObservableObject {
             self?.userId = userId
         }
     }
-    
+
 }
 
 

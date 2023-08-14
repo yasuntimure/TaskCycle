@@ -17,6 +17,7 @@
 		D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */; };
 		D0B3B0C72A8A938C001B14D1 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */; };
 		D0B3B0CB2A8A944E001B14D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0B3B0CA2A8A944E001B14D1 /* GoogleService-Info.plist */; };
+		D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */; };
 		D0C996912A86C4D80085481B /* ToDoListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996902A86C4D80085481B /* ToDoListRow.swift */; };
 		D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996922A86D74B0085481B /* KeyboardButton.swift */; };
 		D0C996962A886FF20085481B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996952A886FF20085481B /* SettingsView.swift */; };
@@ -69,6 +70,8 @@
 		D098D8462A85E3BD005E534C /* ToDoListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
 		D098D8472A85E3BD005E534C /* ToDoListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
 		D0B3B0CA2A8A944E001B14D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D0B3B0CC2A8A94F6001B14D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithButton.swift; sourceTree = "<group>"; };
 		D0C996902A86C4D80085481B /* ToDoListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListRow.swift; sourceTree = "<group>"; };
 		D0C996922A86D74B0085481B /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
 		D0C996952A886FF20085481B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -173,6 +176,7 @@
 		D0DA8B952A7D7DAF00458284 /* TaskCycle */ = {
 			isa = PBXGroup;
 			children = (
+				D0B3B0CC2A8A94F6001B14D1 /* Info.plist */,
 				D0ED2EA22A802AE300828887 /* App */,
 				D0ED2EE42A802D7800828887 /* Data */,
 				D0ED2EAD2A802B9B00828887 /* UI */,
@@ -245,6 +249,7 @@
 				D0ED2EB72A802BA700828887 /* LoadingView.swift */,
 				D0ED2EEB2A802EB000828887 /* LogoView.swift */,
 				D0C996922A86D74B0085481B /* KeyboardButton.swift */,
+				D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -438,6 +443,7 @@
 				D098D8432A85B6F6005E534C /* WeekSliderViewModel.swift in Sources */,
 				D0C996982A8870750085481B /* SettingsViewModel.swift in Sources */,
 				D0ED2EBE2A802BA700828887 /* GradientView.swift in Sources */,
+				D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */,
 				D0ED2EB82A802BA700828887 /* TextFieldView.swift in Sources */,
 				D0ED2EEC2A802EB000828887 /* LogoView.swift in Sources */,
 				D0ED2ED92A802C8C00828887 /* MainViewModel.swift in Sources */,
@@ -595,6 +601,7 @@
 				DEVELOPMENT_TEAM = JGMV95L4F7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TaskCycle/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -624,6 +631,7 @@
 				DEVELOPMENT_TEAM = JGMV95L4F7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TaskCycle/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
