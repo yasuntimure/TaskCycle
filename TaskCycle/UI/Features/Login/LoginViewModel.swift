@@ -41,6 +41,18 @@ class LoginViewModel: LoginViewModelProtocol {
 
     @Published var isRegisterPresented = false
 
+//    private var handler: AuthStateDidChangeListenerHandle?
+//
+//    init() {
+//        self.handler = Auth.auth().addStateDidChangeListener { [weak self] _, user in
+//            if let uid = user?.uid, !uid.isEmpty {
+//                self?.userId = uid
+//                self?.userName = user?.displayName ?? ""
+//            }
+//        }
+//    }
+
+
     init() {
         checkPreviousSignIn()
         $email

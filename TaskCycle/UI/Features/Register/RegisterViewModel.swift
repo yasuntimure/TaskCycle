@@ -72,7 +72,7 @@ class RegisterViewModel: ObservableObject {
     }
 
     func insertUserId(_ userId: String) {
-        let newUser = User (
+        let newUser = UserModel (
             id: userId,
             name: inputs.name.text,
             email: inputs.email.text,

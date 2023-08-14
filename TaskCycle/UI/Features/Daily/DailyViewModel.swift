@@ -24,7 +24,14 @@ class DailyViewModel: DailyViewModelProtocol {
     @Published var createNewTask: Bool = false
     @Published var settingsViewPresented = false
 
-    init(userId: String, list: ToDoListModel) {
+
+    let list = ToDoListModel(id: "111", title: "My Lust", description: "LustLust",
+                             items: [ToDoListItemModel(id: "120", title: "My Item", description: "My description", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "121", title: "My Item", description: "", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "122", title: "My Item", description: "", date: Date().timeIntervalSince1970),
+                                     ToDoListItemModel(id: "123", title: "My Item", description: "My description", date: Date().timeIntervalSince1970),
+                                     ToDoListItemModel(id: "124", title: "My Item", description: "My description My description My description My description My description My description My description My description My description My description My description", date: Date().timeIntervalSince1970)],
+                             date: Date().timeIntervalSince1970)
+
+    init(userId: String) {
         weekSliderViewModel = WeekSliderViewModel()
         toDoListViewModel = ToDoListViewModel(userId: userId, list: list)
     }
