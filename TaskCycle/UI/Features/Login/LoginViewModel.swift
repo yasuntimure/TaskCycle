@@ -21,8 +21,9 @@ protocol LoginViewModelProtocol: ObservableObject {
     var showAlert: Bool { get set }
     var errorMessage: String { get set }
     var isRegisterPresented: Bool { get set }
-    func login()
+    func signInDefault()
     func signInWithGoogle()
+    func signIn(_ type: SignInType?)
 }
 
 class LoginViewModel: LoginViewModelProtocol {
@@ -40,18 +41,6 @@ class LoginViewModel: LoginViewModelProtocol {
     @Published var errorMessage: String = ""
 
     @Published var isRegisterPresented = false
-
-//    private var handler: AuthStateDidChangeListenerHandle?
-//
-//    init() {
-//        self.handler = Auth.auth().addStateDidChangeListener { [weak self] _, user in
-//            if let uid = user?.uid, !uid.isEmpty {
-//                self?.userId = uid
-//                self?.userName = user?.displayName ?? ""
-//            }
-//        }
-//    }
-
 
     init() {
         checkPreviousSignIn()
@@ -72,23 +61,28 @@ class LoginViewModel: LoginViewModelProtocol {
         }.store(in: &subscription)
     }
     
-    func login() {
+    func signIn(_ type: SignInType? = nil) {
+        switch type {
+        case .apple: return
+        case .google:
+            signInWithGoogle()
+        case .none:
+            signInDefault()
+        }
+    }
 
+    internal func signInDefault() {
         validateEmail()
         validatePassword()
-        
         guard email.validation == .email(.approved) && password.validation == .password(.approved) else { return }
-            
-        // Try Login
         Auth.auth().signIn(withEmail: email.text, password: password.text) { [weak self] result, error in
-        
+
             guard let userId = result?.user.uid, error == nil else {
                 print("Error: \(error!.localizedDescription)")
                 self?.errorMessage = error?.localizedDescription ?? "Could not create a new account!"
                 self?.showAlert = true
                 return
             }
-
             self?.userId = userId
         }
     }
@@ -104,7 +98,7 @@ class LoginViewModel: LoginViewModelProtocol {
         }
     }
 
-    func signInWithGoogle() {
+    internal func signInWithGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
 
         // Create Google Sign In configuration object.
@@ -125,6 +119,7 @@ class LoginViewModel: LoginViewModelProtocol {
 
             guard let userId = signInResult?.user.userID else { return }
             self.userId = userId
+        
         }
     }
 

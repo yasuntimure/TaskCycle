@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D036B4C02A8AE92E007F121C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */; };
 		D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C12A8AF128007F121C /* AppDelegate.swift */; };
+		D036B4C42A8AF590007F121C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C32A8AF590007F121C /* MainView.swift */; };
 		D098D8192A84330D005E534C /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8182A84330D005E534C /* OffsetKey.swift */; };
 		D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D81A2A843570005E534C /* DailyViewModel.swift */; };
 		D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83A2A85A17C005E534C /* CustomDateView.swift */; };
@@ -24,7 +25,6 @@
 		D0C996962A886FF20085481B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996952A886FF20085481B /* SettingsView.swift */; };
 		D0C996982A8870750085481B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996972A8870750085481B /* SettingsViewModel.swift */; };
 		D0DA8B972A7D7DAF00458284 /* TaskCycleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA8B962A7D7DAF00458284 /* TaskCycleApp.swift */; };
-		D0DA8B992A7D7DAF00458284 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA8B982A7D7DAF00458284 /* ContentView.swift */; };
 		D0DA8B9B2A7D7DB000458284 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0DA8B9A2A7D7DB000458284 /* Assets.xcassets */; };
 		D0DA8B9E2A7D7DB000458284 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0DA8B9D2A7D7DB000458284 /* Preview Assets.xcassets */; };
 		D0DA8BA82A7D80DE00458284 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA8BA72A7D80DE00458284 /* FirebaseAuth */; };
@@ -63,6 +63,7 @@
 /* Begin PBXFileReference section */
 		D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D036B4C12A8AF128007F121C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D036B4C32A8AF590007F121C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D098D8182A84330D005E534C /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
 		D098D81A2A843570005E534C /* DailyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewModel.swift; sourceTree = "<group>"; };
 		D098D83A2A85A17C005E534C /* CustomDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
@@ -78,7 +79,6 @@
 		D0C996972A8870750085481B /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		D0DA8B932A7D7DAF00458284 /* TaskCycle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskCycle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0DA8B962A7D7DAF00458284 /* TaskCycleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCycleApp.swift; sourceTree = "<group>"; };
-		D0DA8B982A7D7DAF00458284 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D0DA8B9A2A7D7DB000458284 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0DA8B9D2A7D7DB000458284 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D0ED2EB02A802BA700828887 /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
@@ -207,12 +207,12 @@
 		D0ED2EA32A802AED00828887 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				D036B4C32A8AF590007F121C /* MainView.swift */,
 				D0C996942A886FE30085481B /* Settings */,
 				D098D8452A85E3BD005E534C /* ToDoList */,
 				D0ED2EEF2A80332600828887 /* Daily */,
 				D0ED2ECE2A802C4600828887 /* Register */,
 				D0ED2EC12A802BE900828887 /* Login */,
-				D0DA8B982A7D7DAF00458284 /* ContentView.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -419,7 +419,6 @@
 				D0ED2EBD2A802BA700828887 /* SecondaryButton.swift in Sources */,
 				D098D8492A85E3BD005E534C /* ToDoListView.swift in Sources */,
 				D0ED2ED42A802C4600828887 /* RegisterViewModel.swift in Sources */,
-				D0DA8B992A7D7DAF00458284 /* ContentView.swift in Sources */,
 				D0ED2ECC2A802C1200828887 /* StatefulPreviewWrapper.swift in Sources */,
 				D0ED2EEA2A802D7800828887 /* ToDoListItemModel.swift in Sources */,
 				D0ED2EE12A802D4400828887 /* BindingExtension.swift in Sources */,
@@ -444,6 +443,7 @@
 				D0ED2EC82A802BE900828887 /* LoginView.swift in Sources */,
 				D0ED2EE02A802D4400828887 /* EncodableExtension.swift in Sources */,
 				D0ED2EBF2A802BA700828887 /* LoadingView.swift in Sources */,
+				D036B4C42A8AF590007F121C /* MainView.swift in Sources */,
 				D0ED2EBC2A802BA700828887 /* ToggleButton.swift in Sources */,
 				D0ED2EB92A802BA700828887 /* PlusButton.swift in Sources */,
 				D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */,

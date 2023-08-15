@@ -49,7 +49,7 @@ struct LoginView<VM>: View where VM: LoginViewModelProtocol {
                     .focused($focusedField, equals: .password)
 
                 PrimaryButton(title: "Login") {
-                    viewModel.login()
+                    viewModel.signIn(nil)
                 }
                 .padding(.top, ScreenSize.width/12)
                 .shadow(radius: 2)
@@ -93,7 +93,6 @@ struct LoginView<VM>: View where VM: LoginViewModelProtocol {
                 RegisterView()
                     .presentationDetents([.large])
             }
-            .userId(viewModel.userId)
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(title: Text(viewModel.errorMessage))
             }

@@ -74,6 +74,6 @@ struct DailyView_Previews: PreviewProvider {
 
 
     static var previews: some View {
-        DailyView(viewModel: DailyViewModel(userId: "", list: list))
+        DailyView(viewModel: DailyViewModel(userId: ""))
     }
 }
