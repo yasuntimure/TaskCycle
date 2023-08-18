@@ -5,6 +5,7 @@
 //  Created by Eyüp on 2023-08-07.
 //
 
+import Foundation
 import SwiftUI
 
 extension Date {
@@ -37,14 +38,6 @@ extension Date {
         }
 
         return week
-    }
-
-    typealias Week = [Day]
-    
-    struct Day: Identifiable {
-        var id: UUID = .init()
-        var date: Date
-        var isSelected: Bool = false
     }
 
     /// Creating Next Week, based on the Last Current Week's Date

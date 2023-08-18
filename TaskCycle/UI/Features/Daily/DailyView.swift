@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct DailyView<VM>: View where VM: DailyViewModelProtocol {
+struct DailyView: View {
     
-    @StateObject var viewModel: VM
+    @ObservedObject var viewModel: DailyViewModel
 
     var body: some View {
         NavigationView {
@@ -18,16 +18,16 @@ struct DailyView<VM>: View where VM: DailyViewModelProtocol {
                     CustomDateView()
                         .hSpacing(.topLeading)
                         .overlay(alignment: .topTrailing) { ProfileImage() }
-                        .padding(15)
+                        .padding(.horizontal, 15)
                     
                     /// Week Slider
-                    WeekSliderView(viewModel: viewModel.weekSliderViewModel)
+                    WeekSliderView()
                         .padding(.horizontal, -15)
                         .tabViewStyle(.page(indexDisplayMode: .never))
                         .frame(height: 100)
                         .padding(.horizontal, 15)
                     
-                    ToDoListView(viewModel: viewModel.toDoListViewModel)
+                    ToDoListView()
                     
                 }
                 .hSpacing(.leading)
@@ -36,6 +36,7 @@ struct DailyView<VM>: View where VM: DailyViewModelProtocol {
             }
             .background(Color.backgroundColor)
         }
+        .environmentObject(viewModel)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) { EditButton() }
             ToolbarItem(placement: .navigationBarTrailing) { settingsViewNavigation }
@@ -65,15 +66,8 @@ extension DailyView {
 
 
 struct DailyView_Previews: PreviewProvider {
-
-    static let list = ToDoListModel(id: "111", title: "My Lust", description: "LustLust",
-                                     items: [ToDoListItemModel(id: "120", title: "My Item", description: "", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "121", title: "My Item", description: "", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "122", title: "My Item", description: "", date: Date().timeIntervalSince1970),
-                                             ToDoListItemModel(id: "123", title: "My Item", description: "", date: Date().timeIntervalSince1970),
-                                             ToDoListItemModel(id: "124", title: "My Item", description: "", date: Date().timeIntervalSince1970)],
-                                     date: Date().timeIntervalSince1970)
-
-
     static var previews: some View {
         DailyView(viewModel: DailyViewModel(userId: ""))
+            .environmentObject(MainViewModel())
     }
 }

@@ -6,34 +6,199 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
-protocol DailyViewModelProtocol: ObservableObject {
-    var weekSliderViewModel: WeekSliderViewModel { get set }
-    var toDoListViewModel: ToDoListViewModel { get set }
-    var tasks: [Task] { get set }
-    var createNewTask: Bool { get set }
-    var settingsViewPresented: Bool { get set }
-}
+class DailyViewModel: ObservableObject {
 
-class DailyViewModel: DailyViewModelProtocol {
+    /// Week Slider Properties
+    @Published var selectedDay: WeekDay = WeekDay(date: .init())
+    @Published var weekIndex: Int = 1
+    @Published var weeks: [Week] = []
+    @Published var createWeek: Bool = false
 
-    /// Task Manager Properties
-    @Published var weekSliderViewModel: WeekSliderViewModel
-    @Published var toDoListViewModel: ToDoListViewModel
-    @Published var tasks: [Task] = sampleTasks.sorted(by: { $1.creationDate > $0.creationDate })
-    @Published var createNewTask: Bool = false
+    /// To Do List Properties
+    @Published var items: [ToDoListItemModel] = []
+    @Published var selectedItem: ToDoListItemModel? = nil
+    @Published var isEditing: Bool = false
+    @Published var newItemId: String = ""
+
+    @Published var showAlert: Bool = false
+    @Published var errorMessage: String = ""
+    @Published var isLoading: Bool = false
     @Published var settingsViewPresented = false
 
-
-    let list = ToDoListModel(id: "111", title: "My Lust", description: "LustLust",
-                             items: [ToDoListItemModel(id: "120", title: "My Item", description: "My description", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "121", title: "My Item", description: "", date: Date().timeIntervalSince1970), ToDoListItemModel(id: "122", title: "My Item", description: "", date: Date().timeIntervalSince1970),
-                                     ToDoListItemModel(id: "123", title: "My Item", description: "My description", date: Date().timeIntervalSince1970),
-                                     ToDoListItemModel(id: "124", title: "My Item", description: "My description My description My description My description My description My description My description My description My description My description My description", date: Date().timeIntervalSince1970)],
-                             date: Date().timeIntervalSince1970)
+    @Published var userId: String
 
     init(userId: String) {
-        weekSliderViewModel = WeekSliderViewModel()
-        toDoListViewModel = ToDoListViewModel(userId: userId, list: list)
+        self.userId = userId
+        self.fetchItems()
+    }
+}
+
+// MARK: - Week Slider Methods
+
+extension DailyViewModel {
+
+    func setWeekData() {
+        if weeks.isEmpty {
+            let currentWeek = Date().fetchWeek()
+
+            if let firstDate = currentWeek.first?.date {
+                weeks.append(firstDate.createPreviousWeek())
+            }
+
+            weeks.append(currentWeek)
+
+            if let lastDate = currentWeek.last?.date {
+                weeks.append(lastDate.createNextWeek())
+            }
+        }
     }
 
+    func paginateWeek() {
+        /// SafeCheck
+        if weeks.indices.contains(weekIndex) {
+            if let firstDate = weeks[weekIndex].first?.date, weekIndex == 0 {
+                /// Inserting New Week at 0th Index and Removing Last Array Item
+                weeks.insert(firstDate.createPreviousWeek(), at: 0)
+                weeks.removeLast()
+                weekIndex = 1
+            }
+
+            if let lastDate = weeks[weekIndex].last?.date, weekIndex == (weeks.count - 1) {
+                /// Appending New Week at Last Index and Removing First Array Item
+                weeks.append(lastDate.createNextWeek())
+                weeks.removeFirst()
+                weekIndex = weeks.count - 2
+            }
+        }
+
+        print("Weeks Count: ", weeks.count)
+    }
+
+    // Returns if selectedDay date is same day with parameters date
+    func isSelected(_ day: WeekDay) -> Bool {
+        selectedDay.date.isSame(day.date)
+    }
+}
+
+
+// MARK: - To Do List Methods
+
+extension DailyViewModel {
+
+    func fetchItems() {
+
+        isLoading = true
+
+        items = []
+
+        Firestore.firestore()
+            .collection("users")
+            .document(userId)
+            .collection("weekdays")
+            .document(selectedDay.weekDay())
+            .collection("items")
+            .getDocuments { [weak self] (querySnapshot, err) in
+            if let err = err {
+
+                print("Error getting documents: \(err)")
+
+            } else {
+
+                guard let documents = querySnapshot?.documents else {
+                    print("Documents couldnt casted")
+                    return
+                }
+
+                for document in documents {
+                    let result = Result {
+                        try document.data(as: ToDoListItemModel.self)
+                    }
+                    switch result {
+                    case .success(let item):
+                        self?.items.append(item)
+                    case .failure(let error):
+                        print("Error decoding item: \(error)")
+                    }
+                }
+                self?.reorder()
+                self?.isLoading = false
+            }
+        }
+    }
+
+    func reorder() {
+        items.sort(by: { !$0.isDone && $1.isDone })
+    }
+
+    func deleteItems(at indexSet: IndexSet) {
+        indexSet.forEach { index in
+            Firestore.firestore()
+                .collection("users")
+                .document(userId)
+                .collection("weekdays")
+                .document(selectedDay.weekDay())
+                .collection("items")
+                .document(items[index].id)
+                .delete { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                    }
+                }
+        }
+        items.remove(atOffsets: indexSet)
+    }
+
+    func moveItems(from indexSet: IndexSet, to newIndex: Int) {
+        items.move(fromOffsets: indexSet, toOffset: newIndex)
+    }
+
+    func update(item: ToDoListItemModel) {
+        Firestore.firestore()
+            .collection("users")
+            .document(userId)
+            .collection("weekdays")
+            .document(selectedDay.weekDay())
+            .collection("items")
+            .document(item.id)
+            .updateData(["title": item.title,
+                         "isDone": item.isDone]) { error in
+
+                if let error = error {
+                    print("Error updating document: \(error)")
+                } else {
+                    print("Item updated")
+                }
+            }
+
+        // update local array
+        if let index = self.items.firstIndex(where: {$0.id == item.id}) {
+            self.items[index].set(title: item.title)
+            self.items[index].set(isDone: item.isDone)
+        }
+
+        self.reorder()
+    }
+
+    func addNewItem() {
+        let item = ToDoListItemModel(id: UUID().uuidString,
+                                     title: "",
+                                     description: "",
+                                     date: Date().timeIntervalSince1970)
+
+        // Save model
+        Firestore.firestore()
+            .collection ("users")
+            .document(userId)
+            .collection("weekdays")
+            .document(selectedDay.weekDay())
+            .collection("items")
+            .document (item.id)
+            .setData(item.asDictionary())
+
+        newItemId = item.id
+    }
 }

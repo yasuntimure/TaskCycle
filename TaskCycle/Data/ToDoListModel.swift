@@ -8,42 +8,39 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-protocol ToDoListProtocol {
-    var id: String { get }
-    var title: String { get set }
-    var description: String { get set }
-    var items: [ToDoListItemModel] { get set }
-    var date: TimeInterval { get set }
+typealias Week = [WeekDay]
+
+struct WeekDay: Hashable, Codable, Identifiable {
+    var id: UUID = .init()
+    var date: Date
+    var isSelected: Bool = false
+    var items: [ToDoListItemModel] = []
+
+    func weekDay() -> String {
+        return date.format("MM-dd-yyyy")
+    }
+
 }
 
-struct ToDoListModel: ToDoListProtocol, Hashable, Codable, Identifiable {
-    var id: String
-    var title: String
-    var description: String
-    var items: [ToDoListItemModel]
+struct WeekDayJSON: Hashable, Codable, Identifiable {
+    var id: String = .init()
     var date: TimeInterval
+    var isSelected: Bool = false
+    var items: [ToDoListItemModel] = []
 }
 
-class ToDoList: ObservableObject {
+class WeekDayViewModel: ObservableObject {
 
     @Published var id: String = ""
-    @Published var title: String = ""
-    @Published var description: String = ""
-    @Published var items: [ToDoListItemModel] = []
     @Published var date: Date = Date()
+    @Published var items: [ToDoListItemModel] = []
 
-    func getStructModel() -> ToDoListModel {
-        ToDoListModel(id: UUID().uuidString,
-                      title: self.title,
-                      description: self.description,
-                      items: self.items,
-                      date: self.date.timeIntervalSince1970)
+    func getWeekDay() -> WeekDay {
+        WeekDay(date: self.date, items: self.items)
     }
 
     func reset() {
         self.id = ""
-        self.title = ""
-        self.description = ""
         self.items = []
         self.date = Date()
     }

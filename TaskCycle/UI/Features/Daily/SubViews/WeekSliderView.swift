@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
+struct WeekSliderView: View {
 
-    @ObservedObject var viewModel: VM
+    @EnvironmentObject var viewModel: DailyViewModel
 
     var body: some View {
         TabView(selection: $viewModel.weekIndex) {
@@ -30,7 +30,7 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
 
     /// Week View
     @ViewBuilder
-    func WeekView(_ week: Date.Week) -> some View {
+    func WeekView(_ week: Week) -> some View {
         HStack(spacing: 10) {
             ForEach(week) { day in
                 WeekColumn(date: day.date, isSelected: viewModel.isSelected(day))
@@ -38,7 +38,10 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
                     .onTapGesture {
                         /// Updating Selected Day
                         withAnimation {
-                            viewModel.selectedDate = day.date
+                            hideKeyboard()
+                            viewModel.isEditing = false
+                            viewModel.selectedDay = day
+                            viewModel.fetchItems()
                             print(day.date)
                         }
                     }
@@ -53,8 +56,10 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
                         .onPreferenceChange(OffsetKey.self) { value in
                             /// When the Offset reaches 15 and if the createWeek is toggled then simply generating next set of week
                             if value.rounded() == 15 && viewModel.createWeek {
-                                viewModel.paginateWeek()
-                                viewModel.createWeek = false
+                                withAnimation {
+                                    viewModel.paginateWeek()
+                                    viewModel.createWeek = false
+                                }
                             }
                         }
                 }
@@ -110,6 +115,6 @@ struct WeekSliderView<VM>: View where VM: WeekSliderViewModelProtocol {
 
 struct WeekSliderView_Previews: PreviewProvider {
     static var previews: some View {
-        WeekSliderView(viewModel: WeekSliderViewModel())
+        WeekSliderView()
     }
 }

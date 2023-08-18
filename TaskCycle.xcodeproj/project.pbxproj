@@ -15,9 +15,7 @@
 		D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D81A2A843570005E534C /* DailyViewModel.swift */; };
 		D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83A2A85A17C005E534C /* CustomDateView.swift */; };
 		D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83C2A85A396005E534C /* WeekSliderView.swift */; };
-		D098D8432A85B6F6005E534C /* WeekSliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8422A85B6F6005E534C /* WeekSliderViewModel.swift */; };
 		D098D8492A85E3BD005E534C /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8462A85E3BD005E534C /* ToDoListView.swift */; };
-		D098D84A2A85E3BD005E534C /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8472A85E3BD005E534C /* ToDoListViewModel.swift */; };
 		D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */; };
 		D0B3B0C72A8A938C001B14D1 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */; };
 		D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */; };
@@ -70,9 +68,7 @@
 		D098D81A2A843570005E534C /* DailyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewModel.swift; sourceTree = "<group>"; };
 		D098D83A2A85A17C005E534C /* CustomDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
 		D098D83C2A85A396005E534C /* WeekSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderView.swift; sourceTree = "<group>"; };
-		D098D8422A85B6F6005E534C /* WeekSliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderViewModel.swift; sourceTree = "<group>"; };
 		D098D8462A85E3BD005E534C /* ToDoListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
-		D098D8472A85E3BD005E534C /* ToDoListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
 		D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithButton.swift; sourceTree = "<group>"; };
 		D0C996902A86C4D80085481B /* ToDoListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListRow.swift; sourceTree = "<group>"; };
 		D0C996922A86D74B0085481B /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
@@ -128,25 +124,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D098D8442A85B724005E534C /* WeekSlider */ = {
-			isa = PBXGroup;
-			children = (
-				D098D83C2A85A396005E534C /* WeekSliderView.swift */,
-				D098D8422A85B6F6005E534C /* WeekSliderViewModel.swift */,
-			);
-			path = WeekSlider;
-			sourceTree = "<group>";
-		};
-		D098D8452A85E3BD005E534C /* ToDoList */ = {
-			isa = PBXGroup;
-			children = (
-				D098D8462A85E3BD005E534C /* ToDoListView.swift */,
-				D098D8472A85E3BD005E534C /* ToDoListViewModel.swift */,
-				D0C996902A86C4D80085481B /* ToDoListRow.swift */,
-			);
-			path = ToDoList;
-			sourceTree = "<group>";
-		};
 		D0C996942A886FE30085481B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,7 +187,6 @@
 				D036B4C32A8AF590007F121C /* MainView.swift */,
 				D0267DF52A8F09490079F90E /* MainViewModel.swift */,
 				D0C996942A886FE30085481B /* Settings */,
-				D098D8452A85E3BD005E534C /* ToDoList */,
 				D0ED2EEF2A80332600828887 /* Daily */,
 				D0ED2ECE2A802C4600828887 /* Register */,
 				D0ED2EC12A802BE900828887 /* Login */,
@@ -317,7 +293,6 @@
 		D0ED2EEF2A80332600828887 /* Daily */ = {
 			isa = PBXGroup;
 			children = (
-				D098D8442A85B724005E534C /* WeekSlider */,
 				D0ED2EF02A80332E00828887 /* SubViews */,
 				D0ED2EED2A80330D00828887 /* DailyView.swift */,
 				D098D81A2A843570005E534C /* DailyViewModel.swift */,
@@ -328,6 +303,9 @@
 		D0ED2EF02A80332E00828887 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				D098D8462A85E3BD005E534C /* ToDoListView.swift */,
+				D0C996902A86C4D80085481B /* ToDoListRow.swift */,
+				D098D83C2A85A396005E534C /* WeekSliderView.swift */,
 				D098D83A2A85A17C005E534C /* CustomDateView.swift */,
 				D0ED2EFD2A81B20000828887 /* ProfileImage.swift */,
 			);
@@ -429,7 +407,6 @@
 				D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */,
 				D0ED2ECD2A802C1200828887 /* ScreenSize.swift in Sources */,
 				D0ED2EEE2A80330D00828887 /* DailyView.swift in Sources */,
-				D098D8432A85B6F6005E534C /* WeekSliderViewModel.swift in Sources */,
 				D0C996982A8870750085481B /* SettingsViewModel.swift in Sources */,
 				D0ED2EBE2A802BA700828887 /* GradientView.swift in Sources */,
 				D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */,
@@ -456,7 +433,6 @@
 				D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */,
 				D0ED2ED52A802C4600828887 /* RegisterView.swift in Sources */,
 				D0ED2EF42A816A9A00828887 /* Task.swift in Sources */,
-				D098D84A2A85E3BD005E534C /* ToDoListViewModel.swift in Sources */,
 				D0ED2EBB2A802BA700828887 /* PrimaryButton.swift in Sources */,
 				D0ED2EBA2A802BA700828887 /* HeaderView.swift in Sources */,
 				D0267DF62A8F09490079F90E /* MainViewModel.swift in Sources */,

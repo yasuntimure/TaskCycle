@@ -23,39 +23,16 @@ struct ToDoListItemModel: ToDoListItemProtocol, Hashable, Codable, Identifiable 
     var date: TimeInterval
     var isDone: Bool = false
 
-    mutating func set(_ status: Bool) {
-        isDone = status
+    mutating func set(title: String) {
+        self.title = title
+    }
+
+    mutating func set(description: String) {
+        self.description = description
+    }
+
+    mutating func set(isDone: Bool) {
+        self.isDone = isDone
     }
 }
 
-class ToDoListItem: ObservableObject {
-
-    @Published var id: String = ""
-    @Published var title: String = ""
-    @Published var description: String = ""
-    @Published var date: Date = Date()
-    @Published var isDone: Bool = false
-    @Published var isPresented: Bool = false
-
-
-    func getStructModel() -> ToDoListItemModel {
-        ToDoListItemModel(id: UUID().uuidString,
-                          title: self.title,
-                          description: self.description,
-                          date: self.date.timeIntervalSince1970,
-                          isDone: self.isDone)
-    }
-
-    func reset() {
-        self.id = ""
-        self.title = ""
-        self.description = ""
-        self.date = Date()
-        self.isDone = false
-    }
-
-    func canSave() -> Bool {
-        !title.trimmingCharacters(in: .whitespaces).isEmpty
-    }
-
-}
