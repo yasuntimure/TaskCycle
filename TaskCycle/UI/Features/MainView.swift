@@ -9,29 +9,30 @@ import SwiftUI
 
 struct MainView: View {
 
-    @StateObject var loginViewModel = LoginViewModel()
+    @StateObject var viewModel = MainViewModel()
 
     var body: some View {
         NavigationView {
-            if !loginViewModel.userId.isEmpty {
+            if viewModel.userId.isEmpty {
+                LoginView(viewModel: LoginViewModel())
+            } else {
                 TabView {
-                    DailyView(viewModel: DailyViewModel(userId: loginViewModel.userId))
+                    DailyView(viewModel: DailyViewModel(userId: viewModel.userId))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .tabItem {
                             Label("Daily", systemImage: "calendar")
                                 .foregroundColor(.primary)
                         }
-                    EmptyView()
+                    RegisterView()
                         .tabItem {
                             Label("Notes", systemImage: "note.text")
                                 .foregroundColor(.primary)
                         }
                 }
 
-            } else {
-                LoginView(viewModel: loginViewModel)
             }
         }
+        .environmentObject(viewModel)
     }
 }
 

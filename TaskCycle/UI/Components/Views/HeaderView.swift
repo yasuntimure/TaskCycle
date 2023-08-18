@@ -12,7 +12,6 @@ struct HeaderView: View {
     @Environment (\.colorScheme) var colorScheme: ColorScheme
 
     var body: some View {
-
         VStack (alignment: .leading, spacing: 30) {
             HStack (spacing: 5) {
                 Text("Task")

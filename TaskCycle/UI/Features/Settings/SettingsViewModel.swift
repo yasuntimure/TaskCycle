@@ -16,15 +16,6 @@ class SettingsViewModel: ObservableObject {
     @Published var joinDate: String = "22.07.2023"
     @Published var userId: String = ""
 
-    func logout(completion: @escaping () -> Void) {
-        do {
-            try Auth.auth().signOut()
-        } catch let signOutError as NSError {
-            showAlert = true
-            errorMessage = signOutError.description
-        }
-
-        completion()
-    }
+    
 
 }

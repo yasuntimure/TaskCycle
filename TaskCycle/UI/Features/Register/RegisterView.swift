@@ -47,9 +47,30 @@ struct RegisterView: View {
                     viewModel.register { dismiss() }
                 }
                 .padding(.top, ScreenSize.width/15)
-                .padding(.bottom, ScreenSize.width/2)
-                
-                Spacer()
+
+                HStack (spacing: 12) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(height: 1.5)
+                        .foregroundColor(.secondary)
+                        .opacity(0.5)
+                        .padding(.leading, 30)
+                    Text("with")
+                        .font(.system(size: 16)).bold()
+                        .foregroundColor(.secondary)
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(height: 1.5)
+                        .foregroundColor(.secondary)
+                        .opacity(0.5)
+                        .padding(.trailing, 30)
+                }
+                .padding([.top, .bottom], ScreenSize.width/20)
+
+                // Sign In with Google
+                SignInWithButton(signInType: .google) {
+                    viewModel.signUpWithGoogle { dismiss() }
+                }
+                .shadow(radius: 2)
+                .padding([.bottom], ScreenSize.width/3)
 
             }
             .alert(isPresented: $viewModel.showAlert) {

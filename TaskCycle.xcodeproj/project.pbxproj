@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0267DF62A8F09490079F90E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0267DF52A8F09490079F90E /* MainViewModel.swift */; };
 		D036B4C02A8AE92E007F121C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */; };
 		D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C12A8AF128007F121C /* AppDelegate.swift */; };
 		D036B4C42A8AF590007F121C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C32A8AF590007F121C /* MainView.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D0267DF52A8F09490079F90E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D036B4C12A8AF128007F121C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D036B4C32A8AF590007F121C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -71,7 +73,6 @@
 		D098D8422A85B6F6005E534C /* WeekSliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderViewModel.swift; sourceTree = "<group>"; };
 		D098D8462A85E3BD005E534C /* ToDoListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
 		D098D8472A85E3BD005E534C /* ToDoListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
-		D0B3B0CC2A8A94F6001B14D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithButton.swift; sourceTree = "<group>"; };
 		D0C996902A86C4D80085481B /* ToDoListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListRow.swift; sourceTree = "<group>"; };
 		D0C996922A86D74B0085481B /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
@@ -175,7 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */,
-				D0B3B0CC2A8A94F6001B14D1 /* Info.plist */,
 				D0ED2EA22A802AE300828887 /* App */,
 				D0ED2EE42A802D7800828887 /* Data */,
 				D0ED2EAD2A802B9B00828887 /* UI */,
@@ -208,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				D036B4C32A8AF590007F121C /* MainView.swift */,
+				D0267DF52A8F09490079F90E /* MainViewModel.swift */,
 				D0C996942A886FE30085481B /* Settings */,
 				D098D8452A85E3BD005E534C /* ToDoList */,
 				D0ED2EEF2A80332600828887 /* Daily */,
@@ -458,6 +459,7 @@
 				D098D84A2A85E3BD005E534C /* ToDoListViewModel.swift in Sources */,
 				D0ED2EBB2A802BA700828887 /* PrimaryButton.swift in Sources */,
 				D0ED2EBA2A802BA700828887 /* HeaderView.swift in Sources */,
+				D0267DF62A8F09490079F90E /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import Combine
+import GoogleSignIn
 
 class RegisterViewModel: ObservableObject {
 
@@ -59,32 +60,85 @@ class RegisterViewModel: ObservableObject {
            return
         }
 
-        Auth.auth().createUser(withEmail: inputs.email.text, password: inputs.password.text) { [weak self] result, error in
-            guard let userId = result?.user.uid, error == nil else {
-                self?.errorMessage = error?.localizedDescription ?? "Could not create a new account!"
-                self?.showAlert = true
-                return
-            }
-            
-            self?.insertUserId(userId)
+        let name = self.inputs.name.text
+        let email = self.inputs.email.text
+        let password = self.inputs.password.text
+
+        self.createUser(withEmail: email, password: password) { [weak self] userId in
+            let newUser = UserModel (
+                id: userId,
+                name: name,
+                email: email,
+                password: password,
+                joinDate: Date().timeIntervalSince1970
+            )
+
+            self?.insertUserToFirestore(newUser)
             completion()
         }
     }
 
-    func insertUserId(_ userId: String) {
-        let newUser = UserModel (
-            id: userId,
-            name: inputs.name.text,
-            email: inputs.email.text,
-            password: inputs.password.text,
-            joinDate: Date().timeIntervalSince1970
-        )
+    func signUpWithGoogle(completion: @escaping () -> Void) {
 
-        let database = Firestore.firestore()
+        // Create Google Sign In configuration object.
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
 
-        database.collection("users")
-            .document(userId)
-            .setData(newUser.asDictionary())
+        // Prepare presenting viewController
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScenes = scenes.first as? UIWindowScene
+        let window = windowScenes?.windows.first
+        guard let rootViewController = window?.rootViewController else { return }
+
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] signInResult, error in
+            if let error = error {
+                self?.showAlert(message: "\(error.localizedDescription)")
+            }
+
+            guard let user = signInResult?.user else { return }
+
+            guard let name = user.profile?.givenName,
+                    let email = user.profile?.email,
+                    let password = user.userID else {
+                self?.showAlert(message: "An error occured while fetching data from google!")
+                return
+            }
+
+            self?.createUser(withEmail: email, password: password) { [weak self] userId in
+                let newUser = UserModel (
+                    id: userId,
+                    name: name,
+                    email: email,
+                    password: password,
+                    joinDate: Date().timeIntervalSince1970
+                )
+
+                self?.insertUserToFirestore(newUser)
+                completion()
+            }
+        }
+    }
+
+    private func createUser(withEmail: String, password: String, completion: @escaping (String) -> Void) {
+        Auth.auth().createUser(withEmail: withEmail, password: password) { [weak self] result, error in
+            guard let userId = result?.user.uid, error == nil else {
+                self?.showAlert(message: error?.localizedDescription ?? "Could not create a new account!")
+                return
+            }
+            completion(userId)
+        }
+    }
+
+    private func insertUserToFirestore(_ user: UserModel) {
+        Firestore.firestore().collection("users")
+            .document(user.id)
+            .setData(user.asDictionary())
+    }
+
+    private func showAlert(message: String) {
+        errorMessage = message
+        showAlert = true
     }
 }
 

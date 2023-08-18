@@ -10,7 +10,7 @@ import PhotosUI
 
 struct SettingsView: View {
 
-    @StateObject var viewModel = SettingsViewModel()
+    @EnvironmentObject var viewModel: MainViewModel
 
     var body: some View {
 
@@ -25,16 +25,14 @@ struct SettingsView: View {
                     .styleSettingRow()
 
                 HStack {
-                    Text("Joined:")
+                    Text("Email:")
                         .bold()
-                    Text(viewModel.joinDate)
+                    Text(viewModel.userEmail)
                 }
                 .styleSettingRow()
 
                 SecondaryButton(title: "Logout") {
-                    viewModel.logout {
-                        viewModel.userId = ""
-                    }
+                    viewModel.logout()
                 }
                 .padding(.top)
 
@@ -45,7 +43,6 @@ struct SettingsView: View {
                 Alert(title: Text(viewModel.errorMessage))
             }
             .navigationTitle("Settings")
-            
         }
     }
 

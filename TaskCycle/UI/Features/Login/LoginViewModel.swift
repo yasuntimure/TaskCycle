@@ -15,15 +15,12 @@ import Combine
 protocol LoginViewModelProtocol: ObservableObject {
     var email: InputField { get set }
     var password: InputField { get set }
-    var userId: String { get set }
-    var userName: String { get set }
-    var isLoggedIn: Bool { get set }
     var showAlert: Bool { get set }
     var errorMessage: String { get set }
     var isRegisterPresented: Bool { get set }
-    func signInDefault()
+    func login()
     func signInWithGoogle()
-    func signIn(_ type: SignInType?)
+    func signIn(withEmail: String, password: String)
 }
 
 class LoginViewModel: LoginViewModelProtocol {
@@ -33,17 +30,12 @@ class LoginViewModel: LoginViewModelProtocol {
     @Published var email: InputField = InputField(placeholder: "Enter Email", text: "", validation: Validation.none)
     @Published var password: InputField = InputField(placeholder: "Enter Password", text: "", validation: Validation.none)
 
-    @Published var userId: String = ""
-    @Published var userName: String = ""
-    @Published var isLoggedIn: Bool = false
-
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
     @Published var isRegisterPresented = false
 
     init() {
-        checkPreviousSignIn()
         $email
             .dropFirst(4)
             .sink { email in
@@ -60,73 +52,59 @@ class LoginViewModel: LoginViewModelProtocol {
                 }
         }.store(in: &subscription)
     }
-    
-    func signIn(_ type: SignInType? = nil) {
-        switch type {
-        case .apple: return
-        case .google:
-            signInWithGoogle()
-        case .none:
-            signInDefault()
-        }
-    }
 
-    internal func signInDefault() {
+    func login() {
         validateEmail()
         validatePassword()
-        guard email.validation == .email(.approved) && password.validation == .password(.approved) else { return }
-        Auth.auth().signIn(withEmail: email.text, password: password.text) { [weak self] result, error in
-
-            guard let userId = result?.user.uid, error == nil else {
-                print("Error: \(error!.localizedDescription)")
-                self?.errorMessage = error?.localizedDescription ?? "Could not create a new account!"
-                self?.showAlert = true
-                return
-            }
-            self?.userId = userId
+        guard email.validation == .email(.approved) && password.validation == .password(.approved) else {
+            self.showAlert(message: "Email or Password not approved!")
+            return
         }
+        signIn(withEmail: email.text, password: password.text)
     }
 
-    func checkPreviousSignIn() {
-        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-            if let error = error {
-                self.errorMessage = "error: \(error.localizedDescription)"
-            }
-
-            guard let userId = user?.userID else { return }
-            self.userId = userId
-        }
-    }
-
-    internal func signInWithGoogle() {
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-
+    func signInWithGoogle() {
         // Create Google Sign In configuration object.
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
-
         GIDSignIn.sharedInstance.configuration = config
 
+        // Prepare presenting viewController
         let scenes = UIApplication.shared.connectedScenes
         let windowScenes = scenes.first as? UIWindowScene
         let window = windowScenes?.windows.first
         guard let rootViewController = window?.rootViewController else { return }
 
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { signInResult, error in
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] signInResult, error in
             if let error = error {
-                self.errorMessage = "error: \(error.localizedDescription)"
-                self.showAlert = true
+                self?.showAlert(message: "\(error.localizedDescription)")
             }
 
-            guard let userId = signInResult?.user.userID else { return }
-            self.userId = userId
-        
+            guard let email = signInResult?.user.profile?.email,
+                    let password = signInResult?.user.userID else {
+                self?.showAlert(message: "An error occured while fetching data from google!")
+                return
+            }
+
+            self?.signIn(withEmail: email, password: password)
         }
     }
 
-    func signOut(){
-        GIDSignIn.sharedInstance.signOut()
+    internal func signIn(withEmail: String, password: String) {
+        Auth.auth().signIn(withEmail: withEmail, password: password) { [weak self] result, error in
+            guard let user = result?.user, error == nil else {
+                self?.showAlert(message: error?.localizedDescription ?? "Could not create a new account!")
+                return
+            }
+            let email = user.displayName ?? "user"
+            print("Success: \(email) logged in")
+        }
     }
 
+    private func showAlert(message: String) {
+        errorMessage = message
+        showAlert = true
+    }
 }
 
 

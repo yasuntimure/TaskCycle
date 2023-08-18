@@ -49,7 +49,7 @@ struct LoginView<VM>: View where VM: LoginViewModelProtocol {
                     .focused($focusedField, equals: .password)
 
                 PrimaryButton(title: "Login") {
-                    viewModel.signIn(nil)
+                    viewModel.login()
                 }
                 .padding(.top, ScreenSize.width/12)
                 .shadow(radius: 2)
