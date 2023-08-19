@@ -23,7 +23,7 @@ struct MainView: View {
                             Label("Daily", systemImage: "calendar")
                                 .foregroundColor(.primary)
                         }
-                    NotesView()
+                    NotesView(viewModel: NotesViewModel(userId: viewModel.userId))
                         .tabItem {
                             Label("Notes", systemImage: "note.text")
                                 .foregroundColor(.primary)

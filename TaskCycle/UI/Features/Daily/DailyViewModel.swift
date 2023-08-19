@@ -17,8 +17,8 @@ class DailyViewModel: ObservableObject {
     @Published var createWeek: Bool = false
 
     /// To Do List Properties
-    @Published var items: [ToDoListItemModel] = []
-    @Published var selectedItem: ToDoListItemModel? = nil
+    @Published var items: [ToDoItemModel] = []
+    @Published var selectedItem: ToDoItemModel? = nil
     @Published var newItemId: String = ""
 
     @Published var showAlert: Bool = false
@@ -93,7 +93,7 @@ extension DailyViewModel {
             .collection("users")
             .document(userId)
             .collection("weekdays")
-            .document(selectedDay.weekDay())
+            .document(selectedDay.formatedDate())
             .collection("items")
             .getDocuments { [weak self] (querySnapshot, err) in
             if let err = err {
@@ -109,7 +109,7 @@ extension DailyViewModel {
 
                 for document in documents {
                     let result = Result {
-                        try document.data(as: ToDoListItemModel.self)
+                        try document.data(as: ToDoItemModel.self)
                     }
                     switch result {
                     case .success(let item):
@@ -134,7 +134,7 @@ extension DailyViewModel {
                 .collection("users")
                 .document(userId)
                 .collection("weekdays")
-                .document(selectedDay.weekDay())
+                .document(selectedDay.formatedDate())
                 .collection("items")
                 .document(items[index].id)
                 .delete { err in
@@ -152,12 +152,12 @@ extension DailyViewModel {
         items.move(fromOffsets: indexSet, toOffset: newIndex)
     }
 
-    func update(item: ToDoListItemModel) {
+    func update(item: ToDoItemModel) {
         Firestore.firestore()
             .collection("users")
             .document(userId)
             .collection("weekdays")
-            .document(selectedDay.weekDay())
+            .document(selectedDay.formatedDate())
             .collection("items")
             .document(item.id)
             .updateData(["title": item.title,
@@ -180,7 +180,7 @@ extension DailyViewModel {
     }
 
     func addNewItem() {
-        let item = ToDoListItemModel(id: UUID().uuidString,
+        let item = ToDoItemModel(id: UUID().uuidString,
                                      title: "",
                                      description: "",
                                      date: Date().timeIntervalSince1970)
@@ -190,7 +190,7 @@ extension DailyViewModel {
             .collection ("users")
             .document(userId)
             .collection("weekdays")
-            .document(selectedDay.weekDay())
+            .document(selectedDay.formatedDate())
             .collection("items")
             .document (item.id)
             .setData(item.asDictionary())

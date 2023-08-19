@@ -27,7 +27,7 @@ struct DailyView: View {
                         .frame(height: 100)
                         .padding(.horizontal, 15)
                     
-                    ToDoListView()
+                    DailyTaskView()
                 }
                 .hSpacing(.leading)
                 .background(.white)

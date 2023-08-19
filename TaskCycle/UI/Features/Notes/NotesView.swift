@@ -9,22 +9,50 @@ import SwiftUI
 
 struct NotesView: View {
 
-    @State var settingsViewPresented: Bool = false
+    @ObservedObject var viewModel: NotesViewModel
 
     var body: some View {
         NavigationView {
-            VStack {
-                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) { EditButton() }
-                        ToolbarItem(placement: .navigationBarTrailing) { settingsViewNavigation }
+            ZStack {
+                List {
+                    ForEach ($viewModel.notes) { $note in
+                        NoteRow(note: $note)
                     }
-                    .sheet(isPresented: $settingsViewPresented) {
-                        SettingsView()
-                            .presentationDetents([.fraction(0.45)])
-                    }
+                    .onDelete(perform: viewModel.deleteItems(at:))
+                    .onMove(perform: viewModel.moveItems(from:to:))
+                }
+                .background(.clear)
+                .refreshable { viewModel.fetchNotes() }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) { EditButton() }
+                    ToolbarItem(placement: .navigationBarTrailing) { settingsViewNavigation }
+                }
+                .listStyle(.plain)
+                .navigationTitle("Notes")
+                .sheet(isPresented: $viewModel.newNotePresented) {
+                    NewNoteView()
+                        .presentationDetents([.fraction(0.45)])
+
+                }
+                .sheet(isPresented: $viewModel.settingsPresented) {
+                    SettingsView()
+                        .presentationDetents([.fraction(0.45)])
+                }
+
+                PlusButton(size: 25) {
+                    viewModel.newNotePresented = true
+                }
+                .vSpacing(.bottom).hSpacing(.trailing)
+                .padding([.trailing,.bottom], 20)
+
+            }
+            .sheet(isPresented: $viewModel.settingsPresented) {
+                SettingsView()
+                    .presentationDetents([.fraction(0.45)])
             }
         }
+        .environmentObject(viewModel)
+
     }
 }
 
@@ -38,7 +66,7 @@ extension NotesView {
             .foregroundColor(.primary)
             .frame(width: 25, height: 25)
             .onTapGesture {
-//                viewModel.settingsViewPresented = true
+                viewModel.settingsPresented = true
             }
 
     }
@@ -47,6 +75,6 @@ extension NotesView {
 
 struct NotesView_Previews: PreviewProvider {
     static var previews: some View {
-        NotesView()
+        NotesView(viewModel: NotesViewModel(userId: " " ))
     }
 }

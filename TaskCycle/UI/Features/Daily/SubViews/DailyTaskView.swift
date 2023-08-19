@@ -1,5 +1,5 @@
 //
-//  ToDoListView.swift
+//  DailyTaskView.swift
 //  ToDoList
 //
 //  Created by Eyüp on 2023-07-10.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ToDoListView: View {
+struct DailyTaskView: View {
 
     @EnvironmentObject var viewModel: DailyViewModel
 
@@ -16,7 +16,7 @@ struct ToDoListView: View {
             ScrollView (.vertical, showsIndicators: false) {
                 LazyVStack {
                     ForEach ($viewModel.items) { $todoItem in
-                        ToDoListRow(isNew: todoItem.id == viewModel.newItemId,
+                        DailyTaskRow(isNew: todoItem.id == viewModel.newItemId,
                                     item: $todoItem)
                     }
                 }
@@ -40,9 +40,9 @@ struct ToDoListView: View {
     }
 }
 
-struct ToDoListView_Previews: PreviewProvider {
+struct DailyTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        ToDoListView()
+        DailyTaskView()
             .environmentObject(DailyViewModel(userId: ""))
     }
 }

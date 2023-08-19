@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ToDoListRow: View {
+struct DailyTaskRow: View {
 
     private enum FocusFields {
         case title, description
@@ -18,7 +18,7 @@ struct ToDoListRow: View {
     @FocusState private var focusState: FocusFields?
 
     @State var isNew: Bool
-    @Binding var item: ToDoListItemModel
+    @Binding var item: ToDoItemModel
 
     var body: some View {
         HStack {
@@ -61,9 +61,9 @@ struct ToDoListRow: View {
 
 }
 
-struct EditItemView_Previews: PreviewProvider {
+struct DailyTaskRow_Previews: PreviewProvider {
 
-    static let item = ToDoListItemModel(
+    static let item = ToDoItemModel(
         id: "",
         title: "Drink Water",
         description: "Remember to drink 3l water everyday .cornerRadius(15)  .cornerRadius(15) .cornerRadius(15)  .cornerRadius(15) .cornerRadius(15) ",
@@ -71,6 +71,6 @@ struct EditItemView_Previews: PreviewProvider {
     )
 
     static var previews: some View {
-        ToDoListRow(isNew: true, item: .constant(item))
+        DailyTaskRow(isNew: true, item: .constant(item))
     }
 }

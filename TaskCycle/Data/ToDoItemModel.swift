@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-protocol ToDoListItemProtocol {
+protocol ToDoItemProtocol {
     var id: String { get }
     var title: String { get set }
     var description: String { get set }
@@ -16,7 +16,7 @@ protocol ToDoListItemProtocol {
     var isDone: Bool { get set }
 }
 
-struct ToDoListItemModel: ToDoListItemProtocol, Hashable, Codable, Identifiable {
+struct ToDoItemModel: ToDoItemProtocol, Hashable, Codable, Identifiable {
     var id: String
     var title: String
     var description: String
