@@ -23,7 +23,6 @@ class DailyViewModel: ObservableObject {
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
-    @Published var isLoading: Bool = false
 
     @Published var userId: String
 
@@ -86,9 +85,6 @@ extension DailyViewModel {
 extension DailyViewModel {
 
     func fetchItems() {
-
-        isLoading = true
-
         Firestore.firestore()
             .collection("users")
             .document(userId)
@@ -118,14 +114,23 @@ extension DailyViewModel {
                         print("Error decoding item: \(error)")
                     }
                 }
+
+                if let items = self?.items, items.isEmpty {
+                    self?.addNewItem()
+                    self?.fetchItems()
+                }
+
                 self?.reorder()
-                self?.isLoading = false
             }
         }
     }
 
     func reorder() {
-        items.sort(by: { !$0.isDone && $1.isDone })
+        if items.contains(where: { $0.title.isEmpty }) {
+            items.sort(by: { ($0.title.isEmpty && !$1.title.isEmpty) || (!$0.isDone && $1.isDone) })
+        } else {
+            items.sort(by: { !$0.isDone && $1.isDone })
+        }
     }
 
     func deleteItems(at indexSet: IndexSet) {

@@ -16,8 +16,7 @@ struct DailyTaskView: View {
             ScrollView (.vertical, showsIndicators: false) {
                 LazyVStack {
                     ForEach ($viewModel.items) { $todoItem in
-                        DailyTaskRow(isNew: todoItem.id == viewModel.newItemId,
-                                    item: $todoItem)
+                        DailyTaskRow(item: $todoItem)
                     }
                 }
             }

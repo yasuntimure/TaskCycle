@@ -17,7 +17,6 @@ struct DailyTaskRow: View {
 
     @FocusState private var focusState: FocusFields?
 
-    @State var isNew: Bool
     @Binding var item: ToDoItemModel
 
     var body: some View {
@@ -25,7 +24,7 @@ struct DailyTaskRow: View {
             ToggleButton(state: $item.isDone)
                 .frame(width: 30, height: 30)
 
-            TextField("Title", text: $item.title)
+            TextField("Write something . . .", text: $item.title)
                 .font(.headline)
                 .strikethrough(item.isDone)
                 .focused($focusState, equals: .title)
@@ -38,13 +37,12 @@ struct DailyTaskRow: View {
         .padding(.horizontal)
         .padding(.top, 5)
         .onChange(of: item) { newItem in
-            isNew = false
             withAnimation {
                 viewModel.update(item: newItem)
             }
         }
         .onAppear {
-            focusState = isNew ? .title : nil
+            focusState = item.title.isEmpty ? .title : nil
         }
     }
     
@@ -71,6 +69,6 @@ struct DailyTaskRow_Previews: PreviewProvider {
     )
 
     static var previews: some View {
-        DailyTaskRow(isNew: true, item: .constant(item))
+        DailyTaskRow(item: .constant(item))
     }
 }
