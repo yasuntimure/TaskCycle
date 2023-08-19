@@ -23,13 +23,12 @@ struct MainView: View {
                             Label("Daily", systemImage: "calendar")
                                 .foregroundColor(.primary)
                         }
-                    RegisterView()
+                    NotesView()
                         .tabItem {
                             Label("Notes", systemImage: "note.text")
                                 .foregroundColor(.primary)
                         }
                 }
-
             }
         }
         .environmentObject(viewModel)

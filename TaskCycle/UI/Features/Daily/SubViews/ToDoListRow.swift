@@ -29,10 +29,7 @@ struct ToDoListRow: View {
                 .font(.headline)
                 .strikethrough(item.isDone)
                 .focused($focusState, equals: .title)
-                .onSubmit {
-                    viewModel.isEditing = false
-                    withAnimation { hideKeyboard() }
-                }
+                .onSubmit { withAnimation { hideKeyboard() } }
         }
         .padding()
         .background(Color.backgroundColor)

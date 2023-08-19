@@ -12,49 +12,38 @@ struct ToDoListView: View {
     @EnvironmentObject var viewModel: DailyViewModel
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                if viewModel.isLoading {
-                    LoadingView()
-                        .frame(width: 50, height: 50, alignment: .center)
-                }
-
-                ScrollView {
-                    LazyVStack {
-                        ForEach ($viewModel.items) { $todoItem in
-                            ToDoListRow(isNew: todoItem.id == viewModel.newItemId,
-                                        item: $todoItem)
-                            .onTapGesture {
-                                viewModel.isEditing = true
-                                viewModel.newItemId = ""
-                            }
-                        }
+        ZStack(alignment: .top) {
+            ScrollView (.vertical, showsIndicators: false) {
+                LazyVStack {
+                    ForEach ($viewModel.items) { $todoItem in
+                        ToDoListRow(isNew: todoItem.id == viewModel.newItemId,
+                                    item: $todoItem)
                     }
-                }
-                .refreshable {
-                    viewModel.fetchItems()
-                }
-                .listStyle(.plain)
-
-
-                if !viewModel.isEditing {
-                    PlusButton(size: 25) {
-                        viewModel.newItemId = ""
-                        viewModel.addNewItem()
-                        viewModel.fetchItems()
-                        viewModel.isEditing = true
-                    }
-                    .vSpacing(.bottom).hSpacing(.trailing)
-                    .padding([.trailing,.bottom], 20)
                 }
             }
+            .refreshable {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    viewModel.fetchItems()
+                }
+            }
+
+
+            PlusButton(size: 25) {
+                viewModel.newItemId = ""
+                viewModel.addNewItem()
+                viewModel.fetchItems()
+            }
+            .vSpacing(.bottom).hSpacing(.trailing)
+            .padding([.trailing,.bottom], 20)
         }
+
     }
 }
 
 struct ToDoListView_Previews: PreviewProvider {
     static var previews: some View {
         ToDoListView()
+            .environmentObject(DailyViewModel(userId: ""))
     }
 }
 

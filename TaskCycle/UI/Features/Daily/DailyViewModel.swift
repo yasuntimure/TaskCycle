@@ -19,13 +19,11 @@ class DailyViewModel: ObservableObject {
     /// To Do List Properties
     @Published var items: [ToDoListItemModel] = []
     @Published var selectedItem: ToDoListItemModel? = nil
-    @Published var isEditing: Bool = false
     @Published var newItemId: String = ""
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
     @Published var isLoading: Bool = false
-    @Published var settingsViewPresented = false
 
     @Published var userId: String
 
@@ -91,8 +89,6 @@ extension DailyViewModel {
 
         isLoading = true
 
-        items = []
-
         Firestore.firestore()
             .collection("users")
             .document(userId)
@@ -101,15 +97,15 @@ extension DailyViewModel {
             .collection("items")
             .getDocuments { [weak self] (querySnapshot, err) in
             if let err = err {
-
                 print("Error getting documents: \(err)")
-
             } else {
 
                 guard let documents = querySnapshot?.documents else {
                     print("Documents couldnt casted")
                     return
                 }
+
+                self?.items.removeAll()
 
                 for document in documents {
                     let result = Result {

@@ -39,9 +39,10 @@ struct WeekSliderView: View {
                         /// Updating Selected Day
                         withAnimation {
                             hideKeyboard()
-                            viewModel.isEditing = false
                             viewModel.selectedDay = day
-                            viewModel.fetchItems()
+                            DispatchQueue.main.async {
+                                viewModel.fetchItems()
+                            }
                             print(day.date)
                         }
                     }
