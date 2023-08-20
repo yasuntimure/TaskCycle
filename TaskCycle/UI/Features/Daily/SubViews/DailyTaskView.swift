@@ -42,7 +42,7 @@ struct DailyTaskView: View {
 struct DailyTaskView_Previews: PreviewProvider {
     static var previews: some View {
         DailyTaskView()
-            .environmentObject(DailyViewModel(userId: ""))
+            .environmentObject(DailyViewModel(userId: "5JK0lwRArPULkWLO6Xf9DPxdo073"))
     }
 }
 

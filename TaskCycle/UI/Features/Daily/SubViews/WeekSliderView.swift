@@ -117,5 +117,6 @@ struct WeekSliderView: View {
 struct WeekSliderView_Previews: PreviewProvider {
     static var previews: some View {
         WeekSliderView()
+            .environmentObject(DailyViewModel(userId: "5JK0lwRArPULkWLO6Xf9DPxdo073"))
     }
 }

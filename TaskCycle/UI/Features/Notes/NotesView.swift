@@ -75,6 +75,6 @@ extension NotesView {
 
 struct NotesView_Previews: PreviewProvider {
     static var previews: some View {
-        NotesView(viewModel: NotesViewModel(userId: " " ))
+        NotesView(viewModel: NotesViewModel(userId: " "))
     }
 }

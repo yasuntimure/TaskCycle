@@ -20,6 +20,8 @@ class NotesViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
+    @Published var noteType: NoteType = .empty
+
     init(userId: String) {
         self.userId = userId
         self.fetchNotes()

@@ -1,5 +1,5 @@
 //
-//  EditItemView.swift
+//  DailyTaskRow.swift
 //  TaskCycle
 //
 //  Created by Eyüp on 2023-08-11.
@@ -70,5 +70,6 @@ struct DailyTaskRow_Previews: PreviewProvider {
 
     static var previews: some View {
         DailyTaskRow(item: .constant(item))
+            .environmentObject(DailyViewModel(userId: "5JK0lwRArPULkWLO6Xf9DPxdo073"))
     }
 }

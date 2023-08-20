@@ -24,6 +24,8 @@
 		D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83A2A85A17C005E534C /* CustomDateView.swift */; };
 		D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83C2A85A396005E534C /* WeekSliderView.swift */; };
 		D098D8492A85E3BD005E534C /* DailyTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8462A85E3BD005E534C /* DailyTaskView.swift */; };
+		D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A94FCD2A91AB9E00656814 /* IconView.swift */; };
+		D0A94FD12A91B12F00656814 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = D0A94FD02A91B12F00656814 /* EmojiPicker */; };
 		D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */; };
 		D0B3B0C72A8A938C001B14D1 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */; };
 		D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */; };
@@ -84,6 +86,7 @@
 		D098D83A2A85A17C005E534C /* CustomDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
 		D098D83C2A85A396005E534C /* WeekSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderView.swift; sourceTree = "<group>"; };
 		D098D8462A85E3BD005E534C /* DailyTaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyTaskView.swift; sourceTree = "<group>"; };
+		D0A94FCD2A91AB9E00656814 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithButton.swift; sourceTree = "<group>"; };
 		D0C996902A86C4D80085481B /* DailyTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTaskRow.swift; sourceTree = "<group>"; };
 		D0C996922A86D74B0085481B /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
@@ -130,6 +133,7 @@
 				D0B3B0C72A8A938C001B14D1 /* GoogleSignInSwift in Frameworks */,
 				D0DA8BA82A7D80DE00458284 /* FirebaseAuth in Frameworks */,
 				D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */,
+				D0A94FD12A91B12F00656814 /* EmojiPicker in Frameworks */,
 				D0DA8BAA2A7D80DE00458284 /* FirebaseFirestore in Frameworks */,
 				D0DA8BAC2A7D80DE00458284 /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -162,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				D0267E012A912F4E0079F90E /* NewNoteView.swift */,
+				D0A94FCD2A91AB9E00656814 /* IconView.swift */,
 				D0267DFC2A912D080079F90E /* NoteRow.swift */,
 			);
 			path = Subviews;
@@ -387,6 +392,7 @@
 				D0DA8BAB2A7D80DE00458284 /* FirebaseFirestoreSwift */,
 				D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */,
 				D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */,
+				D0A94FD02A91B12F00656814 /* EmojiPicker */,
 			);
 			productName = TaskCycle;
 			productReference = D0DA8B932A7D7DAF00458284 /* TaskCycle.app */;
@@ -419,6 +425,7 @@
 			packageReferences = (
 				D0DA8BA62A7D80DE00458284 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D0B3B0C32A8A938C001B14D1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				D0A94FCF2A91B12F00656814 /* XCRemoteSwiftPackageReference "EmojiPicker" */,
 			);
 			productRefGroup = D0DA8B942A7D7DAF00458284 /* Products */;
 			projectDirPath = "";
@@ -462,6 +469,7 @@
 				D0ED2EFC2A81AA2500828887 /* DateExtension.swift in Sources */,
 				D0ED2EF62A81A2D600828887 /* ColorExtension.swift in Sources */,
 				D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */,
+				D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */,
 				D0ED2ECD2A802C1200828887 /* ScreenSize.swift in Sources */,
 				D0ED2EEE2A80330D00828887 /* DailyView.swift in Sources */,
 				D0C996982A8870750085481B /* SettingsViewModel.swift in Sources */,
@@ -700,6 +708,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D0A94FCF2A91B12F00656814 /* XCRemoteSwiftPackageReference "EmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kelvas09/EmojiPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		D0B3B0C32A8A938C001B14D1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -719,6 +735,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D0A94FD02A91B12F00656814 /* EmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0A94FCF2A91B12F00656814 /* XCRemoteSwiftPackageReference "EmojiPicker" */;
+			productName = EmojiPicker;
+		};
 		D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0B3B0C32A8A938C001B14D1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
