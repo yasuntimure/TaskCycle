@@ -6,9 +6,8 @@
 //
 
 import Foundation
-
-import Foundation
 import FirebaseFirestoreSwift
+import EmojiPicker
 
 protocol NoteProtocol {
     var id: String { get }
@@ -24,6 +23,7 @@ struct NoteModel: NoteProtocol, Hashable, Codable, Identifiable {
     var description: String
     var items: [ToDoItemModel]
     var date: TimeInterval
+    var emoji: String?
 }
 
 class Note: ObservableObject {
@@ -33,13 +33,15 @@ class Note: ObservableObject {
     @Published var description: String = ""
     @Published var items: [ToDoItemModel] = []
     @Published var date: Date = Date()
+    @Published var emoji: Emoji?
 
     func getStructModel() -> NoteModel {
         NoteModel(id: UUID().uuidString,
                   title: self.title,
                   description: self.description,
                   items: self.items,
-                  date: self.date.timeIntervalSince1970)
+                  date: self.date.timeIntervalSince1970,
+                  emoji: self.emoji?.value)
     }
 
     func reset() {
@@ -48,5 +50,6 @@ class Note: ObservableObject {
         self.description = ""
         self.items = []
         self.date = Date()
+        self.emoji = nil
     }
 }

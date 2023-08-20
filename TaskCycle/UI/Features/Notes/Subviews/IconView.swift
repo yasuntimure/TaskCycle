@@ -3,7 +3,7 @@ import EmojiPicker
 
 struct IconView: View {
 
-    @State var selectedEmoji: Emoji?
+    @Binding var selectedEmoji: Emoji?
     @State var displayEmojiPicker: Bool = false
 
     var body: some View {
@@ -46,11 +46,11 @@ struct IconView: View {
     }
 }
 
-struct IconView_Previews: PreviewProvider {
-    static var previews: some View {
-        IconView()
-    }
-}
+//struct IconView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        IconView(selectedEmoji: .constant(<#T##value: Emoji?##Emoji?#>))
+//    }
+//}
 
 
 

@@ -26,7 +26,7 @@ struct NewNoteView: View {
 
                 VStack (spacing: 15) {
                     HStack (spacing: 10) {
-                        IconView()
+                        IconView(selectedEmoji: $viewModel.newNote.emoji)
 
                         TextField("Title", text: $viewModel.newNote.title)
                             .autocorrectionDisabled()

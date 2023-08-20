@@ -13,10 +13,15 @@ struct NoteRow: View {
 
     var body: some View {
         HStack {
-            Image(systemName: "doc.text")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 40, height: 40)
+            if let emoji = note.emoji {
+                Text(emoji)
+                    .font(.largeTitle)
+            } else {
+                Image(systemName: "doc.text")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+            }
 
             VStack (alignment: .leading, spacing: 5) {
                 Text(note.title)
