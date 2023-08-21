@@ -12,6 +12,7 @@ class NotesViewModel: ObservableObject {
 
     @Published var userId: String
     @Published var newNotePresented: Bool = false
+    @Published var noteViewPresented: Bool = false
     @Published var settingsPresented: Bool = false
 
     @Published var notes: [NoteModel] = []
@@ -19,8 +20,6 @@ class NotesViewModel: ObservableObject {
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
-
-    @Published var noteType: NoteType = .empty
 
     init(userId: String) {
         self.userId = userId
@@ -94,7 +93,8 @@ class NotesViewModel: ObservableObject {
                              title: "Quick Note",
                              description: "Complete your quick to do list!",
                              items: [],
-                             date: Date().timeIntervalSince1970)
+                             date: Date().timeIntervalSince1970,
+                             noteType: NoteType.empty.rawValue)
 
         // Save model
         Firestore.firestore()

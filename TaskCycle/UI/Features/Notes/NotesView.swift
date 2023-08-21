@@ -13,63 +13,109 @@ struct NotesView: View {
 
     var body: some View {
         NavigationView {
-            ZStack {
-                List {
-                    ForEach ($viewModel.notes) { $note in
-                        NoteRow(note: $note)
-                    }
-                    .onDelete(perform: viewModel.deleteItems(at:))
-                    .onMove(perform: viewModel.moveItems(from:to:))
-                }
-                .background(.clear)
-                .refreshable { viewModel.fetchNotes() }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) { EditButton() }
-                    ToolbarItem(placement: .navigationBarTrailing) { settingsViewNavigation }
-                }
-                .listStyle(.plain)
-                .navigationTitle("Notes")
-                .sheet(isPresented: $viewModel.newNotePresented) {
-                    NewNoteView()
-                        .presentationDetents([.fraction(0.45)])
+            VStack {
+                HeaderView()
 
+                ZStack {
+                    List {
+                        NoteNavigationRow()
+                    }
+                    .listStyle(.plain)
+                    .background(.clear)
+                    .refreshable {
+                        viewModel.fetchNotes()
+                    }
+                    .sheet(isPresented: $viewModel.newNotePresented) {
+                        NewNoteView()
+                            .presentationDetents([.fraction(0.45)])
+
+                    }
+                    .sheet(isPresented: $viewModel.settingsPresented) {
+                        SettingsView()
+                            .presentationDetents([.fraction(0.45)])
+                    }
+
+                    CustomEditButton()
+
+                    PlusButton(size: 25) {
+                        viewModel.newNotePresented = true
+                    }
+                    .vSpacing(.bottom).hSpacing(.trailing)
+                    .padding([.trailing,.bottom], 20)
                 }
                 .sheet(isPresented: $viewModel.settingsPresented) {
                     SettingsView()
                         .presentationDetents([.fraction(0.45)])
                 }
-
-                PlusButton(size: 25) {
-                    viewModel.newNotePresented = true
-                }
-                .vSpacing(.bottom).hSpacing(.trailing)
-                .padding([.trailing,.bottom], 20)
-
-            }
-            .sheet(isPresented: $viewModel.settingsPresented) {
-                SettingsView()
-                    .presentationDetents([.fraction(0.45)])
             }
         }
         .environmentObject(viewModel)
+    }
 
+    @ViewBuilder
+    private func HeaderView() -> some View {
+        VStack {
+            HStack {
+                // Title
+                Text("Notes")
+                    .font(.title.bold())
+                    .hSpacing(.leading)
+                    .foregroundColor(.mTintColor)
+
+                // Settings Button
+                Image(systemName: "gearshape")
+                    .resizable()
+                    .foregroundColor(.secondary)
+                    .frame(width: 28, height: 28)
+                    .onTapGesture {
+                        viewModel.settingsPresented = true
+                    }
+            }
+            .padding([.top, .horizontal])
+
+            Rectangle()
+                .frame(width: ScreenSize.width, height: 2)
+                .foregroundColor(.backgroundColor)
+        }
+    }
+
+    @ViewBuilder
+    private func NoteNavigationRow() -> some View {
+        ForEach ($viewModel.notes) { $note in
+            NavigationLink {
+                NoteView(type: note.type())
+            } label: {
+                NoteRow(note: $note)
+            }
+            .padding(.vertical, -5)
+        }
+        .onDelete(perform: viewModel.deleteItems(at:))
+        .onMove(perform: viewModel.moveItems(from:to:))
+        .listSectionSeparator(.hidden)
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
     }
 }
 
-// MARK: - Settings View Navigation
+// MARK: - Toolbar
 
 extension NotesView {
 
-    var settingsViewNavigation: some View {
-        Image(systemName: "gear")
-            .resizable()
-            .foregroundColor(.primary)
-            .frame(width: 25, height: 25)
-            .onTapGesture {
-                viewModel.settingsPresented = true
-            }
-
+    @ViewBuilder
+    private func CustomEditButton() -> some View {
+        ZStack {
+            Image(systemName: "slider.horizontal.3")
+                .resizable()
+                .foregroundColor(.secondary)
+                .frame(width: 28, height: 28)
+            EditButton()
+                .foregroundColor(.clear)
+        }
+        .hSpacing(.leading)
+        .vSpacing(.bottom)
+        .padding([.leading,.bottom], 28)
     }
+
 }
 
 

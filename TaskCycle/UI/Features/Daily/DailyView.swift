@@ -13,32 +13,76 @@ struct DailyView: View {
 
     var body: some View {
         NavigationView {
-            VStack (alignment: .leading, spacing: 0) {
+            ZStack {
                 VStack (alignment: .leading, spacing: 6) {
-                    CustomDateView()
-                        .hSpacing(.topLeading)
-                        .overlay(alignment: .topTrailing) { ProfileImage() }
-                        .padding(.horizontal, 15)
-                    
-                    /// Week Slider
-                    WeekSliderView()
-                        .padding(.horizontal, -15)
-                        .tabViewStyle(.page(indexDisplayMode: .never))
-                        .frame(height: 100)
-                        .padding(.horizontal, 15)
-                    
-                    DailyTaskView()
+                    HeaderView()
+                        .onTapGesture {
+                            hideKeyboard()
+                        }
+
+                    SliderView()
+
+                    List {
+                        ListRow()
+                    }
+                    .listStyle(.plain)
+                    .refreshable {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            viewModel.fetchItems()
+                        }
+                    }
                 }
                 .hSpacing(.leading)
                 .background(.white)
                 .vSpacing(.top)
+
+                PlusButton(size: 25) {
+                    viewModel.newItemId = ""
+                    viewModel.addNewItem()
+                    viewModel.fetchItems()
+                }
+                .vSpacing(.bottom).hSpacing(.trailing)
+                .padding([.trailing,.bottom], 20)
             }
-            .background(Color.backgroundColor)
-        }
-        .onTapGesture {
-            hideKeyboard()
         }
         .environmentObject(viewModel)
+    }
+
+    @ViewBuilder
+    private func HeaderView() -> some View {
+        CustomDateView()
+            .hSpacing(.topLeading)
+            .overlay(alignment: .topTrailing) { ProfileImage() }
+            .padding(.horizontal)
+            .padding(.top)
+    }
+
+    @ViewBuilder
+    private func SliderView() -> some View {
+        WeekSliderView()
+            .padding(.horizontal, -15)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .frame(height: 100)
+            .padding(.horizontal, 15)
+    }
+
+    @ViewBuilder
+    private func ListRow() -> some View {
+        ForEach ($viewModel.items) { $item in
+            ToDoRow(item: $item)
+                .padding(.vertical, -5)
+                .hSpacing(.leading)
+                .onChange(of: item) { newItem in
+                    withAnimation {
+                        viewModel.update(item: newItem)
+                    }
+                }
+        }
+        .onDelete(perform: viewModel.deleteItems(at:))
+        .onMove(perform: viewModel.moveItems(from:to:))
+        .listSectionSeparator(.hidden)
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
     }
 }
 
@@ -48,3 +92,4 @@ struct DailyView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
     }
 }
+

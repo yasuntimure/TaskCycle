@@ -21,12 +21,14 @@ struct MainView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .tabItem {
                             Label("Daily", systemImage: "calendar")
-                                .foregroundColor(.primary)
+                                .foregroundColor(.mTintColor)
+                                .tint(.mTintColor)
                         }
                     NotesView(viewModel: NotesViewModel(userId: viewModel.userId))
                         .tabItem {
                             Label("Notes", systemImage: "note.text")
-                                .foregroundColor(.primary)
+                                .tint(.mTintColor)
+                                .foregroundColor(.mTintColor)
                         }
                 }
             }

@@ -15,6 +15,8 @@ protocol NoteProtocol {
     var description: String { get set }
     var items: [ToDoItemModel] { get set }
     var date: TimeInterval { get set }
+    var emoji: String? { get set }
+    var noteType: String { get set }
 }
 
 struct NoteModel: NoteProtocol, Hashable, Codable, Identifiable {
@@ -24,6 +26,15 @@ struct NoteModel: NoteProtocol, Hashable, Codable, Identifiable {
     var items: [ToDoItemModel]
     var date: TimeInterval
     var emoji: String?
+    var noteType: String
+
+    func type() -> NoteType {
+        NoteType(rawValue: noteType) ?? NoteType.empty
+    }
+}
+
+enum NoteType: String {
+    case empty, todo, board
 }
 
 class Note: ObservableObject {
@@ -34,6 +45,7 @@ class Note: ObservableObject {
     @Published var items: [ToDoItemModel] = []
     @Published var date: Date = Date()
     @Published var emoji: Emoji?
+    @Published var type: NoteType = .empty
 
     func getStructModel() -> NoteModel {
         NoteModel(id: UUID().uuidString,
@@ -41,7 +53,8 @@ class Note: ObservableObject {
                   description: self.description,
                   items: self.items,
                   date: self.date.timeIntervalSince1970,
-                  emoji: self.emoji?.value)
+                  emoji: self.emoji?.value,
+                  noteType: self.type.rawValue)
     }
 
     func reset() {

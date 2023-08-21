@@ -50,7 +50,7 @@ struct NewNoteView: View {
                         .cornerRadius(20)
                         .shadow(radius: 1)
 
-                    NoteTypeView(type: $viewModel.noteType)
+                    NoteTypeView(type: $viewModel.newNote.type)
                         .padding(.top)
 
                 }
@@ -58,6 +58,7 @@ struct NewNoteView: View {
                 PrimaryButton(title: "Save") {
                     viewModel.saveNewNote()
                     viewModel.fetchNotes()
+                    viewModel.noteViewPresented = true
                     dismiss()
                 }
                 .frame(width: ScreenSize.width)
@@ -79,10 +80,6 @@ struct NewNoteView: View {
 
 }
 
-enum NoteType {
-    case empty, toDo, board
-}
-
 struct NoteTypeView: View {
 
     @Binding var type: NoteType
@@ -90,7 +87,7 @@ struct NoteTypeView: View {
     var body: some View {
         HStack (spacing: 10) {
             TypeButton("Default", isSelected: (type == .empty)) { type = .empty }
-            TypeButton("To Do", isSelected: (type == .toDo)) { type = .toDo }
+            TypeButton("To Do", isSelected: (type == .todo)) { type = .todo }
             TypeButton("Board", isSelected: (type == .board)) { type = .board }
         }
 

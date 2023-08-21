@@ -98,6 +98,27 @@ struct LoginView<VM>: View where VM: LoginViewModelProtocol {
             }
         }
     }
+
+
+    @ViewBuilder
+    private func HeaderView() -> some View {
+        VStack (alignment: .leading, spacing: 30) {
+            HStack (spacing: 5) {
+                Text("Task")
+                    .font(.system(size: 52)).bold()
+                    .foregroundColor(.gray)
+
+                Text("/")
+                    .font(.system(size: 32)).bold()
+                    .foregroundColor(.black)
+
+                Text("Cycle")
+                    .font(.system(size: 52)).bold()
+                    .foregroundColor(.mTintColor)
+            }
+        }
+        .hSpacing(.leading).padding(.leading, 30)
+    }
 }
 
 struct LoginView_Previews: PreviewProvider {
