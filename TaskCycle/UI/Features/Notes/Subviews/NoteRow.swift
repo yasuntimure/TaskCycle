@@ -16,12 +16,16 @@ struct NoteRow: View {
             if let emoji = note.emoji {
                 Text(emoji)
                     .font(.largeTitle)
+                    .vSpacing(.top)
+                    .padding(.top, 15)
             } else {
                 Image(systemName: "doc.text")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
                     .foregroundColor(Color.mTintColor)
+                    .vSpacing(.top)
+                    .padding(.top, 15)
             }
 
             VStack (alignment: .leading, spacing: 5) {
@@ -37,7 +41,8 @@ struct NoteRow: View {
             }
             .padding(.leading, 5)
         }
-        .padding()
+        .padding(.horizontal)
+        .padding(.vertical, 5)
         .hSpacing(.leading)
         .background(Color.backgroundColor)
         .cornerRadius(20)

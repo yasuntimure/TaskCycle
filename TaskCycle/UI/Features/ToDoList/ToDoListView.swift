@@ -80,6 +80,6 @@
 //
 //struct ToDoListView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ToDoListView(viewModel: ToDoListViewModel(userId: "5JK0lwRArPULkWLO6Xf9DPxdo073", list: ToDoListModel(id: "", title: "", description: "", items: [], date: Date().timeIntervalSince1970)))
+//        ToDoListView(viewModel: ToDoListViewModel(userId: Mock.userId, list: ToDoListModel(id: "", title: "", description: "", items: [], date: Date().timeIntervalSince1970)))
 //    }
 //}

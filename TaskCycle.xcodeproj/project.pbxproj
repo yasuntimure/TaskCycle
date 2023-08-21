@@ -31,6 +31,9 @@
 		D0B3B0C72A8A938C001B14D1 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */; };
 		D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */; };
 		D0C5F71F2A9272B100D5CE44 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F71E2A9272B100D5CE44 /* NoteView.swift */; };
+		D0C5F7212A93C94A00D5CE44 /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F7202A93C94A00D5CE44 /* NoteViewModel.swift */; };
+		D0C5F7242A93CA4500D5CE44 /* EmptyNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F7232A93CA4500D5CE44 /* EmptyNoteViewModel.swift */; };
+		D0C5F7262A93CB6700D5CE44 /* EmptyNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F7252A93CB6700D5CE44 /* EmptyNoteBuilder.swift */; };
 		D0C996912A86C4D80085481B /* ToDoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996902A86C4D80085481B /* ToDoRow.swift */; };
 		D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996922A86D74B0085481B /* KeyboardButton.swift */; };
 		D0C996962A886FF20085481B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996952A886FF20085481B /* SettingsView.swift */; };
@@ -91,6 +94,9 @@
 		D0A94FD62A91BA0000656814 /* BoardNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteView.swift; sourceTree = "<group>"; };
 		D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithButton.swift; sourceTree = "<group>"; };
 		D0C5F71E2A9272B100D5CE44 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		D0C5F7202A93C94A00D5CE44 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
+		D0C5F7232A93CA4500D5CE44 /* EmptyNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNoteViewModel.swift; sourceTree = "<group>"; };
+		D0C5F7252A93CB6700D5CE44 /* EmptyNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNoteBuilder.swift; sourceTree = "<group>"; };
 		D0C996902A86C4D80085481B /* ToDoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoRow.swift; sourceTree = "<group>"; };
 		D0C996922A86D74B0085481B /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
 		D0C996952A886FF20085481B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -186,11 +192,21 @@
 		D0C5F71D2A92729E00D5CE44 /* Note */ = {
 			isa = PBXGroup;
 			children = (
-				D0A94FD32A91B9EE00656814 /* EmptyNoteView.swift */,
 				D0A94FD62A91BA0000656814 /* BoardNoteView.swift */,
 				D0C5F71E2A9272B100D5CE44 /* NoteView.swift */,
+				D0C5F7202A93C94A00D5CE44 /* NoteViewModel.swift */,
 			);
 			path = Note;
+			sourceTree = "<group>";
+		};
+		D0C5F7222A93CA3300D5CE44 /* EmptyNote */ = {
+			isa = PBXGroup;
+			children = (
+				D0A94FD32A91B9EE00656814 /* EmptyNoteView.swift */,
+				D0C5F7232A93CA4500D5CE44 /* EmptyNoteViewModel.swift */,
+				D0C5F7252A93CB6700D5CE44 /* EmptyNoteBuilder.swift */,
+			);
+			path = EmptyNote;
 			sourceTree = "<group>";
 		};
 		D0C996942A886FE30085481B /* Settings */ = {
@@ -253,6 +269,7 @@
 		D0ED2EA32A802AED00828887 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				D0C5F7222A93CA3300D5CE44 /* EmptyNote */,
 				D0C5F71D2A92729E00D5CE44 /* Note */,
 				D0267E0D2A91343A0079F90E /* Main */,
 				D0267E052A9130DB0079F90E /* ToDoList */,
@@ -469,6 +486,7 @@
 				D0267E0A2A9130DB0079F90E /* ToDoListViewModel.swift in Sources */,
 				D0267E002A912DDB0079F90E /* NotesViewModel.swift in Sources */,
 				D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */,
+				D0C5F7242A93CA4500D5CE44 /* EmptyNoteViewModel.swift in Sources */,
 				D0ED2EBD2A802BA700828887 /* SecondaryButton.swift in Sources */,
 				D0ED2ED42A802C4600828887 /* RegisterViewModel.swift in Sources */,
 				D0ED2ECC2A802C1200828887 /* StatefulPreviewWrapper.swift in Sources */,
@@ -493,6 +511,7 @@
 				D0C996962A886FF20085481B /* SettingsView.swift in Sources */,
 				D0C996912A86C4D80085481B /* ToDoRow.swift in Sources */,
 				D0ED2EFE2A81B20000828887 /* ProfileImage.swift in Sources */,
+				D0C5F7212A93C94A00D5CE44 /* NoteViewModel.swift in Sources */,
 				D0267E042A91300C0079F90E /* Note.swift in Sources */,
 				D0ED2EE82A802D7800828887 /* Week.swift in Sources */,
 				D0ED2EC82A802BE900828887 /* LoginView.swift in Sources */,
@@ -506,6 +525,7 @@
 				D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */,
 				D0267DF92A9073EA0079F90E /* NotesView.swift in Sources */,
 				D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */,
+				D0C5F7262A93CB6700D5CE44 /* EmptyNoteBuilder.swift in Sources */,
 				D0ED2EE32A802D4400828887 /* PreferenceKeyExtension.swift in Sources */,
 				D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */,
 				D0A94FD72A91BA0000656814 /* BoardNoteView.swift in Sources */,

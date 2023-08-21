@@ -24,3 +24,17 @@ struct TaskCycleApp: App {
     }
 }
 
+public class Mock {
+
+    static let userId = "5JK0lwRArPULkWLO6Xf9DPxdo073"
+
+    static let note = NoteModel(id: UUID().uuidString,
+                                title: "",
+                                description: "",
+                                items: [],
+                                date: Date().timeIntervalSince1970,
+                                noteType: NoteType.empty.rawValue)
+}
+
+
+

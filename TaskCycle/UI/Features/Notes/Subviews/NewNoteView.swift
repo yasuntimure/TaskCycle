@@ -106,6 +106,6 @@ struct NoteTypeView: View {
 struct NewListView_Previews: PreviewProvider {
     static var previews: some View {
         NewNoteView()
-            .environmentObject(NotesViewModel(userId: "5JK0lwRArPULkWLO6Xf9DPxdo073"))
+            .environmentObject(NotesViewModel(userId: Mock.userId))
     }
 }

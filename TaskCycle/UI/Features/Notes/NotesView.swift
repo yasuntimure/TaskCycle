@@ -7,16 +7,25 @@
 
 import SwiftUI
 
+enum NoteStack: Hashable {
+    case empty(note: NoteModel)
+    case todo
+    case board
+}
 struct NotesView: View {
 
     @ObservedObject var viewModel: NotesViewModel
 
+    @State var noteStack: [NoteStack] = []
+
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $noteStack) {
             VStack {
                 HeaderView()
 
                 ZStack {
+
+                    // List View
                     List {
                         NoteNavigationRow()
                     }
@@ -35,18 +44,38 @@ struct NotesView: View {
                             .presentationDetents([.fraction(0.45)])
                     }
 
+                    // Edit Button
                     CustomEditButton()
 
+
+                    // Add Button
                     PlusButton(size: 25) {
-                        viewModel.newNotePresented = true
+                        viewModel.saveEmptyNote { note in
+                            noteStack.append(.empty(note: note))
+                        }
                     }
                     .vSpacing(.bottom).hSpacing(.trailing)
                     .padding([.trailing,.bottom], 20)
                 }
             }
+            .navigationDestination(for: NoteStack.self) { value in
+                switch value {
+                case .empty(let note):
+                    EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
+                case .todo:
+                    Text("Todo")
+                case .board:
+                    Text("Board")
+                }
+            }
         }
         .environmentObject(viewModel)
     }
+}
+
+// MARK: - HeaderView
+
+extension NotesView {
 
     @ViewBuilder
     private func HeaderView() -> some View {
@@ -74,16 +103,20 @@ struct NotesView: View {
                 .foregroundColor(.backgroundColor)
         }
     }
+}
+
+// MARK: - NoteNavigationRow
+
+extension NotesView {
 
     @ViewBuilder
     private func NoteNavigationRow() -> some View {
         ForEach ($viewModel.notes) { $note in
             NavigationLink {
-                NoteView(type: note.type())
+                EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
             } label: {
                 NoteRow(note: $note)
             }
-            .padding(.vertical, -5)
         }
         .onDelete(perform: viewModel.deleteItems(at:))
         .onMove(perform: viewModel.moveItems(from:to:))
@@ -93,7 +126,7 @@ struct NotesView: View {
     }
 }
 
-// MARK: - Toolbar
+// MARK: - CustomEditButton
 
 extension NotesView {
 

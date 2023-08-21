@@ -11,16 +11,18 @@ struct NoteView: View {
 
     @State var type: NoteType
 
+    @StateObject var viewModel = NoteViewModel()
+
     var body: some View {
         ZStack {
-            switch type {
-            case .empty:
-                EmptyNoteView()
-            case .todo:
-                EmptyNoteView()
-            case .board:
+//            switch type {
+//            case .empty:
+//                EmptyNoteView()
+//            case .todo:
+//                EmptyNoteView()
+//            case .board:
                 BoardNoteView()
-            }
+//            }
         }
     }
 }

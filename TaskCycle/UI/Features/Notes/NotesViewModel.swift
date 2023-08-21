@@ -119,4 +119,23 @@ class NotesViewModel: ObservableObject {
         newNote.reset()
     }
 
+    func saveEmptyNote(completion: @escaping (NoteModel) -> Void) {
+        let note = NoteModel(id: UUID().uuidString,
+                                   title: "",
+                                   description: "",
+                                   items: [],
+                                   date: Date().timeIntervalSince1970,
+                                   noteType: NoteType.empty.rawValue)
+
+        // Save model
+        Firestore.firestore()
+            .collection("users")
+            .document(self.userId)
+            .collection("notes")
+            .document (note.id)
+            .setData(note.asDictionary())
+
+        completion(note)
+    }
+
 }

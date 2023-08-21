@@ -33,7 +33,7 @@ struct NoteModel: NoteProtocol, Hashable, Codable, Identifiable {
     }
 }
 
-enum NoteType: String {
+enum NoteType: String, Hashable {
     case empty, todo, board
 }
 
