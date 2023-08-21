@@ -13,6 +13,14 @@ class EmptyNoteViewModel: ObservableObject {
     @Published var userId: String
     @Published var note: NoteModel
 
+    var noteIsEmpty: Bool {
+        note.title.isEmpty && descriptionIsEmpty
+    }
+
+    var descriptionIsEmpty: Bool {
+        (note.description == EmptyNoteFields.description.rawValue || note.description.trimmingCharacters(in: .whitespaces).isEmpty)
+    }
+
     init(userId: String, note: NoteModel) {
         self.userId = userId
         self.note = note
@@ -47,6 +55,21 @@ class EmptyNoteViewModel: ObservableObject {
                     print("Error updating document: \(error)")
                 } else {
                     print("Note updated")
+                }
+            }
+    }
+
+    func deleteNote() {
+        Firestore.firestore()
+            .collection("users")
+            .document(userId)
+            .collection("notes")
+            .document(note.id)
+            .delete { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Note successfully removed!")
                 }
             }
     }

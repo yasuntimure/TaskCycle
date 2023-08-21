@@ -21,7 +21,7 @@ struct EmptyNoteView: View {
     @FocusState var focusState: EmptyNoteFields?
 
     var placeholderVisible: Bool {
-        viewModel.note.description == "Enter here..." && focusState != .description
+        viewModel.note.description == EmptyNoteFields.description.rawValue && focusState != .description
     }
 
     var body: some View {
@@ -48,7 +48,7 @@ struct EmptyNoteView: View {
                 }
                 .onSubmit {
                     if viewModel.note.description.isEmpty {
-                        viewModel.note.description = "Enter here..."
+                        viewModel.note.description = EmptyNoteFields.description.rawValue
                     }
                 }
         }
@@ -61,7 +61,15 @@ struct EmptyNoteView: View {
             focusState = viewModel.initialFocusState()
         }
         .onDisappear {
-            notesViewModel.fetchNotes()
+            if viewModel.noteIsEmpty {
+                viewModel.deleteNote()
+            } else if placeholderVisible {
+                viewModel.note.description = ""
+                viewModel.updateNote()
+                notesViewModel.fetchNotes()
+            } else {
+                notesViewModel.fetchNotes()
+            }
         }
     }
 
