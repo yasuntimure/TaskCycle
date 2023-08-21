@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct NoteRow: View {
-    
+
     @Binding var note: NoteModel
-    
+
     var body: some View {
         HStack {
             if let emoji = note.emoji {
@@ -23,19 +23,17 @@ struct NoteRow: View {
                     .frame(width: 40, height: 40)
                     .foregroundColor(Color.mTintColor)
             }
-            
+
             VStack (alignment: .leading, spacing: 5) {
                 Text(note.title)
                     .font(.headline)
-                
-                
+
                 if !note.description.isEmpty {
                     Text(note.description)
                         .font(.body)
                         .multilineTextAlignment(.leading)
                         .foregroundColor(.secondary)
                 }
-                
             }
             .padding(.leading, 5)
         }
@@ -57,7 +55,7 @@ struct NoteRow_Previews: PreviewProvider {
         date: Date().timeIntervalSince1970,
         noteType: NoteType.empty.rawValue
     )
-    
+
     static var previews: some View {
         NoteRow(note: .constant(todoItemWithDescription))
     }

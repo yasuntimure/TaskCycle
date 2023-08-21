@@ -27,7 +27,7 @@ struct NotesView: View {
                     }
                     .sheet(isPresented: $viewModel.newNotePresented) {
                         NewNoteView()
-                            .presentationDetents([.fraction(0.45)])
+                            .presentationDetents([.fraction(0.46)])
 
                     }
                     .sheet(isPresented: $viewModel.settingsPresented) {
@@ -42,10 +42,6 @@ struct NotesView: View {
                     }
                     .vSpacing(.bottom).hSpacing(.trailing)
                     .padding([.trailing,.bottom], 20)
-                }
-                .sheet(isPresented: $viewModel.settingsPresented) {
-                    SettingsView()
-                        .presentationDetents([.fraction(0.45)])
                 }
             }
         }

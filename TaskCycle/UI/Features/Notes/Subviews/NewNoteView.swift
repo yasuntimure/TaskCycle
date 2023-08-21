@@ -19,8 +19,8 @@ struct NewNoteView: View {
         NavigationView {
             VStack (spacing: 30)  {
                 Text("Add New Note")
+                    .foregroundColor(.secondary)
                     .font(.system(size: 30)).bold()
-                    .padding(.top, 35)
                     .shadow(radius: 1, x: 1, y: 1)
                     .hSpacing(.leading)
 
@@ -37,7 +37,6 @@ struct NewNoteView: View {
                             .background(Color.backgroundColor)
                             .cornerRadius(20)
                             .shadow(radius: 1)
-
                     }
 
                     TextField("Description", text: $viewModel.newNote.description)
@@ -63,10 +62,8 @@ struct NewNoteView: View {
                 }
                 .frame(width: ScreenSize.width)
                 .shadow(radius: 2)
-                .padding(.bottom, 20)
             }
             .padding(.horizontal)
-            .padding(.top)
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(title: Text(viewModel.errorMessage))
             }
@@ -74,10 +71,7 @@ struct NewNoteView: View {
                 titleFocused = true
             }
         }
-
     }
-
-
 }
 
 struct NoteTypeView: View {
