@@ -55,9 +55,7 @@ struct NewNoteView: View {
                 }
 
                 PrimaryButton(title: "Save") {
-                    viewModel.saveNewNote()
                     viewModel.fetchNotes()
-                    viewModel.noteViewPresented = true
                     dismiss()
                 }
                 .frame(width: ScreenSize.width)

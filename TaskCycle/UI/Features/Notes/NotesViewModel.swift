@@ -11,8 +11,6 @@ import FirebaseFirestore
 class NotesViewModel: ObservableObject {
 
     @Published var userId: String
-    @Published var newNotePresented: Bool = false
-    @Published var noteViewPresented: Bool = false
     @Published var settingsPresented: Bool = false
 
     @Published var notes: [NoteModel] = []
@@ -51,8 +49,8 @@ class NotesViewModel: ObservableObject {
                             try document.data(as: NoteModel.self)
                         }
                         switch result {
-                        case .success(let item):
-                            self?.notes.append(item)
+                        case .success(let note):
+                            self?.notes.append(note)
                         case .failure(let error):
                             print("Error decoding item: \(error)")
                         }
@@ -119,13 +117,13 @@ class NotesViewModel: ObservableObject {
         newNote.reset()
     }
 
-    func saveEmptyNote(completion: @escaping (NoteModel) -> Void) {
+    func saveNewNote(type: NoteType, completion: @escaping (NoteModel) -> Void) {
         let note = NoteModel(id: UUID().uuidString,
-                                   title: "",
-                                   description: "",
-                                   items: [],
-                                   date: Date().timeIntervalSince1970,
-                                   noteType: NoteType.empty.rawValue)
+                             title: "",
+                             description: "",
+                             items: [],
+                             date: Date().timeIntervalSince1970,
+                             noteType: type.rawValue)
 
         // Save model
         Firestore.firestore()

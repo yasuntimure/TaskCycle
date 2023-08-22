@@ -19,7 +19,7 @@ class DailyViewModel: ObservableObject {
     /// To Do List Properties
     @Published var items: [ToDoItemModel] = []
     @Published var selectedItem: ToDoItemModel? = nil
-    @Published var newItemId: String = ""
+//    @Published var newItemId: String = ""
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
@@ -175,11 +175,11 @@ extension DailyViewModel {
                 }
             }
 
-        // update local array
-        if let index = self.items.firstIndex(where: {$0.id == item.id}) {
-            self.items[index].set(title: item.title)
-            self.items[index].set(isDone: item.isDone)
-        }
+//        // update local array
+//        if let index = self.items.firstIndex(where: {$0.id == item.id}) {
+//            self.items[index].set(title: item.title)
+//            self.items[index].set(isDone: item.isDone)
+//        }
 
         self.reorder()
     }
@@ -199,7 +199,5 @@ extension DailyViewModel {
             .collection("items")
             .document (item.id)
             .setData(item.asDictionary())
-
-        newItemId = item.id
     }
 }

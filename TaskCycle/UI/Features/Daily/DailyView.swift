@@ -37,7 +37,6 @@ struct DailyView: View {
                 .vSpacing(.top)
 
                 PlusButton(size: 25) {
-                    viewModel.newItemId = ""
                     viewModel.addNewItem()
                     viewModel.fetchItems()
                 }

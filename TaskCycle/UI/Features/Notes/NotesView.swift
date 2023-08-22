@@ -9,7 +9,7 @@ import SwiftUI
 
 enum NoteStack: Hashable {
     case empty(note: NoteModel)
-    case todo
+    case todo(note: NoteModel)
     case board
 }
 struct NotesView: View {
@@ -34,11 +34,6 @@ struct NotesView: View {
                     .refreshable {
                         viewModel.fetchNotes()
                     }
-                    .sheet(isPresented: $viewModel.newNotePresented) {
-                        NewNoteView()
-                            .presentationDetents([.fraction(0.46)])
-
-                    }
                     .sheet(isPresented: $viewModel.settingsPresented) {
                         SettingsView()
                             .presentationDetents([.fraction(0.45)])
@@ -50,8 +45,8 @@ struct NotesView: View {
 
                     // Add Button
                     PlusButton(size: 25) {
-                        viewModel.saveEmptyNote { note in
-                            noteStack.append(.empty(note: note))
+                        viewModel.saveNewNote(type: .todo) { note in
+                            navigateToReleated(note)
                         }
                     }
                     .vSpacing(.bottom).hSpacing(.trailing)
@@ -62,14 +57,25 @@ struct NotesView: View {
                 switch value {
                 case .empty(let note):
                     EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
-                case .todo:
-                    Text("Todo")
+                case .todo(let note):
+                    ToDoNoteBuilder.make(userId: viewModel.userId, note: note)
                 case .board:
                     Text("Board")
                 }
             }
         }
         .environmentObject(viewModel)
+    }
+
+    func navigateToReleated(_ note: NoteModel) {
+        switch note.type() {
+        case .empty:
+            noteStack.append(.empty(note: note))
+        case .todo:
+            noteStack.append(.todo(note: note))
+        case .board:
+            noteStack.append(.todo(note: note))
+        }
     }
 }
 
@@ -113,7 +119,15 @@ extension NotesView {
     private func NoteNavigationRow() -> some View {
         ForEach ($viewModel.notes) { $note in
             NavigationLink {
-                EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
+                let userId = viewModel.userId
+                switch note.type() {
+                case .empty:
+                    EmptyNoteBuilder.make(userId: userId, note: note)
+                case .todo:
+                    ToDoNoteBuilder.make(userId: userId, note: note)
+                case .board:
+                    EmptyNoteBuilder.make(userId: userId, note: note)
+                }
             } label: {
                 NoteRow(note: $note)
             }
@@ -148,7 +162,8 @@ extension NotesView {
 }
 
 
-struct NotesView_Previews: PreviewProvider {
+struct
+NotesView_Previews: PreviewProvider {
     static var previews: some View {
         NotesView(viewModel: NotesViewModel(userId: " "))
     }

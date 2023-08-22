@@ -29,11 +29,16 @@ public class Mock {
     static let userId = "5JK0lwRArPULkWLO6Xf9DPxdo073"
 
     static let note = NoteModel(id: UUID().uuidString,
-                                title: "",
+                                title: "Mock Title",
                                 description: "",
-                                items: [],
+                                items: [item, item, item, item],
                                 date: Date().timeIntervalSince1970,
                                 noteType: NoteType.empty.rawValue)
+
+    static let item = ToDoItemModel(id: UUID().uuidString,
+                                    title: "Mock Item",
+                                    description: "Mock Description",
+                                    date: Date().timeIntervalSince1970)
 }
 
 

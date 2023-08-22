@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ToDoRow: View {
 
-    @FocusState private var focusState: Bool
-
     @Binding var item: ToDoItemModel
 
     var body: some View {
@@ -21,7 +19,6 @@ struct ToDoRow: View {
             TextField("Write something . . .", text: $item.title)
                 .font(.headline)
                 .strikethrough(item.isDone)
-                .focused($focusState)
                 .onSubmit { withAnimation { hideKeyboard() } }
         }
         .padding()
@@ -29,9 +26,6 @@ struct ToDoRow: View {
         .background(Color.backgroundColor)
         .cornerRadius(20)
         .shadow(radius: 2)
-        .onAppear {
-            focusState = item.title.isEmpty
-        }
     }
 
     @ViewBuilder
