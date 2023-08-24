@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class EmptyNoteBuilder {
+struct EmptyNoteBuilder {
 
     static func make(userId: String, note: NoteModel) -> some View {
         let viewModel = EmptyNoteViewModel(userId: userId, note: note)
