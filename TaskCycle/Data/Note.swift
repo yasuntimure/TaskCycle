@@ -33,12 +33,12 @@ struct NoteModel: NoteProtocol, Hashable, Codable, Identifiable {
     }
 }
 
-enum NoteType: String, Hashable {
+enum NoteType: String, Hashable, CaseIterable {
     case empty, todo, board
 
     var systemImage: String {
         switch self {
-        case .empty:  return "note.text"
+        case .empty:  return "doc.text"
         case .todo: return "checkmark.circle"
         case .board:  return "tablecells"
         }

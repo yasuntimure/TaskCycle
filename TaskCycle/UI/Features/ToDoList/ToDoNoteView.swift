@@ -45,7 +45,7 @@ struct ToDoNoteView: View {
             }
             .vSpacing(.top)
 
-            PlusButton(size: 25) {
+            PlusButton() {
                 viewModel.addNewItem()
             }
             .vSpacing(.bottom).hSpacing(.trailing)

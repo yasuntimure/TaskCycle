@@ -26,7 +26,7 @@ struct MainView: View {
                         }
                     NotesView(viewModel: NotesViewModel(userId: viewModel.userId))
                         .tabItem {
-                            Label("Notes", systemImage: "note.text")
+                            Label("Notes", systemImage: "list.clipboard")
                                 .tint(.mTintColor)
                                 .foregroundColor(.mTintColor)
                         }

@@ -38,8 +38,6 @@ struct NotesView: View {
 
                     // Add New Note Button
                     AddNewNoteButton()
-                        .vSpacing(.bottom).hSpacing(.trailing)
-                        .padding([.trailing,.bottom], 20)
                 }
             }
             .navigationDestination(for: NoteStack.self) { value in
@@ -139,37 +137,28 @@ extension NotesView {
     private func AddNewNoteButton() -> some View {
         VStack (spacing: 15) {
             if noteTypeSelectionMode {
-                NoteIconButton(.empty) {
-                    viewModel.saveNewNote(type: .empty) { note in
-                        navigateToReleated(note)
+                ForEach(NoteType.allCases, id:\.self) { type in
+                    NoteIconButton(type) {
+                        viewModel.saveNewNote(type: type) { note in
+                            navigateToReleated(note)
+                        }
+                        noteTypeSelectionMode = false
                     }
-                }
-                .padding(.top, 7)
-                NoteIconButton(.todo) {
-                    viewModel.saveNewNote(type: .todo) { note in
-                        navigateToReleated(note)
-                    }
-                }
-                NoteIconButton(.board) {
-                    viewModel.saveNewNote(type: .board) { note in
-                        navigateToReleated(note)
-                    }
+                    .padding(.top, type == NoteType.empty ? 10 : 0)
                 }
             }
 
-            PlusButton(size: 25) {
+            PlusButton() {
                 withAnimation {
                     noteTypeSelectionMode.toggle()
                 }
             }
         }
-        .padding(10)
+        .padding(3)
         .background(noteTypeSelectionMode ? Color.backgroundColor : .clear)
-        .overlay(
-            RoundedRectangle(cornerRadius: 50)
-                .stroke(Color.mTintColor, lineWidth: noteTypeSelectionMode ? 2 : 0)
-        )
         .cornerRadius(50)
+        .vSpacing(.bottom).hSpacing(.trailing)
+        .padding([.trailing,.bottom], 20)
     }
 
 

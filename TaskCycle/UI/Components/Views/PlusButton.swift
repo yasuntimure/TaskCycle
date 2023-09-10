@@ -11,7 +11,7 @@ struct PlusButton: View {
 
     @Environment (\.colorScheme) var color: ColorScheme
 
-    var size: CGFloat = 20
+    var size: CGFloat = 25
 
     @State var action: () -> Void
 
