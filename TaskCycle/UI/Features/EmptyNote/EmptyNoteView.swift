@@ -9,7 +9,7 @@ import SwiftUI
 
 enum EmptyNoteFields: String {
     case title
-    case description = "Enter here..."
+    case description
 }
 
 struct EmptyNoteView: View {
@@ -19,10 +19,6 @@ struct EmptyNoteView: View {
     @ObservedObject var viewModel: EmptyNoteViewModel
 
     @FocusState var focusState: EmptyNoteFields?
-
-    var placeholderVisible: Bool {
-        viewModel.note.description == EmptyNoteFields.description.rawValue && focusState != .description
-    }
 
     var body: some View {
         VStack (alignment: .leading) {
@@ -36,21 +32,11 @@ struct EmptyNoteView: View {
                     }
                 }
 
-            TextEditor(text: $viewModel.note.description)
+            TextField("Write something . . .", text: $viewModel.note.description, axis: .vertical)
+                .font(.title2)
                 .foregroundColor(.secondary)
-                .opacity(placeholderVisible ? 0.5 : 1)
-                .font(.title)
+                .onSubmit { withAnimation { hideKeyboard() } }
                 .focused($focusState, equals: .description)
-                .onTapGesture {
-                    if placeholderVisible {
-                        viewModel.note.description = ""
-                    }
-                }
-                .onSubmit {
-                    if viewModel.note.description.isEmpty {
-                        viewModel.note.description = EmptyNoteFields.description.rawValue
-                    }
-                }
         }
         .vSpacing(.topLeading)
         .padding()
@@ -61,12 +47,8 @@ struct EmptyNoteView: View {
             focusState = viewModel.initialFocusState()
         }
         .onDisappear {
-            if viewModel.noteIsEmpty {
+            if viewModel.uncompletedNote {
                 viewModel.deleteNote()
-            } else if placeholderVisible {
-                viewModel.note.description = ""
-                viewModel.updateNote()
-                notesViewModel.fetchNotes()
             } else {
                 notesViewModel.fetchNotes()
             }

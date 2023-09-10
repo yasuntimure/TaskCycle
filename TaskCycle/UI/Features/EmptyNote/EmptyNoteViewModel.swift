@@ -13,20 +13,17 @@ class EmptyNoteViewModel: ObservableObject {
     @Published var userId: String
     @Published var note: NoteModel
 
-    var noteIsEmpty: Bool {
+    var uncompletedNote: Bool {
         note.title.isEmpty && descriptionIsEmpty
     }
 
     var descriptionIsEmpty: Bool {
-        (note.description == EmptyNoteFields.description.rawValue || note.description.trimmingCharacters(in: .whitespaces).isEmpty)
+        (note.description.trimmingCharacters(in: .whitespaces).isEmpty)
     }
 
     init(userId: String, note: NoteModel) {
         self.userId = userId
         self.note = note
-        if note.description.isEmpty {
-            self.note.description = EmptyNoteFields.description.rawValue
-        }
     }
 
     func initialFocusState() -> EmptyNoteFields? {
@@ -34,8 +31,7 @@ class EmptyNoteViewModel: ObservableObject {
             return .title
         }
 
-        if !note.title.isEmpty && note.description == EmptyNoteFields.description.rawValue {
-            note.description = ""
+        if !note.title.isEmpty && note.description.isEmpty {
             return .description
         }
 
