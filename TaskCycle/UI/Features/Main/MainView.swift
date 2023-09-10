@@ -30,6 +30,12 @@ struct MainView: View {
                                 .tint(.mTintColor)
                                 .foregroundColor(.mTintColor)
                         }
+                    SettingsView()
+                        .tabItem {
+                            Label("Settings", systemImage: "gearshape")
+                                .tint(.mTintColor)
+                                .foregroundColor(.mTintColor)
+                        }
                 }
             }
         }
