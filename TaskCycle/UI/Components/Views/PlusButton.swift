@@ -19,14 +19,14 @@ struct PlusButton: View {
         Button(action: action) {
             ZStack (alignment: .center) {
                 Circle()
-                    .stroke(lineWidth: size/5)
+                    .stroke(lineWidth: size/6)
                     .foregroundColor(.mTintColor)
                     .frame(width: size * 2,
                            height: size * 2)
-                Circle()
-                    .foregroundColor(color == .light ? .white : .black)
-                    .frame(width: size * 1.9,
-                           height: size * 1.9)
+//                Circle()
+//                    .foregroundColor(color == .light ? .white : .black)
+//                    .frame(width: size * 1.9,
+//                           height: size * 1.9)
 
                 Rectangle()
                     .foregroundColor(.mTintColor)

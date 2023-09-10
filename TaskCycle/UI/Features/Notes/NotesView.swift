@@ -12,11 +12,12 @@ enum NoteStack: Hashable {
     case todo(note: NoteModel)
     case board
 }
+
 struct NotesView: View {
 
     @ObservedObject var viewModel: NotesViewModel
-
     @State var noteStack: [NoteStack] = []
+    @State var noteTypeSelectionMode: Bool = false
 
     var body: some View {
         NavigationStack(path: $noteStack) {
@@ -35,14 +36,10 @@ struct NotesView: View {
                         viewModel.fetchNotes()
                     }
 
-                    // Add Button
-                    PlusButton(size: 25) {
-                        viewModel.saveNewNote(type: .todo) { note in
-                            navigateToReleated(note)
-                        }
-                    }
-                    .vSpacing(.bottom).hSpacing(.trailing)
-                    .padding([.trailing,.bottom], 20)
+                    // Add New Note Button
+                    AddNewNoteButton()
+                        .vSpacing(.bottom).hSpacing(.trailing)
+                        .padding([.trailing,.bottom], 20)
                 }
             }
             .navigationDestination(for: NoteStack.self) { value in
@@ -136,6 +133,54 @@ extension NotesView {
         .listSectionSeparator(.hidden)
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
+    }
+
+    @ViewBuilder
+    private func AddNewNoteButton() -> some View {
+        VStack (spacing: 15) {
+            if noteTypeSelectionMode {
+                NoteIconButton(.empty) {
+                    viewModel.saveNewNote(type: .empty) { note in
+                        navigateToReleated(note)
+                    }
+                }
+                .padding(.top, 7)
+                NoteIconButton(.todo) {
+                    viewModel.saveNewNote(type: .todo) { note in
+                        navigateToReleated(note)
+                    }
+                }
+                NoteIconButton(.board) {
+                    viewModel.saveNewNote(type: .board) { note in
+                        navigateToReleated(note)
+                    }
+                }
+            }
+
+            PlusButton(size: 25) {
+                withAnimation {
+                    noteTypeSelectionMode.toggle()
+                }
+            }
+        }
+        .padding(10)
+        .background(noteTypeSelectionMode ? Color.backgroundColor : .clear)
+        .overlay(
+            RoundedRectangle(cornerRadius: 50)
+                .stroke(Color.mTintColor, lineWidth: noteTypeSelectionMode ? 2 : 0)
+        )
+        .cornerRadius(50)
+    }
+
+
+    @ViewBuilder
+    private func NoteIconButton(_ note: NoteType,
+                                action: @escaping ()->Void) -> some View {
+        Button(action: action, label: {
+            Image(systemName: note.systemImage)
+                .foregroundColor(.secondary)
+                .font(.largeTitle)
+        })
     }
 }
 
