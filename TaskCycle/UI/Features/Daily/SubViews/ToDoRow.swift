@@ -18,14 +18,13 @@ struct ToDoRow: View {
                 .frame(width: 30, height: 30)
                 .padding()
 
-            TextField("Write something . . .", text: $item.title)
+            TextField("Write something . . .", text: $item.title, axis: .vertical)
                 .font(.headline)
                 .strikethrough(item.isDone)
                 .onSubmit { withAnimation { hideKeyboard() } }
                 .focused($isFocused)
                 .padding([.vertical, .trailing])
         }
-        .frame(height: 60)
         .background(Color.backgroundColor)
         .cornerRadius(20)
         .onAppear {
