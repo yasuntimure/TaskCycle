@@ -12,11 +12,12 @@ enum NoteStack: Hashable {
     case todo(note: NoteModel)
     case board
 }
+
 struct NotesView: View {
 
     @ObservedObject var viewModel: NotesViewModel
-
     @State var noteStack: [NoteStack] = []
+    @State var noteTypeSelectionMode: Bool = false
 
     var body: some View {
         NavigationStack(path: $noteStack) {
@@ -34,23 +35,9 @@ struct NotesView: View {
                     .refreshable {
                         viewModel.fetchNotes()
                     }
-                    .sheet(isPresented: $viewModel.settingsPresented) {
-                        SettingsView()
-                            .presentationDetents([.fraction(0.45)])
-                    }
 
-                    // Edit Button
-                    CustomEditButton()
-
-
-                    // Add Button
-                    PlusButton(size: 25) {
-                        viewModel.saveNewNote(type: .todo) { note in
-                            navigateToReleated(note)
-                        }
-                    }
-                    .vSpacing(.bottom).hSpacing(.trailing)
-                    .padding([.trailing,.bottom], 20)
+                    // Add New Note Button
+                    AddNewNoteButton()
                 }
             }
             .navigationDestination(for: NoteStack.self) { value in
@@ -93,14 +80,16 @@ extension NotesView {
                     .hSpacing(.leading)
                     .foregroundColor(.mTintColor)
 
-                // Settings Button
-                Image(systemName: "gearshape")
-                    .resizable()
-                    .foregroundColor(.secondary)
-                    .frame(width: 28, height: 28)
-                    .onTapGesture {
-                        viewModel.settingsPresented = true
-                    }
+                // Edit Button
+                ZStack {
+                    Image(systemName: "slider.horizontal.3")
+                        .resizable()
+                        .foregroundColor(.secondary)
+                        .frame(width: 24, height: 24)
+                    EditButton()
+                        .foregroundColor(.clear)
+                }
+
             }
             .padding([.top, .horizontal])
 
@@ -143,29 +132,46 @@ extension NotesView {
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
     }
-}
-
-// MARK: - CustomEditButton
-
-extension NotesView {
 
     @ViewBuilder
-    private func CustomEditButton() -> some View {
-        ZStack {
-            Image(systemName: "slider.horizontal.3")
-                .resizable()
-                .foregroundColor(.secondary)
-                .frame(width: 28, height: 28)
-            EditButton()
-                .foregroundColor(.clear)
+    private func AddNewNoteButton() -> some View {
+        VStack (spacing: 15) {
+            if noteTypeSelectionMode {
+                ForEach(NoteType.allCases, id:\.self) { type in
+                    NoteIconButton(type) {
+                        viewModel.saveNewNote(type: type) { note in
+                            navigateToReleated(note)
+                        }
+                        noteTypeSelectionMode = false
+                    }
+                    .padding(.top, type == NoteType.empty ? 10 : 0)
+                }
+            }
+
+            PlusButton() {
+                withAnimation {
+                    noteTypeSelectionMode.toggle()
+                }
+            }
         }
-        .hSpacing(.leading)
-        .vSpacing(.bottom)
-        .padding([.leading,.bottom], 28)
+        .padding(3)
+        .background(noteTypeSelectionMode ? Color.backgroundColor : .clear)
+        .cornerRadius(50)
+        .vSpacing(.bottom).hSpacing(.trailing)
+        .padding([.trailing,.bottom], 20)
     }
 
-}
 
+    @ViewBuilder
+    private func NoteIconButton(_ note: NoteType,
+                                action: @escaping ()->Void) -> some View {
+        Button(action: action, label: {
+            Image(systemName: note.systemImage)
+                .foregroundColor(.secondary)
+                .font(.largeTitle)
+        })
+    }
+}
 
 struct
 NotesView_Previews: PreviewProvider {

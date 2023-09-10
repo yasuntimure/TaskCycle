@@ -36,12 +36,13 @@ struct DailyView: View {
                 .background(.white)
                 .vSpacing(.top)
 
-                PlusButton(size: 25) {
+                PlusButton() {
                     viewModel.addNewItem()
                     viewModel.fetchItems()
                 }
                 .vSpacing(.bottom).hSpacing(.trailing)
                 .padding([.trailing,.bottom], 20)
+                .padding(3)
             }
         }
         .environmentObject(viewModel)
