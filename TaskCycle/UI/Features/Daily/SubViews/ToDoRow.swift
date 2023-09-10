@@ -10,22 +10,28 @@ import SwiftUI
 struct ToDoRow: View {
 
     @Binding var item: ToDoItemModel
+    @FocusState var isFocused: Bool
 
     var body: some View {
-        HStack (spacing: 12) {
+        HStack (spacing: 0) {
             ToggleButton()
                 .frame(width: 30, height: 30)
+                .padding()
 
             TextField("Write something . . .", text: $item.title)
                 .font(.headline)
                 .strikethrough(item.isDone)
                 .onSubmit { withAnimation { hideKeyboard() } }
+                .focused($isFocused)
+                .padding([.vertical, .trailing])
         }
-        .padding()
         .frame(height: 60)
         .background(Color.backgroundColor)
         .cornerRadius(20)
-        .shadow(radius: 2)
+        .onAppear {
+            isFocused = item.title.isEmpty
+        }
+//        .shadow(radius: 2)
     }
 
     @ViewBuilder

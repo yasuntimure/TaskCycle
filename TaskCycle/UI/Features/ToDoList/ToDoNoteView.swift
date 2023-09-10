@@ -13,20 +13,35 @@ struct ToDoNoteView: View {
 
     @ObservedObject var viewModel: ToDoNoteViewModel
 
+    @FocusState var titleFocused: Bool
+
     var body: some View {
         ZStack {
             VStack (alignment: .leading) {
                 TextField("Title...", text: $viewModel.note.title)
                     .font(.largeTitle).bold()
                     .padding()
+                    .focused($titleFocused)
+                    .onSubmit {
+                        if viewModel.note.items.isEmpty {
+                            viewModel.addNewItem()
+                        }
+                    }
 
                 List {
-                    ListRow()
+                    if viewModel.note.items.isEmpty {
+                        PlaceholderToDoRow()
+                            .onTapGesture { viewModel.addNewItem() }
+                    } else {
+                        ListRow()
+                    }
                 }
                 .listStyle(.plain)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) { EditButton() }
                 }
+
+
             }
             .vSpacing(.top)
 
@@ -36,8 +51,11 @@ struct ToDoNoteView: View {
             .vSpacing(.bottom).hSpacing(.trailing)
             .padding([.trailing,.bottom], 20)
         }
+        .onAppear {
+            titleFocused = viewModel.note.title.isEmpty
+        }
         .onDisappear {
-            if viewModel.noteIsEmpty {
+            if viewModel.uncompletedNote {
                 viewModel.deleteNote()
             } else {
                 viewModel.updateNote()
@@ -59,7 +77,6 @@ struct ToDoNoteView: View {
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
     }
-
 }
 
 

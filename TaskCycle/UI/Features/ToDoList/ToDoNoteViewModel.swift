@@ -17,7 +17,7 @@ class ToDoNoteViewModel: ObservableObject {
     @Published var userId: String
     @Published var note: NoteModel
 
-    var noteIsEmpty: Bool {
+    var uncompletedNote: Bool {
         note.title.isEmpty && note.items.isEmpty
     }
 

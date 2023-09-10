@@ -41,12 +41,6 @@ struct NoteRow: View {
             }
             .padding(.leading, 5)
         }
-        .padding(.horizontal)
-        .padding(.vertical, 5)
-        .hSpacing(.leading)
-        .background(Color.backgroundColor)
-        .cornerRadius(20)
-        .shadow(radius: 2)
     }
 }
 

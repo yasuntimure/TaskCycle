@@ -131,6 +131,11 @@ extension NotesView {
             } label: {
                 NoteRow(note: $note)
             }
+            .padding(.horizontal)
+            .padding(.vertical, 5)
+            .hSpacing(.leading)
+            .background(Color.backgroundColor)
+            .cornerRadius(20)
         }
         .onDelete(perform: viewModel.deleteItems(at:))
         .onMove(perform: viewModel.moveItems(from:to:))
