@@ -14,6 +14,7 @@ enum NoteStack: Hashable {
 }
 
 struct NotesView: View {
+    @EnvironmentObject var theme: Theme
 
     @ObservedObject var viewModel: NotesViewModel
     @State var noteStack: [NoteStack] = []
@@ -78,7 +79,7 @@ extension NotesView {
                 Text("Notes")
                     .font(.title.bold())
                     .hSpacing(.leading)
-                    .foregroundColor(.mTintColor)
+                    .foregroundColor(theme.mTintColor)
 
                 // Edit Button
                 ZStack {
@@ -177,5 +178,6 @@ struct
 NotesView_Previews: PreviewProvider {
     static var previews: some View {
         NotesView(viewModel: NotesViewModel(userId: " "))
+            .environmentObject(Theme())
     }
 }

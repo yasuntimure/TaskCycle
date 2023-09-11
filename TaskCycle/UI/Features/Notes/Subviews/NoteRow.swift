@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NoteRow: View {
+    @EnvironmentObject var theme: Theme
 
     @Binding var note: NoteModel
 
@@ -20,7 +21,7 @@ struct NoteRow: View {
                 } else {
                     Image(systemName: note.type().systemImage)
                         .font(.largeTitle)
-                        .foregroundColor(Color.mTintColor)
+                        .foregroundColor(theme.mTintColor)
                 }
             }
             .vSpacing(note.description.isEmpty ? .center : .top)
@@ -68,7 +69,9 @@ struct NoteRow_Previews: PreviewProvider {
     static var previews: some View {
         List {
             NoteRow(note: .constant(todoItemWithoutDescription))
+                .environmentObject(Theme())
             NoteRow(note: .constant(todoItemWithDescription))
+                .environmentObject(Theme())
         }
         .listRowSpacing(10)
 

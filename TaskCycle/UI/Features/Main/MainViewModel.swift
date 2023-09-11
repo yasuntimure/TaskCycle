@@ -24,8 +24,6 @@ class MainViewModel: ObservableObject {
         self.handler = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             guard let user = user else { return }
             self?.userId = user.uid
-            self?.userName = user.displayName ?? "--"
-            self?.userEmail = user.email ?? "--"
         }
     }
 

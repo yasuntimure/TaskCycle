@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PlusButton: View {
 
+    @EnvironmentObject var theme: Theme
+
     @Environment (\.colorScheme) var color: ColorScheme
 
     var size: CGFloat = 25
@@ -20,7 +22,7 @@ struct PlusButton: View {
             ZStack (alignment: .center) {
                 Circle()
                     .stroke(lineWidth: size/6)
-                    .foregroundColor(.mTintColor)
+                    .foregroundColor(theme.mTintColor)
                     .frame(width: size * 2,
                            height: size * 2)
 //                Circle()
@@ -29,13 +31,13 @@ struct PlusButton: View {
 //                           height: size * 1.9)
 
                 Rectangle()
-                    .foregroundColor(.mTintColor)
+                    .foregroundColor(theme.mTintColor)
                     .frame(width: size/6,
                            height: size)
                     .cornerRadius(5)
 
                 Rectangle()
-                    .foregroundColor(.mTintColor)
+                    .foregroundColor(theme.mTintColor)
                     .frame(width: size,
                            height: size/6)
                     .cornerRadius(5)
@@ -47,6 +49,7 @@ struct PlusButton: View {
 struct PlusButton_Previews: PreviewProvider {
     static var previews: some View {
         PlusButton {}
+            .environmentObject(Theme())
             .previewLayout(.fixed(width: 50, height: 50))
     }
 }

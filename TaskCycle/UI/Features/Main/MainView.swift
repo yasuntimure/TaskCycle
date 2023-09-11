@@ -11,6 +11,8 @@ struct MainView: View {
 
     @StateObject var viewModel = MainViewModel()
 
+    @StateObject var theme: Theme = Theme()
+
     var body: some View {
         NavigationView {
             if viewModel.userId.isEmpty {
@@ -21,30 +23,35 @@ struct MainView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .tabItem {
                             Label("Daily", systemImage: "calendar")
-                                .foregroundColor(.mTintColor)
-                                .tint(.mTintColor)
+                                .foregroundColor(theme.mTintColor)
+
                         }
                     NotesView(viewModel: NotesViewModel(userId: viewModel.userId))
                         .tabItem {
                             Label("Notes", systemImage: "list.clipboard")
-                                .tint(.mTintColor)
-                                .foregroundColor(.mTintColor)
+                                .foregroundColor(theme.mTintColor)
                         }
-                    SettingsView()
+                    SettingsBuilder.make(userId: viewModel.userId)
                         .tabItem {
                             Label("Settings", systemImage: "gearshape")
-                                .tint(.mTintColor)
-                                .foregroundColor(.mTintColor)
+                                .foregroundColor(theme.mTintColor)
                         }
                 }
+                .tint(theme.mTintColor)
             }
         }
         .environmentObject(viewModel)
+        .environmentObject(theme)
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+            .environmentObject(Theme())
     }
+}
+
+class Theme: ObservableObject {
+    @Published var mTintColor: Color = Color.blue
 }

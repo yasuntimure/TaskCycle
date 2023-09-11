@@ -26,6 +26,8 @@ class InputField: ObservableObject, Equatable {
 
 struct TextFieldView: View {
 
+    @EnvironmentObject var theme: Theme
+
     @Binding var input: InputField
 
     var isSecure: Bool = false
@@ -46,7 +48,7 @@ struct TextFieldView: View {
                         .padding(.horizontal)
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(Color.mTintColor, lineWidth: 2)
+                                .stroke(theme.mTintColor, lineWidth: 2)
                         )
                 } else {
                     TextField(input.placeholder, text: $input.text)
@@ -56,7 +58,7 @@ struct TextFieldView: View {
                         .textInputAutocapitalization(.never)
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(Color.mTintColor, lineWidth: 2)
+                                .stroke(theme.mTintColor, lineWidth: 2)
                         )
                 }
 
@@ -76,6 +78,7 @@ struct TextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         Stateful(value: email) { email in
             TextFieldView(input: email, isSecure: false)
+                .environmentObject(Theme())
                 .previewLayout(.fixed(width: ScreenSize.width, height: ScreenSize.height/8))
         }
     }

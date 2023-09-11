@@ -19,7 +19,6 @@ struct TaskCycleApp: App {
         WindowGroup {
             MainView()
                 .preferredColorScheme(.light)
-
         }
     }
 }

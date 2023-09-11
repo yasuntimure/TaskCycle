@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WeekSliderView: View {
+    @EnvironmentObject var theme: Theme
 
     @EnvironmentObject var viewModel: DailyViewModel
 
@@ -97,14 +98,14 @@ struct WeekSliderView: View {
                 // MARK: Matched Geometry Effect
                 if isSelected {
                     Capsule()
-                        .fill(Color.mTintColor)
+                        .fill(theme.mTintColor)
                 }
 
                 /// Indicator to Show Today's Date
                 if date.isToday {
                     Capsule()
                         .stroke(lineWidth: 2)
-                        .foregroundColor(Color.mTintColor).opacity(0.6)
+                        .foregroundColor(theme.mTintColor).opacity(0.6)
                 }
             }
         )
@@ -118,5 +119,6 @@ struct WeekSliderView_Previews: PreviewProvider {
     static var previews: some View {
         WeekSliderView()
             .environmentObject(DailyViewModel(userId: Mock.userId))
+            .environmentObject(Theme())
     }
 }

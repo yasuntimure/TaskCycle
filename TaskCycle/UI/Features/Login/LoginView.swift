@@ -11,6 +11,7 @@ import GoogleSignIn
 import GoogleSignInSwift
 
 struct LoginView<VM>: View where VM: LoginViewModelProtocol {
+    @EnvironmentObject var theme: Theme
 
     private enum Fields {
         case email, password
@@ -84,7 +85,7 @@ struct LoginView<VM>: View where VM: LoginViewModelProtocol {
                         viewModel.isRegisterPresented = true
                     }
                     .bold()
-                    .foregroundColor(Color.mTintColor.opacity(0.9))
+                    .foregroundColor(theme.mTintColor.opacity(0.9))
                 }
                 .padding(.bottom, 100)
                 
@@ -114,7 +115,7 @@ struct LoginView<VM>: View where VM: LoginViewModelProtocol {
 
                 Text("Cycle")
                     .font(.system(size: 52)).bold()
-                    .foregroundColor(.mTintColor)
+                    .foregroundColor(theme.mTintColor)
             }
         }
         .hSpacing(.leading).padding(.leading, 30)
@@ -124,5 +125,6 @@ struct LoginView<VM>: View where VM: LoginViewModelProtocol {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(viewModel: LoginViewModel())
+            .environmentObject(Theme())
     }
 }

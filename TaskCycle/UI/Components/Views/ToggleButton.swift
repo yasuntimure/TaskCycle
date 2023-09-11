@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ToggleButton: View {
+    @EnvironmentObject var theme: Theme
 
     @Binding var state: Bool
 
@@ -20,14 +21,14 @@ struct ToggleButton: View {
                 // Empty Circle
                 Circle()
                     .stroke(lineWidth: 2)
-                    .foregroundColor(.mTintColor)
+                    .foregroundColor(theme.mTintColor)
 
                 // Checked Circle
                 if state {
                     GeometryReader { proxy in
                         ZStack {
                             Circle()
-                                .foregroundColor(.mTintColor)
+                                .foregroundColor(theme.mTintColor)
 
                             Image(systemName: "checkmark")
                                 .foregroundColor(.white)
@@ -50,7 +51,7 @@ extension ToggleButton {
         GeometryReader { proxy in
             ZStack {
                 Circle()
-                    .foregroundColor(.mTintColor)
+                    .foregroundColor(theme.mTintColor)
 
                 Image(systemName: "checkmark")
                     .foregroundColor(.white)
@@ -72,6 +73,7 @@ struct ToggleButtonView_Previews: PreviewProvider {
     static var previews: some View {
         Stateful(value: isChecked) { isChecked in
             ToggleButton(state: isChecked)
+                .environmentObject(Theme())
         }
             .previewLayout(.fixed(width: 100, height: 100))
     }

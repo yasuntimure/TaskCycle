@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PrimaryButton: View {
+    @EnvironmentObject var theme: Theme
 
     @State var title: String
     @State var width: CGFloat = ScreenSize.defaultWidth
@@ -22,7 +23,7 @@ struct PrimaryButton: View {
                 .frame(width: width, height: height)
                 .foregroundColor(.white)
                 .font(.system(size: 20)).bold()
-                .background(Color.mTintColor)
+                .background(theme.mTintColor)
         }
         .cornerRadius(cornerRadius)
     }
@@ -34,5 +35,6 @@ struct PrimaryButton_Previews: PreviewProvider {
         PrimaryButton(title: "Login") {
             // action
         }
+        .environmentObject(Theme())
     }
 }

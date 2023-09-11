@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct KeyboardButton: View {
+    @EnvironmentObject var theme: Theme
 
     @Environment (\.colorScheme) var color: ColorScheme
     var size: CGFloat = 20
@@ -18,7 +19,7 @@ struct KeyboardButton: View {
             Image(systemName: "keyboard.chevron.compact.down.fill")
                 .resizable()
                 .frame(width: size*2, height: size*2)
-                .foregroundColor(Color.mTintColor)
+                .foregroundColor(theme.mTintColor)
         }
     }
 }
@@ -26,7 +27,7 @@ struct KeyboardButton: View {
 struct KeyboardButton_Previews: PreviewProvider {
     static var previews: some View {
         KeyboardButton {
-
         }
+        .environmentObject(Theme())
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NewNoteView: View {
+    @EnvironmentObject var theme: Theme
 
     @EnvironmentObject var viewModel: NotesViewModel
 
@@ -73,6 +74,7 @@ struct NewNoteView: View {
 }
 
 struct NoteTypeView: View {
+    @EnvironmentObject var theme: Theme
 
     @Binding var type: NoteType
 
@@ -91,12 +93,12 @@ struct NoteTypeView: View {
             .padding(.vertical, 10)
             .frame(width: (ScreenSize.defaultWidth-30)/3)
             .bold()
-            .foregroundColor(isSelected ? Color.white : Color.mTintColor)
-            .background(isSelected ? Color.mTintColor : Color.white)
+            .foregroundColor(isSelected ? Color.white : theme.mTintColor)
+            .background(isSelected ? theme.mTintColor : Color.white)
             .cornerRadius(20)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.mTintColor, lineWidth: 2)
+                    .stroke(theme.mTintColor, lineWidth: 2)
             )
     }
 }
@@ -105,5 +107,6 @@ struct NewListView_Previews: PreviewProvider {
     static var previews: some View {
         NewNoteView()
             .environmentObject(NotesViewModel(userId: Mock.userId))
+            .environmentObject(Theme())
     }
 }

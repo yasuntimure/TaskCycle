@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ToDoRow: View {
+    @EnvironmentObject var theme: Theme
 
     @Binding var item: ToDoItemModel
     @FocusState var isFocused: Bool
@@ -42,13 +43,13 @@ struct ToDoRow: View {
                 // Empty Circle
                 Circle()
                     .stroke(lineWidth: 2)
-                    .foregroundColor(.mTintColor)
+                    .foregroundColor(theme.mTintColor)
                 // Checked Circle
                 if item.isDone {
                     GeometryReader { proxy in
                         ZStack {
                             Circle()
-                                .foregroundColor(.mTintColor)
+                                .foregroundColor(theme.mTintColor)
                             Image(systemName: "checkmark")
                                 .foregroundColor(.white)
                                 .font(.system(size: proxy.size.width/2))
@@ -68,5 +69,6 @@ struct ToDoRow_Previews: PreviewProvider {
 
     static var previews: some View {
         ToDoRow(item: .constant(item))
+            .environmentObject(Theme())
     }
 }

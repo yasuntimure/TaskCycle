@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
+    @EnvironmentObject var theme: Theme
 
     @StateObject var viewModel = RegisterViewModel()
     @Environment(\.dismiss) var dismiss
@@ -22,7 +23,7 @@ struct RegisterView: View {
                 VStack (alignment: .leading, spacing: 5) {
                     Text("Register")
                         .font(.system(size: 45)).bold()
-                        .foregroundColor(Color.mTintColor)
+                        .foregroundColor(theme.mTintColor)
                     Text("Create a new Account!")
                         .font(.system(size: 30)).bold()
                         .foregroundColor(Color.secondary)
@@ -84,5 +85,6 @@ struct RegisterView: View {
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
         RegisterView()
+            .environmentObject(Theme())
     }
 }
