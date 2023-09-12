@@ -51,6 +51,7 @@ struct ToDoNoteView: View {
             .vSpacing(.bottom).hSpacing(.trailing)
             .padding([.trailing,.bottom], 20)
         }
+        .toolbarKeyboardDismiss()
         .onAppear {
             titleFocused = viewModel.note.title.isEmpty
         }

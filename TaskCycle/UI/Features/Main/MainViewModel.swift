@@ -12,8 +12,6 @@ import FirebaseFirestore
 class MainViewModel: ObservableObject {
     
     @Published var userId: String = ""
-    @Published var userName: String = ""
-    @Published var userEmail: String = ""
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""

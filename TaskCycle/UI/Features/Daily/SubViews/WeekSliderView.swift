@@ -41,13 +41,12 @@ struct WeekSliderView: View {
                         withAnimation {
                             hideKeyboard()
                             viewModel.selectedDay = day
-                            DispatchQueue.main.async {
-                                viewModel.fetchItems()
+                            Task {
+                                await viewModel.fetchItems()
                             }
                             print(day.date)
                         }
                     }
-
             }
             .background {
                 GeometryReader {
@@ -84,7 +83,6 @@ struct WeekSliderView: View {
                     Circle()
                         .stroke(lineWidth: isSelected ? 2 : 1)
                         .foregroundColor(isSelected ? .white : .gray)
-//                        .shadow(radius: 1).opacity(0.5)
                 )
         }
         // MARK: Foreground Style

@@ -11,7 +11,7 @@ import PhotosUI
 struct SettingsView: View {
     @EnvironmentObject var theme: Theme
     @EnvironmentObject var viewModel: MainViewModel
-    @State var themeColors: [Color] = [.blue, .red, .green, .orange, .purple, .yellow, .pink, .black, .cyan, .brown, .accentColor, .gray, .indigo, .mint]
+    @State var themeColors: [Color] = [.blue, .red, .green, .orange, .purple, .yellow, .pink, .black, .cyan, .brown, .gray, .indigo, .mint]
 
     var body: some View {
         VStack {

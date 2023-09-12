@@ -20,7 +20,6 @@ struct MainView: View {
             } else {
                 TabView {
                     DailyView(viewModel: DailyViewModel(userId: viewModel.userId))
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .tabItem {
                             Label("Daily", systemImage: "calendar")
                                 .foregroundColor(theme.mTintColor)
@@ -31,7 +30,7 @@ struct MainView: View {
                             Label("Notes", systemImage: "list.clipboard")
                                 .foregroundColor(theme.mTintColor)
                         }
-                    SettingsBuilder.make(userId: viewModel.userId)
+                    SettingsView()
                         .tabItem {
                             Label("Settings", systemImage: "gearshape")
                                 .foregroundColor(theme.mTintColor)
@@ -52,6 +51,7 @@ struct MainView_Previews: PreviewProvider {
     }
 }
 
+@MainActor
 class Theme: ObservableObject {
     @Published var mTintColor: Color = Color.blue
 }

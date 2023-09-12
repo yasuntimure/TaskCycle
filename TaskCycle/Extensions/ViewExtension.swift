@@ -22,8 +22,18 @@ extension View {
             .frame(maxHeight: .infinity, alignment: alignment)
     }
     
+    @ViewBuilder
+    func toolbarKeyboardDismiss() -> some View {
+        self.toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Button(action: { hideKeyboard() },
+                       label: { Image(systemName: "keyboard.chevron.compact.down.fill")
+                        .font(.headline)
+                        .tint(.secondary) })
+            }
+        }
+    }
 }
-
 
 #if canImport(UIKit)
 extension View {

@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 
+@MainActor
 class DailyViewModel: ObservableObject {
 
     /// Week Slider Properties
@@ -18,8 +19,6 @@ class DailyViewModel: ObservableObject {
 
     /// To Do List Properties
     @Published var items: [ToDoItemModel] = []
-    @Published var selectedItem: ToDoItemModel? = nil
-//    @Published var newItemId: String = ""
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
@@ -28,7 +27,9 @@ class DailyViewModel: ObservableObject {
 
     init(userId: String) {
         self.userId = userId
-        self.fetchItems()
+        Task {
+            await fetchItems()
+        }
     }
 }
 
@@ -84,46 +85,69 @@ extension DailyViewModel {
 
 extension DailyViewModel {
 
-    func fetchItems() {
-        Firestore.firestore()
+    func fetchItems() async {
+        let querySnapshot = try? await Firestore.firestore()
             .collection("users")
             .document(userId)
             .collection("weekdays")
             .document(selectedDay.formatedDate())
             .collection("items")
-            .getDocuments { [weak self] (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
+            .getDocuments()
 
-                guard let documents = querySnapshot?.documents else {
-                    print("Documents couldnt casted")
-                    return
-                }
+        guard let documents = querySnapshot?.documents else {
+            print("Documents couldnt casted")
+            return
+        }
 
-                self?.items.removeAll()
+        self.items.removeAll()
 
-                for document in documents {
-                    let result = Result {
-                        try document.data(as: ToDoItemModel.self)
-                    }
-                    switch result {
-                    case .success(let item):
-                        self?.items.append(item)
-                    case .failure(let error):
-                        print("Error decoding item: \(error)")
-                    }
-                }
-
-                if let items = self?.items, items.isEmpty {
-                    self?.addNewItem()
-                    self?.fetchItems()
-                }
-
-                self?.reorder()
+        for document in documents {
+            let result = Result {
+                try document.data(as: ToDoItemModel.self)
+            }
+            switch result {
+            case .success(let item):
+                self.items.append(item)
+            case .failure(let error):
+                print("Error decoding item: \(error)")
             }
         }
+
+        self.reorder()
+
     }
+//            .getDocuments { [weak self] (querySnapshot, err) in
+//            if let err = err {
+//                print("Error getting documents: \(err)")
+//            } else {
+//                guard let documents = querySnapshot?.documents else {
+//                    print("Documents couldnt casted")
+//                    return
+//                }
+//
+//                self?.items.removeAll()
+//
+//                for document in documents {
+//                    let result = Result {
+//                        try document.data(as: ToDoItemModel.self)
+//                    }
+//                    switch result {
+//                    case .success(let item):
+//                        self?.items.append(item)
+//                    case .failure(let error):
+//                        print("Error decoding item: \(error)")
+//                    }
+//                }
+//
+////                if let items = self?.items, items.isEmpty {
+////                    self?.addNewItem()
+////                    self?.fetchItems()
+////                }
+//
+//                self?.reorder()
+//            }
+//        }
+
 
     func reorder() {
         if items.contains(where: { $0.title.isEmpty }) {
@@ -174,13 +198,6 @@ extension DailyViewModel {
                     print("Item updated")
                 }
             }
-
-//        // update local array
-//        if let index = self.items.firstIndex(where: {$0.id == item.id}) {
-//            self.items[index].set(title: item.title)
-//            self.items[index].set(isDone: item.isDone)
-//        }
-
         self.reorder()
     }
 

@@ -168,7 +168,7 @@ extension NotesView {
                                 action: @escaping ()->Void) -> some View {
         Button(action: action, label: {
             Image(systemName: note.systemImage)
-                .foregroundColor(.secondary)
+                .foregroundColor(theme.mTintColor)
                 .font(.largeTitle)
         })
     }

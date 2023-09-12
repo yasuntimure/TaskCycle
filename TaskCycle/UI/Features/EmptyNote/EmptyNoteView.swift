@@ -25,21 +25,17 @@ struct EmptyNoteView: View {
             TextField("Title...", text: $viewModel.note.title)
                 .font(.largeTitle).bold()
                 .focused($focusState, equals: .title)
-                .onSubmit {
-                    focusState = .description
-                    if viewModel.note.description == EmptyNoteFields.description.rawValue {
-                        viewModel.note.description = " "
-                    }
-                }
+                .onSubmit { focusState = .description }
 
             TextField("Write something . . .", text: $viewModel.note.description, axis: .vertical)
                 .font(.title2)
                 .foregroundColor(.secondary)
-                .onSubmit { withAnimation { hideKeyboard() } }
                 .focused($focusState, equals: .description)
+                .vSpacing(.top)
         }
         .vSpacing(.topLeading)
         .padding()
+        .toolbarKeyboardDismiss()
         .onChange(of: viewModel.note) { _ in
             viewModel.updateNote()
         }

@@ -22,7 +22,6 @@ struct ToDoRow: View {
             TextField("Write something . . .", text: $item.title, axis: .vertical)
                 .font(.headline)
                 .strikethrough(item.isDone)
-                .onSubmit { withAnimation { hideKeyboard() } }
                 .focused($isFocused)
                 .padding([.vertical, .trailing])
         }
@@ -31,7 +30,6 @@ struct ToDoRow: View {
         .onAppear {
             isFocused = item.title.isEmpty
         }
-//        .shadow(radius: 2)
     }
 
     @ViewBuilder

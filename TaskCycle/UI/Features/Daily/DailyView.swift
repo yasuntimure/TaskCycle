@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DailyView: View {
-    
+
     @ObservedObject var viewModel: DailyViewModel
 
     var body: some View {
@@ -27,8 +27,8 @@ struct DailyView: View {
                     }
                     .listStyle(.plain)
                     .refreshable {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            viewModel.fetchItems()
+                        Task {
+                            await viewModel.fetchItems()
                         }
                     }
                 }
@@ -38,12 +38,15 @@ struct DailyView: View {
 
                 PlusButton() {
                     viewModel.addNewItem()
-                    viewModel.fetchItems()
+                    Task {
+                        await viewModel.fetchItems()
+                    }
                 }
                 .vSpacing(.bottom).hSpacing(.trailing)
                 .padding([.trailing,.bottom], 20)
                 .padding(3)
             }
+            .toolbarKeyboardDismiss()
         }
         .environmentObject(viewModel)
     }
@@ -90,6 +93,7 @@ struct DailyView_Previews: PreviewProvider {
     static var previews: some View {
         DailyView(viewModel: DailyViewModel(userId: Mock.userId))
             .environmentObject(MainViewModel())
+            .environmentObject(Theme())
     }
 }
 
