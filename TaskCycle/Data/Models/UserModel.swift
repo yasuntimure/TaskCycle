@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-class User: ObservableObject {
-   @Published var id: String = ""
-   @Published var name: String = ""
-   @Published var email: String = ""
-}
-
 struct UserModel: Codable {
     let id: String
     let name: String

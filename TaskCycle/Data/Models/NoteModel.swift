@@ -1,5 +1,5 @@
 //
-//  Note.swift
+//  NoteModel.swift
 //  TaskCycle
 //
 //  Created by Eyüp on 2023-08-19.
@@ -42,35 +42,5 @@ enum NoteType: String, Hashable, CaseIterable {
         case .todo: return "checkmark.circle"
         case .board:  return "tablecells"
         }
-    }
-}
-
-class Note: ObservableObject {
-
-    @Published var id: String = ""
-    @Published var title: String = ""
-    @Published var description: String = ""
-    @Published var items: [ToDoItemModel] = []
-    @Published var date: Date = Date()
-    @Published var emoji: Emoji?
-    @Published var type: NoteType = .empty
-
-    func getStructModel() -> NoteModel {
-        NoteModel(id: UUID().uuidString,
-                  title: self.title,
-                  description: self.description,
-                  items: self.items,
-                  date: self.date.timeIntervalSince1970,
-                  emoji: self.emoji?.value,
-                  noteType: self.type.rawValue)
-    }
-
-    func reset() {
-        self.id = ""
-        self.title = ""
-        self.description = ""
-        self.items = []
-        self.date = Date()
-        self.emoji = nil
     }
 }

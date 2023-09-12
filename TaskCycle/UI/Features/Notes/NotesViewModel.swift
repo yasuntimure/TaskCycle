@@ -14,7 +14,6 @@ class NotesViewModel: ObservableObject {
     @Published var settingsPresented: Bool = false
 
     @Published var notes: [NoteModel] = []
-    @Published var newNote: Note = Note()
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
@@ -101,20 +100,6 @@ class NotesViewModel: ObservableObject {
             .collection("notes")
             .document (note.id)
             .setData(note.asDictionary())
-    }
-
-    func saveNewNote() {
-        let note = newNote.getStructModel()
-
-        // Save model
-        Firestore.firestore()
-            .collection("users")
-            .document(self.userId)
-            .collection("notes")
-            .document (note.id)
-            .setData(note.asDictionary())
-
-        newNote.reset()
     }
 
     func saveNewNote(type: NoteType, completion: @escaping (NoteModel) -> Void) {

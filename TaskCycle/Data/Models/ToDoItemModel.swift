@@ -22,17 +22,5 @@ struct ToDoItemModel: ToDoItemProtocol, Hashable, Codable, Identifiable {
     var description: String
     var date: TimeInterval
     var isDone: Bool = false
-
-    mutating func set(title: String) {
-        self.title = title
-    }
-
-    mutating func set(description: String) {
-        self.description = description
-    }
-
-    mutating func set(isDone: Bool) {
-        self.isDone = isDone
-    }
 }
 
