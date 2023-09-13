@@ -85,11 +85,7 @@ class ToDoNoteViewModel: ObservableObject {
 
 
     func addNewItem() {
-        let item = ToDoItemModel(id: UUID().uuidString,
-                                title: "",
-                                description: "",
-                                date: Date().timeIntervalSince1970)
-
+        let item = ToDoItemModel()
         note.items.append(item)
     }
 

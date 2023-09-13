@@ -16,6 +16,10 @@ extension Date {
         return formatter.string(from: self)
     }
 
+    func weekdayFormat() -> String {
+        self.format("MM-dd-yyyy")
+    }
+
     /// Checking Whether the Date is Today
     var isToday: Bool {
         return Calendar.current.isDateInToday(self)

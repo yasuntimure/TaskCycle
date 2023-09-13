@@ -21,9 +21,4 @@ extension FirebaseIdentifiable {
     func put(to collection: String) async -> Result<Self, Error> {
         return await FirebaseService.shared.put(self, to: collection)
     }
-
-    /// DELETE from Firebase
-    func delete(from collection: String) async -> Result<Void, Error> {
-        return await FirebaseService.shared.delete(self, in: collection)
-    }
 }

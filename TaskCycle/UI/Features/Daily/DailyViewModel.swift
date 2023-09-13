@@ -105,23 +105,37 @@ extension DailyViewModel {
 
     func deleteItems(at indexSet: IndexSet) {
         indexSet.forEach { index in
-            Firestore.firestore()
-                .collection("users")
-                .document(userId)
-                .collection("weekdays")
-                .document(selectedDay.formatedDate())
-                .collection("items")
-                .document(items[index].id)
-                .delete { err in
-                    if let err = err {
-                        print("Error removing document: \(err)")
-                    } else {
-                        print("Document successfully removed!")
-                    }
+            Task {
+                do {
+                    let item = self.items[index]
+                    try await WeekDayService.delete(for: item, userId: userId)
+                } catch {
+                    showAlert = true
+                    errorMessage = error.localizedDescription
                 }
+            }
         }
-        items.remove(atOffsets: indexSet)
     }
+
+//    func deleteItems(at indexSet: IndexSet) {
+//        indexSet.forEach { index in
+//            Firestore.firestore()
+//                .collection("users")
+//                .document(userId)
+//                .collection("weekdays")
+//                .document(selectedDay.formatedDate())
+//                .collection("items")
+//                .document(items[index].id)
+//                .delete { err in
+//                    if let err = err {
+//                        print("Error removing document: \(err)")
+//                    } else {
+//                        print("Document successfully removed!")
+//                    }
+//                }
+//        }
+//        items.remove(atOffsets: indexSet)
+//    }
 
     func moveItems(from indexSet: IndexSet, to newIndex: Int) {
         items.move(fromOffsets: indexSet, toOffset: newIndex)
@@ -148,17 +162,14 @@ extension DailyViewModel {
     }
 
     func addNewItem() {
-        let item = ToDoItemModel(id: UUID().uuidString,
-                                     title: "",
-                                     description: "",
-                                     date: Date().timeIntervalSince1970)
+        let item = ToDoItemModel(date: selectedDay.date.weekdayFormat())
 
         // Save model
         Firestore.firestore()
             .collection ("users")
             .document(userId)
             .collection("weekdays")
-            .document(selectedDay.formatedDate())
+            .document(selectedDay.date.weekdayFormat())
             .collection("items")
             .document (item.id)
             .setData(item.asDictionary())

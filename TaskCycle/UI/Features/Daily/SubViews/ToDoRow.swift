@@ -63,7 +63,7 @@ struct ToDoRow: View {
 
 struct ToDoRow_Previews: PreviewProvider {
 
-    static let item = ToDoItemModel(id: "", title: "Drink Water", description: "", date: Date().timeIntervalSince1970)
+    static let item = ToDoItemModel(title: "Drink Water")
 
     static var previews: some View {
         ToDoRow(item: .constant(item))

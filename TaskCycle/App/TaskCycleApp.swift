@@ -36,13 +36,11 @@ public class Mock {
 
     static let item = ToDoItemModel(id: UUID().uuidString,
                                     title: "Mock Item",
-                                    description: "Mock Description",
-                                    date: Date().timeIntervalSince1970)
+                                    description: "Mock Description")
 
     static let emptyItem = ToDoItemModel(id: UUID().uuidString,
                                          title: "",
-                                         description: "",
-                                         date: Date().timeIntervalSince1970)
+                                         description: "")
 }
 
 

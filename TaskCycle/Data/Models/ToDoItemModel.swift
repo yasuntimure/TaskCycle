@@ -13,14 +13,14 @@ struct ToDoItemModel: FirebaseIdentifiable {
     var id: String
     var title: String
     var description: String
-    var date: TimeInterval
+    var date: String
     var isDone: Bool = false
 
     init(
         id: String = UUID().uuidString,
         title: String = "",
         description: String = "",
-        date: TimeInterval = Date().timeIntervalSince1970,
+        date: String = Date().weekdayFormat(),
         isDone: Bool = false
     ) {
         self.id = id

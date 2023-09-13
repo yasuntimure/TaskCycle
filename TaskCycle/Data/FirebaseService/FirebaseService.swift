@@ -100,15 +100,13 @@ extension FirebaseService {
 
 extension FirebaseService {
 
-    func delete<T: FirebaseIdentifiable>(_ value: T, in collection: String) async -> Result<Void, Error> {
-        let ref = database.collection(collection).document(value.id)
+    func delete(_ query: DocumentReference) async -> Result<Void, Error> {
         do {
-            try await ref.delete()
+            try await query.delete()
             return .success(())
         } catch let error {
-            print("Error: \(#function) in \(collection) for id: \(value.id), \(error)")
+            print("Error: \(#function) in \(query.path) for id: \(query.documentID), \(error)")
             return .failure(error)
         }
     }
-
 }
