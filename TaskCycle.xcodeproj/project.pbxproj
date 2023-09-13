@@ -22,6 +22,7 @@
 		D0907A4D2AB0F09F00353AAA /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */; };
 		D0907A4F2AB0FF6400353AAA /* FirebaseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */; };
 		D0907A522AB1059A00353AAA /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A512AB1059A00353AAA /* FirebaseError.swift */; };
+		D0907A552AB108FE00353AAA /* WeekDayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A542AB108FE00353AAA /* WeekDayService.swift */; };
 		D098D8192A84330D005E534C /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8182A84330D005E534C /* OffsetKey.swift */; };
 		D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D81A2A843570005E534C /* DailyViewModel.swift */; };
 		D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83A2A85A17C005E534C /* CustomDateView.swift */; };
@@ -121,6 +122,7 @@
 		D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIdentifiable.swift; sourceTree = "<group>"; };
 		D0907A512AB1059A00353AAA /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
+		D0907A542AB108FE00353AAA /* WeekDayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayService.swift; sourceTree = "<group>"; };
 		D098D8182A84330D005E534C /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
 		D098D81A2A843570005E534C /* DailyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewModel.swift; sourceTree = "<group>"; };
 		D098D83A2A85A17C005E534C /* CustomDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 			children = (
 				D0907A532AB1073100353AAA /* Models */,
 				D0907A502AB1057100353AAA /* FirebaseService */,
+				D0907A542AB108FE00353AAA /* WeekDayService.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */,
 				D0267DF92A9073EA0079F90E /* NotesView.swift in Sources */,
 				D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */,
+				D0907A552AB108FE00353AAA /* WeekDayService.swift in Sources */,
 				D0C5F7262A93CB6700D5CE44 /* EmptyNoteBuilder.swift in Sources */,
 				D0ED2EE32A802D4400828887 /* PreferenceKeyExtension.swift in Sources */,
 				D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */,

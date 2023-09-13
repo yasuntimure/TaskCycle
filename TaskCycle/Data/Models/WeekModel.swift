@@ -8,13 +8,23 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-typealias Week = [WeekDay]
-
-struct WeekDay: Hashable, Codable, Identifiable {
-    var id: UUID = .init()
+struct WeekDay: FirebaseIdentifiable {
+    var id: String
     var date: Date
-    var isSelected: Bool = false
-    var items: [ToDoItemModel] = []
+    var isSelected: Bool
+    var items: [ToDoItemModel]
+
+    init(
+        id: String = UUID().uuidString,
+        date: Date,
+        isSelected: Bool = false,
+        items: [ToDoItemModel] = []
+    ) {
+        self.id = id
+        self.date = date
+        self.isSelected = isSelected
+        self.items = items
+    }
 
     func formatedDate() -> String {
         return date.format("MM-dd-yyyy")

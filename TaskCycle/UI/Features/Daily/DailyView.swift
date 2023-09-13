@@ -27,9 +27,7 @@ struct DailyView: View {
                     }
                     .listStyle(.plain)
                     .refreshable {
-                        Task {
-                            await viewModel.fetchItems()
-                        }
+                        viewModel.fetchItems()
                     }
                 }
                 .hSpacing(.leading)
@@ -38,9 +36,7 @@ struct DailyView: View {
 
                 PlusButton() {
                     viewModel.addNewItem()
-                    Task {
-                        await viewModel.fetchItems()
-                    }
+                    viewModel.fetchItems()
                 }
                 .vSpacing(.bottom).hSpacing(.trailing)
                 .padding([.trailing,.bottom], 20)

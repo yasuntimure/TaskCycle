@@ -14,7 +14,7 @@ class DailyViewModel: ObservableObject {
     /// Week Slider Properties
     @Published var selectedDay: WeekDay = WeekDay(date: .init())
     @Published var weekIndex: Int = 1
-    @Published var weeks: [Week] = []
+    @Published var weeks: [[WeekDay]] = []
     @Published var createWeek: Bool = false
 
     /// To Do List Properties
@@ -27,9 +27,7 @@ class DailyViewModel: ObservableObject {
 
     init(userId: String) {
         self.userId = userId
-        Task {
-            await fetchItems()
-        }
+        fetchItems()
     }
 }
 
@@ -85,69 +83,17 @@ extension DailyViewModel {
 
 extension DailyViewModel {
 
-    func fetchItems() async {
-        let querySnapshot = try? await Firestore.firestore()
-            .collection("users")
-            .document(userId)
-            .collection("weekdays")
-            .document(selectedDay.formatedDate())
-            .collection("items")
-            .getDocuments()
-
-        guard let documents = querySnapshot?.documents else {
-            print("Documents couldnt casted")
-            return
-        }
-
-        self.items.removeAll()
-
-        for document in documents {
-            let result = Result {
-                try document.data(as: ToDoItemModel.self)
-            }
-            switch result {
-            case .success(let item):
-                self.items.append(item)
-            case .failure(let error):
-                print("Error decoding item: \(error)")
+    func fetchItems() {
+        Task {
+            do {
+                self.items = try await WeekDayService.get(for: selectedDay.date, userId: userId)
+                self.reorder()
+            } catch {
+                showAlert = true
+                errorMessage = error.localizedDescription
             }
         }
-
-        self.reorder()
-
     }
-//            .getDocuments { [weak self] (querySnapshot, err) in
-//            if let err = err {
-//                print("Error getting documents: \(err)")
-//            } else {
-//                guard let documents = querySnapshot?.documents else {
-//                    print("Documents couldnt casted")
-//                    return
-//                }
-//
-//                self?.items.removeAll()
-//
-//                for document in documents {
-//                    let result = Result {
-//                        try document.data(as: ToDoItemModel.self)
-//                    }
-//                    switch result {
-//                    case .success(let item):
-//                        self?.items.append(item)
-//                    case .failure(let error):
-//                        print("Error decoding item: \(error)")
-//                    }
-//                }
-//
-////                if let items = self?.items, items.isEmpty {
-////                    self?.addNewItem()
-////                    self?.fetchItems()
-////                }
-//
-//                self?.reorder()
-//            }
-//        }
-
 
     func reorder() {
         if items.contains(where: { $0.title.isEmpty }) {

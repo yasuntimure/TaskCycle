@@ -12,6 +12,7 @@ import Foundation
 import SwiftUI
 
 enum Collections: String {
+    case users = "users"
     case notes = "notes"
     case weekdays = "weekdays"
     case items = "items"

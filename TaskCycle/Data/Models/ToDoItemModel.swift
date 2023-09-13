@@ -8,19 +8,26 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-protocol ToDoItemProtocol {
-    var id: String { get }
-    var title: String { get set }
-    var description: String { get set }
-    var date: TimeInterval { get set }
-    var isDone: Bool { get set }
-}
 
-struct ToDoItemModel: ToDoItemProtocol, Hashable, Codable, Identifiable {
+struct ToDoItemModel: FirebaseIdentifiable {
     var id: String
     var title: String
     var description: String
     var date: TimeInterval
     var isDone: Bool = false
+
+    init(
+        id: String = UUID().uuidString,
+        title: String = "",
+        description: String = "",
+        date: TimeInterval = Date().timeIntervalSince1970,
+        isDone: Bool = false
+    ) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.date = date
+        self.isDone = isDone
+    }
 }
 

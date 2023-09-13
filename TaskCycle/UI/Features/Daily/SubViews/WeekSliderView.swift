@@ -31,7 +31,7 @@ struct WeekSliderView: View {
 
     /// Week View
     @ViewBuilder
-    func WeekView(_ week: Week) -> some View {
+    func WeekView(_ week: [WeekDay]) -> some View {
         HStack(spacing: 10) {
             ForEach(week) { day in
                 WeekColumn(date: day.date, isSelected: viewModel.isSelected(day))
@@ -41,9 +41,7 @@ struct WeekSliderView: View {
                         withAnimation {
                             hideKeyboard()
                             viewModel.selectedDay = day
-                            Task {
-                                await viewModel.fetchItems()
-                            }
+                            viewModel.fetchItems()
                             print(day.date)
                         }
                     }

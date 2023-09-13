@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FirebaseIdentifiable: Hashable, Codable {
+protocol FirebaseIdentifiable: Hashable, Codable, Identifiable {
     var id: String { get set }
 }
 

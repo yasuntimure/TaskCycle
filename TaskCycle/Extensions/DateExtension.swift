@@ -21,11 +21,11 @@ extension Date {
         return Calendar.current.isDateInToday(self)
     }
     
-    func fetchWeek(_ date: Date = .init()) -> Week {
+    func fetchWeek(_ date: Date = .init()) -> [WeekDay] {
         let calendar = Calendar.current
         let startOfDate = calendar.startOfDay(for: date)
         
-        var week: Week = []
+        var week: [WeekDay] = []
         let weekForDate = calendar.dateInterval(of: .weekOfMonth, for: startOfDate)
         guard let starOfWeek = weekForDate?.start else {
             return []
@@ -41,7 +41,7 @@ extension Date {
     }
 
     /// Creating Next Week, based on the Last Current Week's Date
-    func createNextWeek() -> Week {
+    func createNextWeek() -> [WeekDay] {
         let calendar = Calendar.current
         let startOfLastDate = calendar.startOfDay(for: self)
         guard let nextDate = calendar.date(byAdding: .day, value: 1, to: startOfLastDate) else {
@@ -52,7 +52,7 @@ extension Date {
     }
 
     /// Creating Previous Week, based on the First Current Week's Date
-    func createPreviousWeek() -> Week {
+    func createPreviousWeek() -> [WeekDay] {
         let calendar = Calendar.current
         let startOfFirstDate = calendar.startOfDay(for: self)
         guard let previousDate = calendar.date(byAdding: .day, value: -1, to: startOfFirstDate) else {
@@ -66,4 +66,5 @@ extension Date {
     func isSame(_ date: Date) -> Bool {
         return Calendar.current.isDate(self, inSameDayAs: date)
     }
+
 }
