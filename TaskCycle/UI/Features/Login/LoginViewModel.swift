@@ -12,18 +12,8 @@ import GoogleSignIn
 import SwiftUI
 import Combine
 
-protocol LoginViewModelProtocol: ObservableObject {
-    var email: InputField { get set }
-    var password: InputField { get set }
-    var showAlert: Bool { get set }
-    var errorMessage: String { get set }
-    var isRegisterPresented: Bool { get set }
-    func login()
-    func signInWithGoogle()
-    func signIn(withEmail: String, password: String)
-}
-
-class LoginViewModel: LoginViewModelProtocol {
+@MainActor
+class LoginViewModel: ObservableObject {
 
     private var subscription = Set<AnyCancellable>()
 

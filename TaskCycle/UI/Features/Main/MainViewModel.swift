@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
+@MainActor
 class MainViewModel: ObservableObject {
     
     @Published var userId: String = ""

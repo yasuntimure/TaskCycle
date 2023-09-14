@@ -42,7 +42,7 @@ struct WeekSliderView: View {
                             hideKeyboard()
                             viewModel.selectedDay = day
                             viewModel.fetchItems()
-                            print(day.date)
+                            print("Selected Day: ",day.date.weekdayFormat())
                         }
                     }
             }

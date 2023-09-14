@@ -43,10 +43,10 @@ extension FirebaseService {
         }
     }
 
-    func getArray<T: Decodable>(of type: T,with query: Query) async -> Result<[T], Error> {
+    func getArray<T: Decodable>(of type: T, from collection: CollectionReference) async -> Result<[T], Error> {
         do {
             var response: [T] = []
-            let querySnapshot = try await query.getDocuments()
+            let querySnapshot = try await collection.getDocuments()
 
             for document in querySnapshot.documents {
                 do {
@@ -70,26 +70,24 @@ extension FirebaseService {
 
 extension FirebaseService {
 
-    func post<T: FirebaseIdentifiable>(_ value: T, to collection: String) async -> Result<T, Error> {
-        let ref = database.collection(collection).document()
+    func post<T: FirebaseIdentifiable>(_ value: T, to document: DocumentReference) async -> Result<Void, Error> {
         var valueToWrite: T = value
-        valueToWrite.id = ref.documentID
+        valueToWrite.id = document.documentID
         do {
-            try ref.setData(from: valueToWrite)
-            return .success(valueToWrite)
+            try document.setData(from: valueToWrite)
+            return .success(())
         } catch let error {
-            print("Error: \(#function) in collection: \(collection), \(error)")
+            print("Error: \(#function) in collection: \(document.path), \(error)")
             return .failure(error)
         }
     }
 
-    func put<T: FirebaseIdentifiable>(_ value: T, to collection: String) async -> Result<T, Error> {
-        let ref = database.collection(collection).document(value.id)
+    func put<T: FirebaseIdentifiable>(_ value: T, to document: DocumentReference) async -> Result<Void, Error> {
         do {
-            try ref.setData(from: value)
-            return .success(value)
+            try document.setData(from: value)
+            return .success(())
         } catch let error {
-            print("Error: \(#function) in \(collection) for id: \(value.id), \(error)")
+            print("Error: \(#function) in \(document.path) for id: \(value.id), \(error)")
             return .failure(error)
         }
     }

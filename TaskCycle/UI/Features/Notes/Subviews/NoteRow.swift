@@ -73,7 +73,7 @@ struct NoteRow_Previews: PreviewProvider {
             NoteRow(note: .constant(todoItemWithDescription))
                 .environmentObject(Theme())
         }
-        .listRowSpacing(10)
+//        .listRowSpacing(10)
 
     }
 }

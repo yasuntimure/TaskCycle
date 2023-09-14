@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EmptyNoteBuilder {
 
+    @MainActor 
     static func make(userId: String, note: NoteModel) -> some View {
         let viewModel = EmptyNoteViewModel(userId: userId, note: note)
         return EmptyNoteView(viewModel: viewModel)

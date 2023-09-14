@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ToDoNoteBuilder {
 
+    @MainActor 
     static func make(userId: String, note: NoteModel) -> some View {
         let viewModel = ToDoNoteViewModel(userId: userId, note: note)
         return ToDoNoteView(viewModel: viewModel)

@@ -10,14 +10,14 @@ import Firebase
 import GoogleSignIn
 import GoogleSignInSwift
 
-struct LoginView<VM>: View where VM: LoginViewModelProtocol {
+struct LoginView: View {
     @EnvironmentObject var theme: Theme
 
     private enum Fields {
         case email, password
     }
 
-    @ObservedObject var viewModel: VM
+    @ObservedObject var viewModel: LoginViewModel
 
     @FocusState private var focusedField: Fields?
 

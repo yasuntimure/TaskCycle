@@ -10,6 +10,7 @@ import Firebase
 import Combine
 import GoogleSignIn
 
+@MainActor
 class RegisterViewModel: ObservableObject {
 
     private var subscription = Set<AnyCancellable>()

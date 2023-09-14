@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 
+@MainActor
 class NotesViewModel: ObservableObject {
 
     @Published var userId: String

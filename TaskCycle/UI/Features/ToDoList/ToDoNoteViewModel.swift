@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
+@MainActor
 class ToDoNoteViewModel: ObservableObject {
 
     @Published var showAlert: Bool = false

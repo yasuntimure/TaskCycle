@@ -35,8 +35,9 @@ struct DailyView: View {
                 .vSpacing(.top)
 
                 PlusButton() {
-                    viewModel.addNewItem()
-                    viewModel.fetchItems()
+                    withAnimation {
+                        viewModel.insertAndSaveEmptyItem()
+                    }
                 }
                 .vSpacing(.bottom).hSpacing(.trailing)
                 .padding([.trailing,.bottom], 20)
@@ -67,13 +68,13 @@ struct DailyView: View {
 
     @ViewBuilder
     private func ListRow() -> some View {
-        ForEach ($viewModel.items) { $item in
-            ToDoRow(item: $item)
+        ForEach ($viewModel.items) { $rowItem in
+            ToDoRow(item: $rowItem)
                 .padding(.vertical, -5)
                 .hSpacing(.leading)
-                .onChange(of: item) { newItem in
+                .onChange(of: rowItem) { item in
                     withAnimation {
-                        viewModel.update(item: newItem)
+                        viewModel.update(item)
                     }
                 }
         }

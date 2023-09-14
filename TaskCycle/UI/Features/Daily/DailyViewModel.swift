@@ -9,10 +9,10 @@ import SwiftUI
 import FirebaseFirestore
 
 @MainActor
-class DailyViewModel: ObservableObject {
+final class DailyViewModel: ObservableObject {
 
     /// Week Slider Properties
-    @Published var selectedDay: WeekDay = WeekDay(date: .init())
+    @Published var selectedDay: WeekDay
     @Published var weekIndex: Int = 1
     @Published var weeks: [[WeekDay]] = []
     @Published var createWeek: Bool = false
@@ -27,6 +27,7 @@ class DailyViewModel: ObservableObject {
 
     init(userId: String) {
         self.userId = userId
+        selectedDay = WeekDay(date: Date())
         fetchItems()
     }
 }
@@ -68,8 +69,6 @@ extension DailyViewModel {
                 weekIndex = weeks.count - 2
             }
         }
-
-        print("Weeks Count: ", weeks.count)
     }
 
     // Returns if selectedDay date is same day with parameters date
@@ -84,10 +83,51 @@ extension DailyViewModel {
 extension DailyViewModel {
 
     func fetchItems() {
+        handleDB(.fetch)
+    }
+
+    func update(_ item: ToDoItemModel) {
+        handleDB(.update(item))
+        sortItems()
+    }
+
+    func save(_ item: ToDoItemModel) {
+        handleDB(.save(item))
+    }
+
+    func insertAndSaveEmptyItem() {
+        let date = selectedDay.date.weekdayFormat()
+        let emptyItem = ToDoItemModel(date: date)
+        items.insert(emptyItem, at: 0)
+        save(emptyItem)
+    }
+
+    func deleteItems(at indexSet: IndexSet) {
+        indexSet.forEach { index in
+            let item = self.items[index]
+            items.remove(at: index)
+            handleDB(.delete(item))
+        }
+    }
+
+    func moveItems(from indexSet: IndexSet, to newIndex: Int) {
+        items.move(fromOffsets: indexSet, toOffset: newIndex)
+    }
+
+    private func handleDB(_ action: DailyServiceActions) {
         Task {
             do {
-                self.items = try await WeekDayService.get(for: selectedDay.date, userId: userId)
-                self.reorder()
+                switch action {
+                case .fetch:
+                    self.items = try await DailyService.get(for: selectedDay.date, userId: userId)
+                    sortItems()
+                case .update(let item):
+                    try await DailyService.put(item: item, userId: userId)
+                case .save(let item):
+                    try await DailyService.post(item: item, userId: userId)
+                case .delete(let item):
+                    try await DailyService.delete(for: item, userId: userId)
+                }
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -95,83 +135,18 @@ extension DailyViewModel {
         }
     }
 
-    func reorder() {
+    private func sortItems() {
         if items.contains(where: { $0.title.isEmpty }) {
             items.sort(by: { ($0.title.isEmpty && !$1.title.isEmpty) || (!$0.isDone && $1.isDone) })
         } else {
             items.sort(by: { !$0.isDone && $1.isDone })
         }
     }
+}
 
-    func deleteItems(at indexSet: IndexSet) {
-        indexSet.forEach { index in
-            Task {
-                do {
-                    let item = self.items[index]
-                    try await WeekDayService.delete(for: item, userId: userId)
-                } catch {
-                    showAlert = true
-                    errorMessage = error.localizedDescription
-                }
-            }
-        }
-    }
-
-//    func deleteItems(at indexSet: IndexSet) {
-//        indexSet.forEach { index in
-//            Firestore.firestore()
-//                .collection("users")
-//                .document(userId)
-//                .collection("weekdays")
-//                .document(selectedDay.formatedDate())
-//                .collection("items")
-//                .document(items[index].id)
-//                .delete { err in
-//                    if let err = err {
-//                        print("Error removing document: \(err)")
-//                    } else {
-//                        print("Document successfully removed!")
-//                    }
-//                }
-//        }
-//        items.remove(atOffsets: indexSet)
-//    }
-
-    func moveItems(from indexSet: IndexSet, to newIndex: Int) {
-        items.move(fromOffsets: indexSet, toOffset: newIndex)
-    }
-
-    func update(item: ToDoItemModel) {
-        Firestore.firestore()
-            .collection("users")
-            .document(userId)
-            .collection("weekdays")
-            .document(selectedDay.formatedDate())
-            .collection("items")
-            .document(item.id)
-            .updateData(["title": item.title,
-                         "isDone": item.isDone]) { error in
-
-                if let error = error {
-                    print("Error updating document: \(error)")
-                } else {
-                    print("Item updated")
-                }
-            }
-        self.reorder()
-    }
-
-    func addNewItem() {
-        let item = ToDoItemModel(date: selectedDay.date.weekdayFormat())
-
-        // Save model
-        Firestore.firestore()
-            .collection ("users")
-            .document(userId)
-            .collection("weekdays")
-            .document(selectedDay.date.weekdayFormat())
-            .collection("items")
-            .document (item.id)
-            .setData(item.asDictionary())
-    }
+fileprivate enum DailyServiceActions {
+    case fetch
+    case update(ToDoItemModel)
+    case save(ToDoItemModel)
+    case delete(ToDoItemModel)
 }
