@@ -10,6 +10,8 @@ import SwiftUI
 struct MainView: View {
 
     @StateObject var viewModel = MainViewModel()
+    @StateObject var dailyViewModel = DailyViewModel()
+    @StateObject var notesViewModel = NotesViewModel()
 
     @StateObject var theme: Theme = Theme()
 
@@ -19,13 +21,13 @@ struct MainView: View {
                 LoginView(viewModel: LoginViewModel())
             } else {
                 TabView {
-                    DailyView(viewModel: DailyViewModel(userId: viewModel.userId))
+                    DailyView(viewModel: dailyViewModel)
                         .tabItem {
                             Label("Daily", systemImage: "calendar")
                                 .foregroundColor(theme.mTintColor)
 
                         }
-                    NotesView(viewModel: NotesViewModel(userId: viewModel.userId))
+                    NotesView(viewModel: notesViewModel)
                         .tabItem {
                             Label("Notes", systemImage: "list.clipboard")
                                 .foregroundColor(theme.mTintColor)

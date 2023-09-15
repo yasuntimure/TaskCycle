@@ -31,7 +31,7 @@ public class Mock {
                                 title: "Mock Title",
                                 description: "",
                                 items: [item, item, item, item],
-                                date: Date().timeIntervalSince1970,
+                                date: Date().weekdayFormat(),
                                 noteType: NoteType.empty.rawValue)
 
     static let item = ToDoItemModel(id: UUID().uuidString,

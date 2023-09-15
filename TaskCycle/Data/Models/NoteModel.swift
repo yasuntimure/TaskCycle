@@ -9,24 +9,31 @@ import Foundation
 import FirebaseFirestoreSwift
 import EmojiPicker
 
-protocol NoteProtocol {
-    var id: String { get }
-    var title: String { get set }
-    var description: String { get set }
-    var items: [ToDoItemModel] { get set }
-    var date: TimeInterval { get set }
-    var emoji: String? { get set }
-    var noteType: String { get set }
-}
-
-struct NoteModel: NoteProtocol, Hashable, Codable, Identifiable {
+struct NoteModel: FirebaseIdentifiable {
     var id: String
     var title: String
     var description: String
     var items: [ToDoItemModel]
-    var date: TimeInterval
+    var date: String
     var emoji: String?
     var noteType: String
+
+    init(id: String = UUID().uuidString,
+         title: String = "",
+         description: String = "",
+         items: [ToDoItemModel] = [],
+         date: String = Date().weekdayFormat(),
+         emoji: String? = nil,
+         noteType: String = NoteType.empty.rawValue)
+    {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.items = items
+        self.date = date
+        self.emoji = emoji
+        self.noteType = noteType
+    }
 
     func type() -> NoteType {
         NoteType(rawValue: noteType) ?? NoteType.empty

@@ -8,5 +8,6 @@
 import Foundation
 
 public enum FirebaseError: Error {
+    case invalidPath
     case documentNotFound
 }

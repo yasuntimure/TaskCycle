@@ -7,11 +7,12 @@
 
 import SwiftUI
 import FirebaseFirestore
+import SwiftKeychainWrapper
+
 
 @MainActor
 class NotesViewModel: ObservableObject {
 
-    @Published var userId: String
     @Published var settingsPresented: Bool = false
 
     @Published var notes: [NoteModel] = []
@@ -19,65 +20,22 @@ class NotesViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    init(userId: String) {
-        self.userId = userId
+    var userId: String {
+        return KeychainWrapper.standard.string(forKey: "userIdKey") ?? ""
+    }
+
+    init() {
         self.fetchNotes()
     }
 
     func fetchNotes() {
-        Firestore.firestore()
-            .collection("users")
-            .document(userId)
-            .collection("notes")
-            .getDocuments { [weak self] (querySnapshot, err) in
-
-                if let err = err {
-
-                    print("Error getting documents: \(err)")
-
-                } else {
-
-                    self?.notes.removeAll()
-
-                    guard let documents = querySnapshot?.documents else {
-                        print("Documents couldnt casted")
-                        return
-                    }
-
-                    for document in documents {
-                        let result = Result {
-                            try document.data(as: NoteModel.self)
-                        }
-                        switch result {
-                        case .success(let note):
-                            self?.notes.append(note)
-                        case .failure(let error):
-                            print("Error decoding item: \(error)")
-                        }
-                    }
-
-                    if let notes = self?.notes, notes.isEmpty {
-                        self?.addTemplateNote()
-                        self?.fetchNotes()
-                    }
-                }
-            }
+        executeDBOperation(.fetch)
     }
 
     func deleteItems(at indexSet: IndexSet) {
         indexSet.forEach { index in
-            Firestore.firestore()
-                .collection("users")
-                .document(self.userId)
-                .collection("notes")
-                .document(notes[index].id)
-                .delete { err in
-                    if let err = err {
-                        print("Error removing document: \(err)")
-                    } else {
-                        print("Document successfully removed!")
-                    }
-                }
+            let note = notes[index]
+            executeDBOperation(.delete(note))
         }
         notes.remove(atOffsets: indexSet)
     }
@@ -87,39 +45,43 @@ class NotesViewModel: ObservableObject {
     }
 
     func addTemplateNote() {
-        let note = NoteModel(id: UUID().uuidString,
-                             title: "Quick Note",
-                             description: "Complete your quick to do list!",
-                             items: [],
-                             date: Date().timeIntervalSince1970,
-                             noteType: NoteType.empty.rawValue)
-
-        // Save model
-        Firestore.firestore()
-            .collection("users")
-            .document(self.userId)
-            .collection("notes")
-            .document (note.id)
-            .setData(note.asDictionary())
+        let note = NoteModel(title: "Quick Note",
+                             description: "Complete your quick to do list!")
+        executeDBOperation(.save(note))
     }
 
     func saveNewNote(type: NoteType, completion: @escaping (NoteModel) -> Void) {
-        let note = NoteModel(id: UUID().uuidString,
-                             title: "",
-                             description: "",
-                             items: [],
-                             date: Date().timeIntervalSince1970,
-                             noteType: type.rawValue)
-
-        // Save model
-        Firestore.firestore()
-            .collection("users")
-            .document(self.userId)
-            .collection("notes")
-            .document (note.id)
-            .setData(note.asDictionary())
-
+        let note = NoteModel(noteType: type.rawValue)
+        executeDBOperation(.save(note))
         completion(note)
     }
 
+    private func executeDBOperation(_ action: NotesServiceActions) {
+        Task {
+            do {
+                switch action {
+                case .fetch:
+                    self.notes = try await NotesService.getNotes()
+                    if notes.isEmpty {
+                        self.addTemplateNote()
+                        self.fetchNotes()
+                    }
+                case .save(let note):
+                    try await NotesService.post(note)
+                case .delete(let note):
+                    try await NotesService.delete(note)
+                }
+            } catch {
+                showAlert = true
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+
+}
+
+enum NotesServiceActions {
+    case fetch
+    case save(NoteModel)
+    case delete(NoteModel)
 }

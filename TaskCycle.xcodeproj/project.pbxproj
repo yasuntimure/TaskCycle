@@ -27,6 +27,8 @@
 		D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D81A2A843570005E534C /* DailyViewModel.swift */; };
 		D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83A2A85A17C005E534C /* CustomDateView.swift */; };
 		D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83C2A85A396005E534C /* WeekSliderView.swift */; };
+		D0A8AB9D2AB3CFBE00C7A159 /* NotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */; };
+		D0A8AB9F2AB3D01A00C7A159 /* FirestorePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */; };
 		D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A94FCD2A91AB9E00656814 /* IconView.swift */; };
 		D0A94FD12A91B12F00656814 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = D0A94FD02A91B12F00656814 /* EmojiPicker */; };
 		D0A94FD42A91B9EE00656814 /* EmptyNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A94FD32A91B9EE00656814 /* EmptyNoteView.swift */; };
@@ -54,6 +56,7 @@
 		D0DA8BA82A7D80DE00458284 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA8BA72A7D80DE00458284 /* FirebaseAuth */; };
 		D0DA8BAA2A7D80DE00458284 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA8BA92A7D80DE00458284 /* FirebaseFirestore */; };
 		D0DA8BAC2A7D80DE00458284 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA8BAB2A7D80DE00458284 /* FirebaseFirestoreSwift */; };
+		D0E746392AB3FAB80025A0C7 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = D0E746382AB3FAB80025A0C7 /* SwiftKeychainWrapper */; };
 		D0ED2EB82A802BA700828887 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB02A802BA700828887 /* TextFieldView.swift */; };
 		D0ED2EB92A802BA700828887 /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB12A802BA700828887 /* PlusButton.swift */; };
 		D0ED2EBB2A802BA700828887 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB32A802BA700828887 /* PrimaryButton.swift */; };
@@ -127,6 +130,8 @@
 		D098D81A2A843570005E534C /* DailyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewModel.swift; sourceTree = "<group>"; };
 		D098D83A2A85A17C005E534C /* CustomDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
 		D098D83C2A85A396005E534C /* WeekSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderView.swift; sourceTree = "<group>"; };
+		D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesService.swift; sourceTree = "<group>"; };
+		D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePath.swift; sourceTree = "<group>"; };
 		D0A94FCD2A91AB9E00656814 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		D0A94FD32A91B9EE00656814 /* EmptyNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNoteView.swift; sourceTree = "<group>"; };
 		D0A94FD62A91BA0000656814 /* BoardNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteView.swift; sourceTree = "<group>"; };
@@ -198,6 +203,7 @@
 				D0A94FD12A91B12F00656814 /* EmojiPicker in Frameworks */,
 				D0DA8BAA2A7D80DE00458284 /* FirebaseFirestore in Frameworks */,
 				D0DA8BAC2A7D80DE00458284 /* FirebaseFirestoreSwift in Frameworks */,
+				D0E746392AB3FAB80025A0C7 /* SwiftKeychainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +216,7 @@
 				D0267DF82A9073EA0079F90E /* NotesView.swift */,
 				D0267DFF2A912DDB0079F90E /* NotesViewModel.swift */,
 				D0267E0C2A9132690079F90E /* Subviews */,
+				D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -250,6 +257,7 @@
 				D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */,
 				D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */,
 				D0907A512AB1059A00353AAA /* FirebaseError.swift */,
+				D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */,
 			);
 			path = FirebaseService;
 			sourceTree = "<group>";
@@ -537,6 +545,7 @@
 				D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */,
 				D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */,
 				D0A94FD02A91B12F00656814 /* EmojiPicker */,
+				D0E746382AB3FAB80025A0C7 /* SwiftKeychainWrapper */,
 			);
 			productName = TaskCycle;
 			productReference = D0DA8B932A7D7DAF00458284 /* TaskCycle.app */;
@@ -573,6 +582,7 @@
 				D0DA8BA62A7D80DE00458284 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D0B3B0C32A8A938C001B14D1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				D0A94FCF2A91B12F00656814 /* XCRemoteSwiftPackageReference "EmojiPicker" */,
+				D0E746372AB3FAB80025A0C7 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 			);
 			productRefGroup = D0DA8B942A7D7DAF00458284 /* Products */;
 			projectDirPath = "";
@@ -638,6 +648,7 @@
 				D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */,
 				D0907A4F2AB0FF6400353AAA /* FirebaseIdentifiable.swift in Sources */,
 				D0ED2ECD2A802C1200828887 /* ScreenSize.swift in Sources */,
+				D0A8AB9D2AB3CFBE00C7A159 /* NotesService.swift in Sources */,
 				D0ED2EEE2A80330D00828887 /* DailyView.swift in Sources */,
 				D0ED2EBE2A802BA700828887 /* GradientView.swift in Sources */,
 				D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */,
@@ -656,6 +667,7 @@
 				D0ED2EC82A802BE900828887 /* LoginView.swift in Sources */,
 				D0ED2EE02A802D4400828887 /* EncodableExtension.swift in Sources */,
 				D0ED2EBF2A802BA700828887 /* LoadingView.swift in Sources */,
+				D0A8AB9F2AB3D01A00C7A159 /* FirestorePath.swift in Sources */,
 				D05412D62AACE8F400A39508 /* PlaceholderToDoRow.swift in Sources */,
 				D036B4C42A8AF590007F121C /* MainView.swift in Sources */,
 				D0ED2EBC2A802BA700828887 /* ToggleButton.swift in Sources */,
@@ -980,6 +992,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		D0E746372AB3FAB80025A0C7 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1012,6 +1032,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D0DA8BA62A7D80DE00458284 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		D0E746382AB3FAB80025A0C7 /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0E746372AB3FAB80025A0C7 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

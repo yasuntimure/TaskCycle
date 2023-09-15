@@ -109,14 +109,13 @@ extension NotesView {
     private func NoteNavigationRow() -> some View {
         ForEach ($viewModel.notes) { $note in
             NavigationLink {
-                let userId = viewModel.userId
                 switch note.type() {
                 case .empty:
-                    EmptyNoteBuilder.make(userId: userId, note: note)
+                    EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
                 case .todo:
-                    ToDoNoteBuilder.make(userId: userId, note: note)
+                    ToDoNoteBuilder.make(userId: viewModel.userId, note: note)
                 case .board:
-                    EmptyNoteBuilder.make(userId: userId, note: note)
+                    EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
                 }
             } label: {
                 NoteRow(note: $note)
@@ -177,7 +176,7 @@ extension NotesView {
 struct
 NotesView_Previews: PreviewProvider {
     static var previews: some View {
-        NotesView(viewModel: NotesViewModel(userId: " "))
+        NotesView(viewModel: NotesViewModel())
             .environmentObject(Theme())
     }
 }

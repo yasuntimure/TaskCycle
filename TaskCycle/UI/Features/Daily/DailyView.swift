@@ -88,7 +88,7 @@ struct DailyView: View {
 
 struct DailyView_Previews: PreviewProvider {
     static var previews: some View {
-        DailyView(viewModel: DailyViewModel(userId: Mock.userId))
+        DailyView(viewModel: DailyViewModel())
             .environmentObject(MainViewModel())
             .environmentObject(Theme())
     }

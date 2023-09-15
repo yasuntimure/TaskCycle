@@ -11,13 +11,6 @@ import FirebaseFirestoreSwift
 import Foundation
 import SwiftUI
 
-enum Collections: String {
-    case users = "users"
-    case notes = "notes"
-    case weekdays = "weekdays"
-    case items = "items"
-}
-
 struct FirebaseService {
     static let shared = FirebaseService()
     let database = Firestore.firestore()

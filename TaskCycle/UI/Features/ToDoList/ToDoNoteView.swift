@@ -84,6 +84,6 @@ struct ToDoNoteView: View {
 struct ToDoNoteView_Previews: PreviewProvider {
     static var previews: some View {
         ToDoNoteBuilder.make(userId: Mock.userId, note: Mock.note)
-            .environmentObject(NotesViewModel(userId: Mock.userId))
+            .environmentObject(NotesViewModel())
     }
 }

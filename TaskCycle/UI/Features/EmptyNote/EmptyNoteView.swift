@@ -57,7 +57,7 @@ struct EmptyNoteView_Previews: PreviewProvider {
 
     static let note = NoteModel(id: UUID().uuidString,
                                 title: "", description: "",
-                                items: [], date: Date().timeIntervalSince1970,
+                                items: [], date: Date().weekdayFormat(),
                                 noteType: NoteType.empty.rawValue)
 
     static var previews: some View {

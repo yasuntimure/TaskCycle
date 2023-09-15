@@ -7,51 +7,46 @@
 
 import Firebase
 import FirebaseFirestore
+import SwiftKeychainWrapper
+
+enum CollectionName: String {
+    case users
+    case weekdays
+    case items
+    case notes
+}
 
 struct DailyService {
-    static func get(for date: Date, userId: String) async throws -> [ToDoItemModel] {
-        let ref = FirestorePath(id: userId)
-        let collection = ref.itemsCollectionReference(date: date.weekdayFormat())
+
+    private static var userId: String {
+        return KeychainWrapper.standard.string(forKey: "userIdKey") ?? ""
+    }
+
+    static func getItems(for date: String) async throws -> [ToDoItemModel] {
+        guard let collection = FirestorePath.users(userId)?.weekDays(date).items().collectionReference() else {
+            throw FirebaseError.invalidPath
+        }
         return try await FirebaseService.shared.getArray(of: ToDoItemModel(), from: collection).get()
     }
 
-    static func delete(for item: ToDoItemModel, userId: String) async throws {
-        let ref = FirestorePath(id: userId)
-        let document = ref.itemsCollectionReference(date: item.date).document(item.id)
+    static func delete(_ item: ToDoItemModel) async throws {
+        guard let document = FirestorePath.users(userId)?.weekDays(item.date).items(item.id).documentReference() else {
+            throw FirebaseError.invalidPath
+        }
         return try await FirebaseService.shared.delete(document).get()
     }
 
-    static func put(item: ToDoItemModel, userId: String) async throws {
-        let ref = FirestorePath(id: userId)
-        let document = ref.itemsCollectionReference(date: item.date).document(item.id)
+    static func put(_ item: ToDoItemModel) async throws {
+        guard let document = FirestorePath.users(userId)?.weekDays(item.date).items(item.id).documentReference() else {
+            throw FirebaseError.invalidPath
+        }
         return try await FirebaseService.shared.put(item, to: document).get()
     }
 
-    static func post(item: ToDoItemModel, userId: String) async throws {
-        let ref = FirestorePath(id: userId)
-        let document = ref.itemsCollectionReference(date: item.date).document(item.id)
+    static func post(_ item: ToDoItemModel) async throws {
+        guard let document = FirestorePath.users(userId)?.weekDays(item.date).items(item.id).documentReference() else {
+            throw FirebaseError.invalidPath
+        }
         return try await FirebaseService.shared.post(item, to: document).get()
     }
 }
-
-fileprivate struct FirestorePath {
-    let id: String
-
-    func userDocumentReference() -> DocumentReference {
-        return FirebaseService.shared.database
-            .collection(Collections.users.rawValue)
-            .document(id)
-    }
-
-    func weekDayDocumentReference(date: String) -> DocumentReference {
-        return userDocumentReference()
-            .collection(Collections.weekdays.rawValue)
-            .document(date)
-    }
-
-    func itemsCollectionReference(date: String) -> CollectionReference {
-        return weekDayDocumentReference(date: date)
-            .collection(Collections.items.rawValue)
-    }
-}
-

@@ -23,10 +23,7 @@ final class DailyViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    @Published var userId: String
-
-    init(userId: String) {
-        self.userId = userId
+    init() {
         selectedDay = WeekDay(date: Date())
         fetchItems()
     }
@@ -83,16 +80,16 @@ extension DailyViewModel {
 extension DailyViewModel {
 
     func fetchItems() {
-        handleDB(.fetch)
+        executeDBOperation(.fetch)
     }
 
     func update(_ item: ToDoItemModel) {
-        handleDB(.update(item))
+        executeDBOperation(.update(item))
         sortItems()
     }
 
     func save(_ item: ToDoItemModel) {
-        handleDB(.save(item))
+        executeDBOperation(.save(item))
     }
 
     func insertAndSaveEmptyItem() {
@@ -106,7 +103,7 @@ extension DailyViewModel {
         indexSet.forEach { index in
             let item = self.items[index]
             items.remove(at: index)
-            handleDB(.delete(item))
+            executeDBOperation(.delete(item))
         }
     }
 
@@ -114,19 +111,19 @@ extension DailyViewModel {
         items.move(fromOffsets: indexSet, toOffset: newIndex)
     }
 
-    private func handleDB(_ action: DailyServiceActions) {
+    private func executeDBOperation(_ action: DailyServiceActions) {
         Task {
             do {
                 switch action {
                 case .fetch:
-                    self.items = try await DailyService.get(for: selectedDay.date, userId: userId)
+                    self.items = try await DailyService.getItems(for: selectedDay.date.weekdayFormat())
                     sortItems()
                 case .update(let item):
-                    try await DailyService.put(item: item, userId: userId)
+                    try await DailyService.put(item)
                 case .save(let item):
-                    try await DailyService.post(item: item, userId: userId)
+                    try await DailyService.post(item)
                 case .delete(let item):
-                    try await DailyService.delete(for: item, userId: userId)
+                    try await DailyService.delete(item)
                 }
             } catch {
                 showAlert = true
