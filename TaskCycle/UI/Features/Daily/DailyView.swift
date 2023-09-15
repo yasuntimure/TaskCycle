@@ -39,6 +39,7 @@ struct DailyView: View {
                         viewModel.insertAndSaveEmptyItem()
                     }
                 }
+                .disabled(viewModel.items.contains(where: { $0.title.isEmpty }))
                 .vSpacing(.bottom).hSpacing(.trailing)
                 .padding([.trailing,.bottom], 20)
                 .padding(3)

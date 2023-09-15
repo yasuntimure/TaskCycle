@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ToDoNoteView: View {
 
-    @EnvironmentObject var notesViewModel: NotesViewModel
-
     @ObservedObject var viewModel: ToDoNoteViewModel
 
     @FocusState var titleFocused: Bool
@@ -58,10 +56,7 @@ struct ToDoNoteView: View {
         .onDisappear {
             if viewModel.uncompletedNote {
                 viewModel.deleteNote()
-            } else {
-                viewModel.updateNote()
-                notesViewModel.fetchNotes()
-            }
+            } 
         }
     }
 
@@ -81,9 +76,9 @@ struct ToDoNoteView: View {
 }
 
 
-struct ToDoNoteView_Previews: PreviewProvider {
-    static var previews: some View {
-        ToDoNoteBuilder.make(userId: Mock.userId, note: Mock.note)
-            .environmentObject(NotesViewModel())
-    }
-}
+//struct ToDoNoteView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
+//            .environmentObject(NotesViewModel())
+//    }
+//}

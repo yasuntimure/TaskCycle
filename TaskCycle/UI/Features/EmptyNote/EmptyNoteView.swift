@@ -14,8 +14,6 @@ enum EmptyNoteFields: String {
 
 struct EmptyNoteView: View {
 
-    @EnvironmentObject var notesViewModel: NotesViewModel
-
     @ObservedObject var viewModel: EmptyNoteViewModel
 
     @FocusState var focusState: EmptyNoteFields?
@@ -45,9 +43,7 @@ struct EmptyNoteView: View {
         .onDisappear {
             if viewModel.uncompletedNote {
                 viewModel.deleteNote()
-            } else {
-                notesViewModel.fetchNotes()
-            }
+            } 
         }
     }
 
@@ -61,12 +57,6 @@ struct EmptyNoteView_Previews: PreviewProvider {
                                 noteType: NoteType.empty.rawValue)
 
     static var previews: some View {
-        EmptyNoteBuilder.make(userId: Mock.userId, note: Mock.note)
-    }
-}
-
-private extension String {
-    func placeholder() -> String {
-        self.isEmpty ? "Enter ..." : self
+        EmptyNoteView(viewModel: EmptyNoteViewModel(note: note))
     }
 }

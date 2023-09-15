@@ -29,11 +29,25 @@ struct NotesService {
         return try await FirebaseService.shared.delete(document).get()
     }
 
+    static func delete(_ note: NoteModel, of item: ToDoItemModel) async throws {
+        guard let document = FirestorePath.users(userId)?.notes(note.id).items(item.id).documentReference() else {
+            throw FirebaseError.invalidPath
+        }
+        return try await FirebaseService.shared.delete(document).get()
+    }
+
     static func post(_ note: NoteModel) async throws {
         guard let document = FirestorePath.users(userId)?.notes(note.id).documentReference() else {
             throw FirebaseError.invalidPath
         }
         return try await FirebaseService.shared.post(note, to: document).get()
+    }
+
+    static func put(_ note: NoteModel) async throws {
+        guard let document = FirestorePath.users(userId)?.notes(note.id).documentReference() else {
+            throw FirebaseError.invalidPath
+        }
+        return try await FirebaseService.shared.put(note, to: document).get()
     }
 }
 

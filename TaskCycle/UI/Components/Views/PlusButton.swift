@@ -25,10 +25,10 @@ struct PlusButton: View {
                     .foregroundColor(theme.mTintColor)
                     .frame(width: size * 2,
                            height: size * 2)
-//                Circle()
-//                    .foregroundColor(color == .light ? .white : .black)
-//                    .frame(width: size * 1.9,
-//                           height: size * 1.9)
+                Circle()
+                    .foregroundColor(color == .light ? Color.backgroundColor : .black)
+                    .frame(width: size * 1.9,
+                           height: size * 1.9)
 
                 Rectangle()
                     .foregroundColor(theme.mTintColor)

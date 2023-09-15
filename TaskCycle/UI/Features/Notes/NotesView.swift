@@ -44,12 +44,15 @@ struct NotesView: View {
             .navigationDestination(for: NoteStack.self) { value in
                 switch value {
                 case .empty(let note):
-                    EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
+                    EmptyNoteView(viewModel: EmptyNoteViewModel(note: note))
                 case .todo(let note):
-                    ToDoNoteBuilder.make(userId: viewModel.userId, note: note)
+                    ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
                 case .board:
                     Text("Board")
                 }
+            }
+            .onAppear {
+                viewModel.fetchNotes()
             }
         }
         .environmentObject(viewModel)
@@ -111,11 +114,11 @@ extension NotesView {
             NavigationLink {
                 switch note.type() {
                 case .empty:
-                    EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
+                    EmptyNoteView(viewModel: EmptyNoteViewModel(note: note))
                 case .todo:
-                    ToDoNoteBuilder.make(userId: viewModel.userId, note: note)
+                    ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
                 case .board:
-                    EmptyNoteBuilder.make(userId: viewModel.userId, note: note)
+                    ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
                 }
             } label: {
                 NoteRow(note: $note)

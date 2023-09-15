@@ -11,8 +11,10 @@ import FirebaseFirestore
 @MainActor
 class EmptyNoteViewModel: ObservableObject {
 
-    @Published var userId: String
     @Published var note: NoteModel
+
+    @Published var showAlert: Bool = false
+    @Published var errorMessage: String = ""
 
     var uncompletedNote: Bool {
         note.title.isEmpty && descriptionIsEmpty
@@ -22,8 +24,7 @@ class EmptyNoteViewModel: ObservableObject {
         (note.description.trimmingCharacters(in: .whitespaces).isEmpty)
     }
 
-    init(userId: String, note: NoteModel) {
-        self.userId = userId
+    init(note: NoteModel) {
         self.note = note
     }
 
@@ -40,35 +41,25 @@ class EmptyNoteViewModel: ObservableObject {
     }
 
     func updateNote() {
-        Firestore.firestore()
-            .collection("users")
-            .document(userId)
-            .collection("notes")
-            .document(note.id)
-            .updateData(["title": note.title,
-                         "description": note.description]) { error in
-
-                if let error = error {
-                    print("Error updating document: \(error)")
-                } else {
-                    print("Note updated")
-                }
+        Task {
+            do {
+                try await NotesService.put(note)
+            } catch {
+                showAlert = true
+                errorMessage = error.localizedDescription
             }
+        }
     }
 
     func deleteNote() {
-        Firestore.firestore()
-            .collection("users")
-            .document(userId)
-            .collection("notes")
-            .document(note.id)
-            .delete { err in
-                if let err = err {
-                    print("Error removing document: \(err)")
-                } else {
-                    print("Note successfully removed!")
-                }
+        Task {
+            do {
+                try await NotesService.delete(note)
+            } catch {
+                showAlert = true
+                errorMessage = error.localizedDescription
             }
+        }
     }
 
 }

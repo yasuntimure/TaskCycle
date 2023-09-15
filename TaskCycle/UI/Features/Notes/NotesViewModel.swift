@@ -20,10 +20,6 @@ class NotesViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    var userId: String {
-        return KeychainWrapper.standard.string(forKey: "userIdKey") ?? ""
-    }
-
     init() {
         self.fetchNotes()
     }

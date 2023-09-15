@@ -39,8 +39,6 @@
 		D0C5F71F2A9272B100D5CE44 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F71E2A9272B100D5CE44 /* NoteView.swift */; };
 		D0C5F7212A93C94A00D5CE44 /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F7202A93C94A00D5CE44 /* NoteViewModel.swift */; };
 		D0C5F7242A93CA4500D5CE44 /* EmptyNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F7232A93CA4500D5CE44 /* EmptyNoteViewModel.swift */; };
-		D0C5F7262A93CB6700D5CE44 /* EmptyNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F7252A93CB6700D5CE44 /* EmptyNoteBuilder.swift */; };
-		D0C5F7282A94057A00D5CE44 /* ToDoNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F7272A94057A00D5CE44 /* ToDoNoteBuilder.swift */; };
 		D0C5F7302A981FDA00D5CE44 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C5F72F2A981FDA00D5CE44 /* WidgetKit.framework */; };
 		D0C5F7322A981FDA00D5CE44 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C5F7312A981FDA00D5CE44 /* SwiftUI.framework */; };
 		D0C5F7352A981FDA00D5CE44 /* TaskCycleWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5F7342A981FDA00D5CE44 /* TaskCycleWidgetBundle.swift */; };
@@ -139,8 +137,6 @@
 		D0C5F71E2A9272B100D5CE44 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		D0C5F7202A93C94A00D5CE44 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
 		D0C5F7232A93CA4500D5CE44 /* EmptyNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNoteViewModel.swift; sourceTree = "<group>"; };
-		D0C5F7252A93CB6700D5CE44 /* EmptyNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNoteBuilder.swift; sourceTree = "<group>"; };
-		D0C5F7272A94057A00D5CE44 /* ToDoNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoNoteBuilder.swift; sourceTree = "<group>"; };
 		D0C5F72D2A981FDA00D5CE44 /* TaskCycleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaskCycleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0C5F72F2A981FDA00D5CE44 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		D0C5F7312A981FDA00D5CE44 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -221,16 +217,15 @@
 			path = Notes;
 			sourceTree = "<group>";
 		};
-		D0267E052A9130DB0079F90E /* ToDoList */ = {
+		D0267E052A9130DB0079F90E /* ToDoNote */ = {
 			isa = PBXGroup;
 			children = (
 				D0267E062A9130DB0079F90E /* ToDoNoteView.swift */,
 				D05412D32AACDFE300A39508 /* ListRowNavigationLink.swift */,
 				D0267E072A9130DB0079F90E /* ToDoNoteViewModel.swift */,
-				D0C5F7272A94057A00D5CE44 /* ToDoNoteBuilder.swift */,
 				D05412D52AACE8F400A39508 /* PlaceholderToDoRow.swift */,
 			);
-			path = ToDoList;
+			path = ToDoNote;
 			sourceTree = "<group>";
 		};
 		D0267E0C2A9132690079F90E /* Subviews */ = {
@@ -288,7 +283,6 @@
 			children = (
 				D0A94FD32A91B9EE00656814 /* EmptyNoteView.swift */,
 				D0C5F7232A93CA4500D5CE44 /* EmptyNoteViewModel.swift */,
-				D0C5F7252A93CB6700D5CE44 /* EmptyNoteBuilder.swift */,
 			);
 			path = EmptyNote;
 			sourceTree = "<group>";
@@ -378,7 +372,7 @@
 				D0C5F7222A93CA3300D5CE44 /* EmptyNote */,
 				D0C5F71D2A92729E00D5CE44 /* Note */,
 				D0267E0D2A91343A0079F90E /* Main */,
-				D0267E052A9130DB0079F90E /* ToDoList */,
+				D0267E052A9130DB0079F90E /* ToDoNote */,
 				D0ED2EEF2A80332600828887 /* Daily */,
 				D0267DF72A9073DD0079F90E /* Notes */,
 				D0C996942A886FE30085481B /* Settings */,
@@ -642,7 +636,6 @@
 				D0ED2EC72A802BE900828887 /* LoginViewModel.swift in Sources */,
 				D0ED2EFC2A81AA2500828887 /* DateExtension.swift in Sources */,
 				D0ED2EF62A81A2D600828887 /* ColorExtension.swift in Sources */,
-				D0C5F7282A94057A00D5CE44 /* ToDoNoteBuilder.swift in Sources */,
 				D0907A4D2AB0F09F00353AAA /* FirebaseService.swift in Sources */,
 				D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */,
 				D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */,
@@ -678,7 +671,6 @@
 				D0267DF92A9073EA0079F90E /* NotesView.swift in Sources */,
 				D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */,
 				D0907A552AB108FE00353AAA /* DailyService.swift in Sources */,
-				D0C5F7262A93CB6700D5CE44 /* EmptyNoteBuilder.swift in Sources */,
 				D0ED2EE32A802D4400828887 /* PreferenceKeyExtension.swift in Sources */,
 				D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */,
 				D0A94FD72A91BA0000656814 /* BoardNoteView.swift in Sources */,
