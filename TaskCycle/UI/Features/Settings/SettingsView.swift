@@ -76,16 +76,20 @@ struct SettingsView: View {
                 theme.mTintColor = color
             }
         }) {
-            Circle()
-                .fill(color)
-                .frame(width: theme.mTintColor == color ? 40 : 30,
-                       height: theme.mTintColor == color ? 40 : 30)
-                .background(
+            VStack {
+                Circle()
+                    .fill(color)
+                    .frame(width: theme.mTintColor == color ? 40 : 30,
+                           height: theme.mTintColor == color ? 40 : 30)
+                    .layeredBackground(color)
+
+                if theme.mTintColor == color {
                     Circle()
-                        .fill(.white)
-                        .frame(width: theme.mTintColor == color ? 45 : 30,
-                               height: theme.mTintColor == color ? 45 : 30)
-                )
+                        .fill(color)
+                        .frame(width: 8, height: 8)
+                        .layeredBackground(color)
+                }
+            }
         }
     }
 
@@ -132,10 +136,10 @@ fileprivate struct SettingsRowStyleModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
             .hSpacing(.leading)
             .padding(.leading)
-            .background(Color.backgroundColor)
+            .layeredBackground(Color.backgroundColor)
             .cornerRadius(12)
 
     }

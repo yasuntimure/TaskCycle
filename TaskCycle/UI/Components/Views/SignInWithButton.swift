@@ -49,9 +49,9 @@ struct SignInWithButton: View {
                     .padding(.trailing, 20)
             }
             .frame(width: width, height: height)
-            .background()
-            .cornerRadius(20)
+            .layeredBackground(.white)
         }
+
     }
 }
 

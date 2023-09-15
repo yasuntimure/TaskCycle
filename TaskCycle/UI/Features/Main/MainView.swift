@@ -16,10 +16,8 @@ struct MainView: View {
     @StateObject var theme: Theme = Theme()
 
     var body: some View {
-        NavigationView {
-            if viewModel.userId.isEmpty {
-                LoginView(viewModel: LoginViewModel())
-            } else {
+        if viewModel.userLoggedIn {
+            NavigationView {
                 TabView {
                     DailyView(viewModel: dailyViewModel)
                         .tabItem {
@@ -40,9 +38,13 @@ struct MainView: View {
                 }
                 .tint(theme.mTintColor)
             }
+            .environmentObject(viewModel)
+            .environmentObject(theme)
+        } else {
+            LoginView(viewModel: LoginViewModel())
+                .environmentObject(theme)
         }
-        .environmentObject(viewModel)
-        .environmentObject(theme)
+
     }
 }
 

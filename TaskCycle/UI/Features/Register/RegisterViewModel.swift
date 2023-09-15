@@ -7,8 +7,10 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 import Combine
 import GoogleSignIn
+import SwiftKeychainWrapper
 
 @MainActor
 class RegisterViewModel: ObservableObject {
@@ -127,6 +129,7 @@ class RegisterViewModel: ObservableObject {
                 self?.showAlert(message: error?.localizedDescription ?? "Could not create a new account!")
                 return
             }
+            KeychainWrapper.standard.set(userId, forKey: "userIdKey")
             completion(userId)
         }
     }

@@ -86,8 +86,8 @@ class LoginViewModel: ObservableObject {
                 self?.showAlert(message: error?.localizedDescription ?? "Could not create a new account!")
                 return
             }
-            let email = user.displayName ?? "user"
-            print("Success: \(email) logged in")
+            let displayName = user.displayName ?? "user"
+            print("Success: \(displayName) logged in")
         }
     }
 

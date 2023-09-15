@@ -27,6 +27,7 @@
 		D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D81A2A843570005E534C /* DailyViewModel.swift */; };
 		D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83A2A85A17C005E534C /* CustomDateView.swift */; };
 		D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83C2A85A396005E534C /* WeekSliderView.swift */; };
+		D0A3315B2AB4EAC00047FA20 /* LayeredBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3315A2AB4EAC00047FA20 /* LayeredBackground.swift */; };
 		D0A8AB9D2AB3CFBE00C7A159 /* NotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */; };
 		D0A8AB9F2AB3D01A00C7A159 /* FirestorePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */; };
 		D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A94FCD2A91AB9E00656814 /* IconView.swift */; };
@@ -59,7 +60,6 @@
 		D0ED2EB92A802BA700828887 /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB12A802BA700828887 /* PlusButton.swift */; };
 		D0ED2EBB2A802BA700828887 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB32A802BA700828887 /* PrimaryButton.swift */; };
 		D0ED2EBC2A802BA700828887 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB42A802BA700828887 /* ToggleButton.swift */; };
-		D0ED2EBD2A802BA700828887 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB52A802BA700828887 /* SecondaryButton.swift */; };
 		D0ED2EBE2A802BA700828887 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB62A802BA700828887 /* GradientView.swift */; };
 		D0ED2EBF2A802BA700828887 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EB72A802BA700828887 /* LoadingView.swift */; };
 		D0ED2EC72A802BE900828887 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EC32A802BE900828887 /* LoginViewModel.swift */; };
@@ -128,6 +128,7 @@
 		D098D81A2A843570005E534C /* DailyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewModel.swift; sourceTree = "<group>"; };
 		D098D83A2A85A17C005E534C /* CustomDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
 		D098D83C2A85A396005E534C /* WeekSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderView.swift; sourceTree = "<group>"; };
+		D0A3315A2AB4EAC00047FA20 /* LayeredBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayeredBackground.swift; sourceTree = "<group>"; };
 		D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesService.swift; sourceTree = "<group>"; };
 		D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePath.swift; sourceTree = "<group>"; };
 		D0A94FCD2A91AB9E00656814 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		D0ED2EB12A802BA700828887 /* PlusButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
 		D0ED2EB32A802BA700828887 /* PrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		D0ED2EB42A802BA700828887 /* ToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
-		D0ED2EB52A802BA700828887 /* SecondaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D0ED2EB62A802BA700828887 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		D0ED2EB72A802BA700828887 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		D0ED2EC32A802BE900828887 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -406,12 +406,12 @@
 				D0ED2EB12A802BA700828887 /* PlusButton.swift */,
 				D0ED2EB32A802BA700828887 /* PrimaryButton.swift */,
 				D0ED2EB42A802BA700828887 /* ToggleButton.swift */,
-				D0ED2EB52A802BA700828887 /* SecondaryButton.swift */,
 				D0ED2EB62A802BA700828887 /* GradientView.swift */,
 				D0ED2EB72A802BA700828887 /* LoadingView.swift */,
 				D0ED2EEB2A802EB000828887 /* LogoView.swift */,
 				D0C996922A86D74B0085481B /* KeyboardButton.swift */,
 				D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */,
+				D0A3315A2AB4EAC00047FA20 /* LayeredBackground.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -623,11 +623,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0A3315B2AB4EAC00047FA20 /* LayeredBackground.swift in Sources */,
 				D0267E0A2A9130DB0079F90E /* ToDoNoteViewModel.swift in Sources */,
 				D0267E002A912DDB0079F90E /* NotesViewModel.swift in Sources */,
 				D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */,
 				D0C5F7242A93CA4500D5CE44 /* EmptyNoteViewModel.swift in Sources */,
-				D0ED2EBD2A802BA700828887 /* SecondaryButton.swift in Sources */,
 				D0ED2ED42A802C4600828887 /* RegisterViewModel.swift in Sources */,
 				D0ED2ECC2A802C1200828887 /* StatefulPreviewWrapper.swift in Sources */,
 				D0ED2EEA2A802D7800828887 /* ToDoItemModel.swift in Sources */,

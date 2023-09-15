@@ -23,9 +23,9 @@ struct PrimaryButton: View {
                 .frame(width: width, height: height)
                 .foregroundColor(.white)
                 .font(.system(size: 20)).bold()
-                .background(theme.mTintColor)
+                .layeredBackground(theme.mTintColor)
+                .cornerRadius(cornerRadius)
         }
-        .cornerRadius(cornerRadius)
     }
 
 }
@@ -36,5 +36,19 @@ struct PrimaryButton_Previews: PreviewProvider {
             // action
         }
         .environmentObject(Theme())
+    }
+}
+
+extension View {
+    func layeredBackground(_ color: Color = .clear, cornerRadius: CGFloat = 20) -> some View {
+        self.background(
+            ZStack {
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .fill(color.shadow(
+                        .inner(color: .black.opacity(0.04), radius: 1, x: -2, y: -2))
+                    )
+            }
+
+        )
     }
 }

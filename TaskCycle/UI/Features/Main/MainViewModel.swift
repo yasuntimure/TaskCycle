@@ -12,8 +12,8 @@ import SwiftKeychainWrapper
 
 @MainActor
 class MainViewModel: ObservableObject {
-    
-    @Published var userId: String = "" 
+
+    @Published var userLoggedIn: Bool = false
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
@@ -21,10 +21,10 @@ class MainViewModel: ObservableObject {
     private var handler: AuthStateDidChangeListenerHandle?
     
     init() {
-        self.handler = Auth.auth().addStateDidChangeListener { [weak self] _, user in
-            guard let user = user else { return }
-            self?.userId = user.uid
-            KeychainWrapper.standard.set(user.uid, forKey: "userIdKey")
+        self.handler = Auth.auth().addStateDidChangeListener { _, user in
+            guard let userId = user?.uid else { return }
+            KeychainWrapper.standard.set(userId, forKey: "userIdKey")
+            self.userLoggedIn = true
         }
     }
 
@@ -37,6 +37,7 @@ class MainViewModel: ObservableObject {
         }
 
         KeychainWrapper.standard.removeObject(forKey: "userIdKey")
-        userId = ""
+        userLoggedIn = false
     }
+
 }

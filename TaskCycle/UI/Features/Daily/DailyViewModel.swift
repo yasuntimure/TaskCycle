@@ -117,6 +117,7 @@ extension DailyViewModel {
                 switch action {
                 case .fetch:
                     self.items = try await DailyService.getItems(for: selectedDay.date.weekdayFormat())
+                    if items.isEmpty { insertAndSaveEmptyItem() }
                     sortItems()
                 case .update(let item):
                     try await DailyService.put(item)

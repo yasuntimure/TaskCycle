@@ -89,12 +89,12 @@ struct WeekSliderView: View {
         // MARK: Capsule Shape
         .frame(width: 45, height: 90)
         .background(
-
             ZStack{
                 // MARK: Matched Geometry Effect
                 if isSelected {
                     Capsule()
                         .fill(theme.mTintColor)
+                        .layeredBackground(theme.mTintColor, cornerRadius: 24)
                 }
 
                 /// Indicator to Show Today's Date

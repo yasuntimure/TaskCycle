@@ -53,7 +53,6 @@ struct LoginView: View {
                     viewModel.login()
                 }
                 .padding(.top, ScreenSize.width/12)
-                .shadow(radius: 2)
 
                 HStack (spacing: 12) {
                     RoundedRectangle(cornerRadius: 10)
@@ -73,10 +72,11 @@ struct LoginView: View {
                 .padding([.top, .bottom], ScreenSize.width/20)
 
                 // Sign In with Google
+
                 SignInWithButton(signInType: .google) {
                     viewModel.signInWithGoogle()
                 }
-                .shadow(radius: 2)
+
                 .padding([.bottom], ScreenSize.width/10)
 
                 VStack (spacing: 5) {

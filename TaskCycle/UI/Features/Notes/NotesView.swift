@@ -126,7 +126,7 @@ extension NotesView {
             .padding(.horizontal)
             .padding(.vertical, 5)
             .hSpacing(.leading)
-            .background(Color.backgroundColor)
+            .layeredBackground(Color.backgroundColor)
             .cornerRadius(20)
         }
         .onDelete(perform: viewModel.deleteItems(at:))

@@ -25,7 +25,7 @@ struct ToDoRow: View {
                 .focused($isFocused)
                 .padding([.vertical, .trailing])
         }
-        .background(Color.backgroundColor)
+        .layeredBackground(Color.backgroundColor)
         .cornerRadius(20)
         .onAppear {
             isFocused = item.title.isEmpty
