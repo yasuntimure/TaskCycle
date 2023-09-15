@@ -54,11 +54,11 @@ struct FirestorePath {
         }
     }
 
-    func documentReference() -> DocumentReference? {
+    func asDocument() -> DocumentReference? {
         return currentReference as? DocumentReference
     }
 
-    func collectionReference() -> CollectionReference? {
+    func asCollection() -> CollectionReference? {
         return currentReference as? CollectionReference
     }
 
@@ -69,13 +69,3 @@ struct FirestorePath {
         case notes
     }
 }
-
-let ref = FirestorePath.users("123")?.weekDays("123").items("123")
-
-//Firestore.firestore()
-//    .collection("users")
-//    .document("123")
-//    .collection("weekDays")
-//    .document("123")
-//    .collection("items")
-//    .document("123")
