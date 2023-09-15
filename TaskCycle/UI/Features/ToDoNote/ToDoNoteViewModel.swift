@@ -64,13 +64,6 @@ final class ToDoNoteViewModel: ObservableObject {
     }
 
     func updateNote() {
-
-//        var array: [Dictionary] = []
-//
-//        note.items.forEach { item in
-//            array.append(item.asDictionary())
-//        }
-
         Task {
             do {
                 try await NotesService.put(note)

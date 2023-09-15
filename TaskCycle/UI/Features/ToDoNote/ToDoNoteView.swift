@@ -56,7 +56,7 @@ struct ToDoNoteView: View {
         .onDisappear {
             if viewModel.uncompletedNote {
                 viewModel.deleteNote()
-            } 
+            }
         }
     }
 

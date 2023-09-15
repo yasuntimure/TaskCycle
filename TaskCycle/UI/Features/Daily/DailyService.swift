@@ -9,13 +9,6 @@ import Firebase
 import FirebaseFirestore
 import SwiftKeychainWrapper
 
-enum CollectionName: String {
-    case users
-    case weekdays
-    case items
-    case notes
-}
-
 struct DailyService {
 
     private static var userId: String {
