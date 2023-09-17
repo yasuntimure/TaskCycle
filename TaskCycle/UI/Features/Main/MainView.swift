@@ -17,27 +17,25 @@ struct MainView: View {
 
     var body: some View {
         if viewModel.userLoggedIn {
-            NavigationView {
-                TabView {
-                    DailyView(viewModel: dailyViewModel)
-                        .tabItem {
-                            Label("Daily", systemImage: "calendar")
-                                .foregroundColor(theme.mTintColor)
+            TabView {
+                DailyView(viewModel: dailyViewModel)
+                    .tabItem {
+                        Label("Daily", systemImage: "calendar")
+                            .foregroundColor(theme.mTintColor)
 
-                        }
-                    NotesView(viewModel: notesViewModel)
-                        .tabItem {
-                            Label("Notes", systemImage: "list.clipboard")
-                                .foregroundColor(theme.mTintColor)
-                        }
-                    SettingsView()
-                        .tabItem {
-                            Label("Settings", systemImage: "gearshape")
-                                .foregroundColor(theme.mTintColor)
-                        }
-                }
-                .tint(theme.mTintColor)
+                    }
+                NotesView(viewModel: notesViewModel)
+                    .tabItem {
+                        Label("Notes", systemImage: "list.clipboard")
+                            .foregroundColor(theme.mTintColor)
+                    }
+                SettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "gearshape")
+                            .foregroundColor(theme.mTintColor)
+                    }
             }
+            .tint(theme.mTintColor)
             .environmentObject(viewModel)
             .environmentObject(theme)
         } else {

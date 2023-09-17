@@ -10,7 +10,7 @@ import SwiftUI
 enum NoteStack: Hashable {
     case empty(note: NoteModel)
     case todo(note: NoteModel)
-    case board
+    case board(note: NoteModel)
 }
 
 struct NotesView: View {
@@ -47,8 +47,8 @@ struct NotesView: View {
                     EmptyNoteView(viewModel: EmptyNoteViewModel(note: note))
                 case .todo(let note):
                     ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
-                case .board:
-                    Text("Board")
+                case .board(let note):
+                    BoardNoteView(viewModel: BoardNoteViewModel(note: note))
                 }
             }
             .onAppear {
@@ -65,7 +65,7 @@ struct NotesView: View {
         case .todo:
             noteStack.append(.todo(note: note))
         case .board:
-            noteStack.append(.todo(note: note))
+            noteStack.append(.board(note: note))
         }
     }
 }
@@ -118,7 +118,7 @@ extension NotesView {
                 case .todo:
                     ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
                 case .board:
-                    ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
+                    BoardNoteView(viewModel: BoardNoteViewModel(note: note))
                 }
             } label: {
                 NoteRow(note: $note)

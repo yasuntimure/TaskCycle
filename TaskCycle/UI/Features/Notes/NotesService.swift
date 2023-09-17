@@ -22,6 +22,13 @@ struct NotesService {
         return try await FirebaseService.shared.getArray(of: NoteModel(), from: collection).get()
     }
 
+    static func get(_ note: NoteModel) async throws -> NoteModel {
+        guard let document = FirestorePath.users(userId)?.notes(note.id).asDocument() else {
+            throw FirebaseError.invalidPath
+        }
+        return try await FirebaseService.shared.get(of: NoteModel(), with: document).get()
+    }
+
     static func delete(_ note: NoteModel) async throws {
         guard let document = FirestorePath.users(userId)?.notes(note.id).asDocument() else {
             throw FirebaseError.invalidPath

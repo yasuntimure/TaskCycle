@@ -12,40 +12,38 @@ struct DailyView: View {
     @ObservedObject var viewModel: DailyViewModel
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                VStack (alignment: .leading, spacing: 6) {
-                    HeaderView()
-                        .onTapGesture {
-                            hideKeyboard()
-                        }
-
-                    SliderView()
-
-                    List {
-                        ListRow()
+        ZStack {
+            VStack (alignment: .leading, spacing: 6) {
+                HeaderView()
+                    .onTapGesture {
+                        hideKeyboard()
                     }
-                    .listStyle(.plain)
-                    .refreshable {
-                        viewModel.fetchItems()
-                    }
+
+                SliderView()
+
+                List {
+                    ListRow()
                 }
-                .hSpacing(.leading)
-                .background(.white)
-                .vSpacing(.top)
-
-                PlusButton() {
-                    withAnimation {
-                        viewModel.insertAndSaveEmptyItem()
-                    }
+                .listStyle(.plain)
+                .refreshable {
+                    viewModel.fetchItems()
                 }
-                .disabled(viewModel.items.contains(where: { $0.title.isEmpty }))
-                .vSpacing(.bottom).hSpacing(.trailing)
-                .padding([.trailing,.bottom], 20)
-                .padding(3)
             }
-            .toolbarKeyboardDismiss()
+            .hSpacing(.leading)
+            .background(.white)
+            .vSpacing(.top)
+
+            PlusButton() {
+                withAnimation {
+                    viewModel.insertAndSaveEmptyItem()
+                }
+            }
+            .disabled(viewModel.items.contains(where: { $0.title.isEmpty }))
+            .vSpacing(.bottom).hSpacing(.trailing)
+            .padding([.trailing,.bottom], 20)
+            .padding(3)
         }
+        .toolbarKeyboardDismiss()
         .environmentObject(viewModel)
     }
 

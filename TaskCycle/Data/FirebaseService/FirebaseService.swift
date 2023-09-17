@@ -20,16 +20,10 @@ struct FirebaseService {
 
 extension FirebaseService {
 
-    func get<T: Decodable>(of type: T, with query: Query) async -> Result<T, Error> {
+    func get<T: Decodable>(of type: T, with document: DocumentReference) async -> Result<T, Error> {
         do {
-            let querySnapshot = try await query.getDocuments()
-            if let document = querySnapshot.documents.first {
-                let data = try document.data(as: T.self)
-                return .success(data)
-            } else {
-                print("Warning: \(#function) document not found")
-                return .failure(FirebaseError.documentNotFound)
-            }
+            let document = try await document.getDocument(as: T.self)
+            return .success(document)
         } catch let error {
             print("Error: \(#function) couldn't access snapshot, \(error)")
             return .failure(error)
