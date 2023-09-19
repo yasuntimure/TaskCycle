@@ -73,36 +73,3 @@ extension NoteModel {
         NoteModel(title: "Quick Note", description: "Complete your quick to do list!")
     }
 }
-
-
-class Note: Identifiable {
-
-    @Published var id: String
-    @Published var title: String
-    @Published var description: String
-    @Published var items: [ToDoItemModel]
-    @Published var date: String
-    @Published var emoji: String?
-    @Published var noteType: String?
-    @Published var kanbanColumns: [KanbanColumn]
-
-    init(_ noteModel: NoteModel)
-    {
-        self.id = noteModel.id
-        self.title = noteModel.title
-        self.description = noteModel.description
-        self.items = noteModel.items
-        self.date = noteModel.date
-        self.emoji = noteModel.emoji
-        self.noteType = noteModel.noteType
-        self.kanbanColumns = noteModel.kanbanColumns
-    }
-
-    func type() -> NoteType? {
-        if let noteType = noteType {
-            return NoteType(rawValue: noteType)
-        }
-        return nil
-    }
-
-}

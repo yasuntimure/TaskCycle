@@ -87,7 +87,7 @@ extension NotesView {
     private func NoteNavigationRow() -> some View {
         ForEach ($viewModel.notes) { $note in
             NavigationLink {
-                NoteView(viewModel: NoteViewModel(note: note))
+                NoteView(viewModel: NoteViewModel(note))
             } label: {
                 NoteRow(note: $note)
             }

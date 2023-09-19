@@ -33,7 +33,7 @@ struct KanbanColumnView: View {
                     SecondaryButton(imageName: "plus",
                                     title: "Add Task",
                                     backgroundColor: theme.mTintColor.opacity(0.15)) {
-                        viewModel.addNewTask(to: column)
+                        viewModel.addTask(to: column)
                     }.padding(.vertical, 6).padding(.horizontal, 12)
                 }
                 .hSpacing(.center)
@@ -86,5 +86,5 @@ struct KanbanColumnView: View {
 #Preview {
     KanbanColumnView(column: KanbanColumn())
         .environmentObject(Theme())
-        .environmentObject(NoteViewModel(note: Mock.note))
+        .environmentObject(NoteViewModel(Mock.note))
 }

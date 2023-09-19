@@ -44,7 +44,7 @@ struct BoardNoteView: View {
 
     func getGridColumns() -> [GridItem] {
         var columns: [GridItem] = []
-        viewModel.note.kanbanColumns.forEach { _ in
+        viewModel.kanbanColumns.forEach { _ in
             columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
         }
         columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
@@ -107,8 +107,8 @@ struct BoardNoteView: View {
 
 struct BoardNoteView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardNoteView(kanbanColumns: [])
+        BoardNoteView(kanbanColumns: .constant([]))
             .environmentObject(Theme())
-            .environmentObject(NoteViewModel(note: Mock.note))
+            .environmentObject(NoteViewModel(Mock.note))
     }
 }

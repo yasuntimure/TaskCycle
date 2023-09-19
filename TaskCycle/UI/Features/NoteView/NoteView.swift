@@ -21,14 +21,14 @@ struct NoteView: View {
     var body: some View {
         ZStack {
             VStack (alignment: .leading) {
-                TextField("Title...", text: $viewModel.note.title)
-                    .titleFont(for: viewModel.note.type() ?? .empty)
+                TextField("Title...", text: $viewModel.title)
+                    .titleFont(for: viewModel.type() ?? .empty)
                     .focused($focusState, equals: .title)
                     .onSubmit { focusState = .description }
                     .padding(.horizontal)
 
-                TextField("Description . . .", text: $viewModel.note.description, axis: .vertical)
-                    .descriptionFont(for: viewModel.note.type() ?? .empty)
+                TextField("Description . . .", text: $viewModel.description, axis: .vertical)
+                    .descriptionFont(for: viewModel.type() ?? .empty)
                     .foregroundColor(.secondary)
                     .focused($focusState, equals: .description)
                     .padding(.horizontal)
@@ -37,11 +37,11 @@ struct NoteView: View {
                     if viewModel.isNoteConfVisible {
                         NoteConfigurationView()
                     } else {
-                        switch viewModel.note.type() ?? .empty {
+                        switch viewModel.type() ?? .empty {
                         case .empty: Divider().opacity(0)
                         case .todo: ToDoListView()
                         case .board: 
-                            BoardNoteView(kanbanColumns: viewModel.note.kanbanColumns)
+                            BoardNoteView(kanbanColumns: $viewModel.kanbanColumns)
                                 .environmentObject(viewModel)
                         }
                     }
@@ -98,13 +98,13 @@ struct NoteView: View {
                     .foregroundStyle(theme.mTintColor)
                 CustomButton("To Do List", image: "checkmark.square") {
                     withAnimation {
-                        viewModel.note.noteType = NoteType.todo.rawValue
+                        viewModel.noteType = NoteType.todo.rawValue
                         viewModel.isNoteConfVisible = false
                     }
                 }
                 CustomButton("Kanban Board", image: "tablecells") {
                     withAnimation {
-                        viewModel.note.noteType = NoteType.board.rawValue
+                        viewModel.noteType = NoteType.board.rawValue
                         viewModel.isNoteConfVisible = false
                     }
                 }
@@ -116,7 +116,7 @@ struct NoteView: View {
     func ToDoListView() -> some View {
         ZStack {
             List {
-                ForEach ($viewModel.note.items) { $item in
+                ForEach ($viewModel.items) { $item in
                     ToDoRow(item: $item)
                         .padding(.vertical, -5)
                         .hSpacing(.leading)
@@ -142,7 +142,7 @@ struct NoteView: View {
 }
 
 #Preview {
-    NoteView(viewModel: NoteViewModel(note: Mock.note))
+    NoteView(viewModel: NoteViewModel(Mock.note))
         .environmentObject(Theme())
         .environmentObject(NotesViewModel())
 }

@@ -11,50 +11,60 @@ import FirebaseFirestore
 @MainActor
 class NoteViewModel: ObservableObject {
 
-    @Published var note: NoteModel
+    var uncompletedNote: Bool {
+        (title.trimmingCharacters(in: .whitespaces).isEmpty) && (description.trimmingCharacters(in: .whitespaces).isEmpty)
+    }
 
     @Published var isNoteConfVisible: Bool = true
-
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    var uncompletedNote: Bool {
-        (note.title.trimmingCharacters(in: .whitespaces).isEmpty) && (note.description.trimmingCharacters(in: .whitespaces).isEmpty)
-    }
+    @Published var id: String
+    @Published var title: String
+    @Published var description: String
+    @Published var items: [ToDoItemModel]
+    @Published var date: String
+    @Published var emoji: String?
+    @Published var noteType: String?
+    @Published var kanbanColumns: [KanbanColumn]
 
-    init(note: NoteModel) {
-        self.note = note
-        self.isNoteConfVisible = (note.type() == nil)
+    init(_ noteModel: NoteModel)
+    {
+        self.id = noteModel.id
+        self.title = noteModel.title
+        self.description = noteModel.description
+        self.items = noteModel.items
+        self.date = noteModel.date
+        self.emoji = noteModel.emoji
+        self.noteType = noteModel.noteType
+        self.kanbanColumns = noteModel.kanbanColumns
+
+        self.isNoteConfVisible = (noteModel.type() == nil)
     }
 
     func initialFocusState() -> NoteTextFields? {
-        if note.title.isEmpty {
+        if title.isEmpty {
             return .title
         }
 
-        if !note.title.isEmpty && note.description.isEmpty {
+        if !title.isEmpty && description.isEmpty {
             return .description
         }
 
         return nil
     }
 
-    func addNewTask(to kanbanColumn: KanbanColumn) {
-        var updatedColumns = self.note.kanbanColumns
-        for (index, column) in updatedColumns.enumerated() {
-            if column.id == kanbanColumn.id {
-                let quickNote = NoteModel.quickNote()
-                updatedColumns[index].tasks.append(quickNote)
-            }
+    func type() -> NoteType? {
+        if let noteType = noteType {
+            return NoteType(rawValue: noteType)
         }
-        self.note.kanbanColumns = updatedColumns
+        return nil
     }
-
 
     func updateNote() {
         Task {
             do {
-                try await NotesService.put(note)
+                try await NotesService.put(self.model())
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -65,7 +75,7 @@ class NoteViewModel: ObservableObject {
     func deleteNote() {
         Task {
             do {
-                try await NotesService.delete(note)
+                try await NotesService.delete(self.model())
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -80,10 +90,10 @@ class NoteViewModel: ObservableObject {
 extension NoteViewModel {
 
     func reorder() {
-        if note.items.contains(where: { $0.title.isEmpty }) {
-            note.items.sort(by: { ($0.title.isEmpty && !$1.title.isEmpty) || (!$0.isDone && $1.isDone) })
+        if items.contains(where: { $0.title.isEmpty }) {
+            items.sort(by: { ($0.title.isEmpty && !$1.title.isEmpty) || (!$0.isDone && $1.isDone) })
         } else {
-            note.items.sort(by: { !$0.isDone && $1.isDone })
+            items.sort(by: { !$0.isDone && $1.isDone })
         }
     }
 
@@ -91,24 +101,24 @@ extension NoteViewModel {
         indexSet.forEach { index in
             Task {
                 do {
-                    let item = note.items[index]
-                    try await NotesService.delete(note, of: item)
+                    let item = items[index]
+                    try await NotesService.delete(self.model(), of: item)
                 } catch {
                     showAlert = true
                     errorMessage = error.localizedDescription
                 }
             }
         }
-        note.items.remove(atOffsets: indexSet)
+        items.remove(atOffsets: indexSet)
     }
 
     func moveItems(from indexSet: IndexSet, to newIndex: Int) {
-        note.items.move(fromOffsets: indexSet, toOffset: newIndex)
+        items.move(fromOffsets: indexSet, toOffset: newIndex)
     }
 
     func addNewItem() {
         let item = ToDoItemModel()
-        note.items.append(item)
+        items.append(item)
     }
 
 }
@@ -119,16 +129,29 @@ extension NoteViewModel {
 extension NoteViewModel {
 
     func delete(_ kanbanColumn: KanbanColumn) {
-        var columns = self.note.kanbanColumns
+        var columns = kanbanColumns
         columns.removeAll { $0.id == kanbanColumn.id }
-        self.note.kanbanColumns = columns
+        kanbanColumns = columns
     }
 
     func addKanbanColumn() {
-        var columns = self.note.kanbanColumns
+        var columns = kanbanColumns
         columns.append(KanbanColumn())
-        self.note.kanbanColumns = columns
+        kanbanColumns = columns
     }
+
+
+    func addTask(to kanbanColumn: KanbanColumn) {
+        var updatedColumns = kanbanColumns
+        for (index, column) in updatedColumns.enumerated() {
+            if column.id == kanbanColumn.id {
+                let quickNote = NoteModel.quickNote()
+                updatedColumns[index].tasks.append(quickNote)
+            }
+        }
+        self.kanbanColumns = updatedColumns
+    }
+
 
     func duplicate(_ kanbanColumn: KanbanColumn) {
         let copiedColumn = KanbanColumn(
@@ -137,15 +160,15 @@ extension NoteViewModel {
             isTargeted: kanbanColumn.isTargeted
         )
 
-        if let originalIndex = self.note.kanbanColumns.firstIndex(where: { $0.id == kanbanColumn.id }) {
-            self.note.kanbanColumns.insert(copiedColumn, at: originalIndex + 1)
+        if let originalIndex = self.kanbanColumns.firstIndex(where: { $0.id == kanbanColumn.id }) {
+            self.kanbanColumns.insert(copiedColumn, at: originalIndex + 1)
         }
     }
 
     /// Removes the dropped tasks from their source column.
     func removeDroppedTasksFromSource(_ droppedTasks: [NoteModel]) {
-        for index in self.note.kanbanColumns.indices {
-            self.note.kanbanColumns[index].tasks.removeAll { task in
+        for index in self.kanbanColumns.indices {
+            self.kanbanColumns[index].tasks.removeAll { task in
                 droppedTasks.contains(task)
             }
         }
@@ -153,10 +176,25 @@ extension NoteViewModel {
 
     /// Adds the dropped tasks to the destination column, ensuring there are no duplicates.
     func addDroppedTasksToDestination(_ droppedTasks: [NoteModel], to column: KanbanColumn) {
-        if let index = self.note.kanbanColumns.firstIndex(where: { $0.id == column.id }) {
-            let updatedTasks = self.note.kanbanColumns[index].tasks + droppedTasks
-            self.note.kanbanColumns[index].tasks = Array(updatedTasks.uniqued())
+        if let index = self.kanbanColumns.firstIndex(where: { $0.id == column.id }) {
+            let updatedTasks = self.kanbanColumns[index].tasks + droppedTasks
+            self.kanbanColumns[index].tasks = Array(updatedTasks.uniqued())
         }
+    }
+}
+
+extension NoteViewModel {
+
+    private func model() -> NoteModel {
+        NoteModel(id: self.id,
+                  title: self.title,
+                  description: self.description,
+                  items: self.items,
+                  date: self.date,
+                  emoji: self.emoji,
+                  noteType: self.noteType,
+                  kanbanColumns: self.kanbanColumns)
+
     }
 }
 
