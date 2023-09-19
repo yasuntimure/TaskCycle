@@ -7,18 +7,12 @@
 
 import SwiftUI
 
-enum NoteStack: Hashable {
-    case empty(note: NoteModel)
-    case todo(note: NoteModel)
-    case board(note: NoteModel)
-}
-
 struct NotesView: View {
     @EnvironmentObject var theme: Theme
 
     @ObservedObject var viewModel: NotesViewModel
-    @State var noteStack: [NoteStack] = []
-    @State var noteTypeSelectionMode: Bool = false
+
+    @State var noteStack: [NoteModel] = []
 
     var body: some View {
         NavigationStack(path: $noteStack) {
@@ -26,8 +20,6 @@ struct NotesView: View {
                 HeaderView()
 
                 ZStack {
-
-                    // List View
                     List {
                         NoteNavigationRow()
                     }
@@ -37,35 +29,18 @@ struct NotesView: View {
                         viewModel.fetchNotes()
                     }
 
-                    // Add New Note Button
-                    AddNewNoteButton()
+                    PlusButton() {
+                        viewModel.saveNewNote { note in
+                            noteStack.append(note)
+                        }
+                    }
+                    .vSpacing(.bottom).hSpacing(.trailing)
+                    .padding([.trailing,.bottom], 20)
                 }
             }
-            .navigationDestination(for: NoteStack.self) { value in
-                switch value {
-                case .empty(let note):
-                    EmptyNoteView(viewModel: EmptyNoteViewModel(note: note))
-                case .todo(let note):
-                    ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
-                case .board(let note):
-                    BoardNoteView(viewModel: BoardNoteViewModel(note: note))
-                }
+            .navigationDestination(for: NoteModel.self) { note in
+                NoteBuilder.make(note)
             }
-            .onAppear {
-                viewModel.fetchNotes()
-            }
-        }
-        .environmentObject(viewModel)
-    }
-
-    func navigateToReleated(_ note: NoteModel) {
-        switch note.type() {
-        case .empty:
-            noteStack.append(.empty(note: note))
-        case .todo:
-            noteStack.append(.todo(note: note))
-        case .board:
-            noteStack.append(.board(note: note))
         }
     }
 }
@@ -112,14 +87,7 @@ extension NotesView {
     private func NoteNavigationRow() -> some View {
         ForEach ($viewModel.notes) { $note in
             NavigationLink {
-                switch note.type() {
-                case .empty:
-                    EmptyNoteView(viewModel: EmptyNoteViewModel(note: note))
-                case .todo:
-                    ToDoNoteView(viewModel: ToDoNoteViewModel(note: note))
-                case .board:
-                    BoardNoteView(viewModel: BoardNoteViewModel(note: note))
-                }
+                NoteView(viewModel: NoteViewModel(note: note))
             } label: {
                 NoteRow(note: $note)
             }
@@ -136,44 +104,6 @@ extension NotesView {
         .listRowBackground(Color.clear)
     }
 
-    @ViewBuilder
-    private func AddNewNoteButton() -> some View {
-        VStack (spacing: 15) {
-            if noteTypeSelectionMode {
-                ForEach(NoteType.allCases, id:\.self) { type in
-                    NoteIconButton(type) {
-                        viewModel.saveNewNote(type: type) { note in
-                            navigateToReleated(note)
-                        }
-                        noteTypeSelectionMode = false
-                    }
-                    .padding(.top, type == NoteType.empty ? 10 : 0)
-                }
-            }
-
-            PlusButton() {
-                withAnimation {
-                    noteTypeSelectionMode.toggle()
-                }
-            }
-        }
-        .padding(3)
-        .background(noteTypeSelectionMode ? Color.backgroundColor : .clear)
-        .cornerRadius(50)
-        .vSpacing(.bottom).hSpacing(.trailing)
-        .padding([.trailing,.bottom], 20)
-    }
-
-
-    @ViewBuilder
-    private func NoteIconButton(_ note: NoteType,
-                                action: @escaping ()->Void) -> some View {
-        Button(action: action, label: {
-            Image(systemName: note.systemImage)
-                .foregroundColor(theme.mTintColor)
-                .font(.largeTitle)
-        })
-    }
 }
 
 struct

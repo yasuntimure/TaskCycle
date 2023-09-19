@@ -83,7 +83,7 @@ class LoginViewModel: ObservableObject {
     internal func signIn(withEmail: String, password: String) {
         Auth.auth().signIn(withEmail: withEmail, password: password) { [weak self] result, error in
             guard let user = result?.user, error == nil else {
-                self?.showAlert(message: error?.localizedDescription ?? "Could not create a new account!")
+                self?.showAlert(message: error?.localizedDescription ?? "Could not signed in to account!")
                 return
             }
             let displayName = user.displayName ?? "user"

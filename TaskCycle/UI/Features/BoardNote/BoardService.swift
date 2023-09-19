@@ -42,25 +42,12 @@ struct BoardService {
         return try await FirebaseService.shared.getArray(of: NoteModel(), from: collection).get()
     }
 
-    func delete(task: NoteModel, from status: TaskStatus) async throws {
+    func delete(task: NoteModel) async throws {
         let noteCollection = FirestorePath.users(userId)?.notes(note.id)
-        switch status {
-        case .todo:
-            guard let document = noteCollection?.toDoTasks(task.id).asDocument() else {
-                throw FirebaseError.invalidPath
-            }
-            return try await FirebaseService.shared.delete(document).get()
-        case .inprogress:
-            guard let document = noteCollection?.inProgressTasks(task.id).asDocument() else {
-                throw FirebaseError.invalidPath
-            }
-            return try await FirebaseService.shared.delete(document).get()
-        case .done:
-            guard let document = noteCollection?.doneTasks(task.id).asDocument() else {
-                throw FirebaseError.invalidPath
-            }
-            return try await FirebaseService.shared.delete(document).get()
+        guard let document = noteCollection?.toDoTasks(task.id).asDocument() else {
+            throw FirebaseError.invalidPath
         }
+        return try await FirebaseService.shared.delete(document).get()
     }
 
     func post() async throws {

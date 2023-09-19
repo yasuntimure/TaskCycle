@@ -21,7 +21,13 @@ extension View {
         self
             .frame(maxHeight: .infinity, alignment: alignment)
     }
-    
+
+    @ViewBuilder
+    func fillIninity(_ alignment: Alignment = .center) -> some View {
+        self
+            .frame(width: .infinity, height: .infinity, alignment: alignment)
+    }
+
     @ViewBuilder
     func toolbarKeyboardDismiss() -> some View {
         self.toolbar {

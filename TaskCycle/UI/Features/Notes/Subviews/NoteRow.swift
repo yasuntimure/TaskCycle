@@ -19,7 +19,7 @@ struct NoteRow: View {
                     Text(emoji)
                         .font(.largeTitle)
                 } else {
-                    Image(systemName: note.type().systemImage)
+                    Image(systemName: note.type()?.systemImage ?? NoteType.empty.systemImage)
                         .font(.largeTitle)
                         .foregroundColor(theme.mTintColor)
                 }

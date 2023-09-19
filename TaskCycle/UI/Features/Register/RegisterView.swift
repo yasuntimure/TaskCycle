@@ -15,10 +15,10 @@ struct RegisterView: View {
 
     var body: some View {
         ZStack {
-            
+
             GradientView()
-            
-            VStack {
+
+            VStack (spacing: 30) {
 
                 VStack (alignment: .leading, spacing: 5) {
                     Text("Register")
@@ -29,56 +29,53 @@ struct RegisterView: View {
                         .foregroundColor(Color.secondary)
                 }
                 .hSpacing(.leading)
-                .padding(.top, ScreenSize.width/4)
-                .frame(width: ScreenSize.defaultWidth)
-                
-                VStack (spacing: 10) {
+                .padding(.horizontal)
+                .frame(maxWidth: Constants.buttonMaxWidth)
 
+                VStack (spacing: 10) {
                     TextFieldView(input: $viewModel.inputs.name)
                     TextFieldView(input: $viewModel.inputs.email)
                     TextFieldView(input: $viewModel.inputs.password, isSecure: true)
                     TextFieldView(input: $viewModel.inputs.confirmPassword, isSecure: true)
-                    
                 }
-                .frame(width: ScreenSize.defaultWidth)
-                .padding(.top)
-
 
                 PrimaryButton(title: "Register") {
                     viewModel.register { dismiss() }
                 }
-                .padding(.top, ScreenSize.width/15)
 
-                HStack (spacing: 12) {
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(height: 1.5)
-                        .foregroundColor(.secondary)
-                        .opacity(0.5)
-                        .padding(.leading, 30)
-                    Text("with")
-                        .font(.system(size: 16)).bold()
-                        .foregroundColor(.secondary)
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(height: 1.5)
-                        .foregroundColor(.secondary)
-                        .opacity(0.5)
-                        .padding(.trailing, 30)
-                }
-                .padding([.top, .bottom], ScreenSize.width/20)
+                SeperatorView()
 
                 // Sign In with Google
                 SignInWithButton(signInType: .google) {
                     viewModel.signUpWithGoogle { dismiss() }
                 }
-                .shadow(radius: 2)
-                .padding([.bottom], ScreenSize.width/3)
-
+                .padding(.bottom, 100)
             }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(title: Text(viewModel.errorMessage))
             }
 
         }
+    }
+
+    @ViewBuilder
+    private func SeperatorView() -> some View {
+        HStack (spacing: 12) {
+            RoundedRectangle(cornerRadius: 10)
+                .frame(height: 1.5)
+                .foregroundColor(.secondary)
+                .opacity(0.5)
+                .padding(.leading, 30)
+            Text("with")
+                .font(.system(size: 16)).bold()
+                .foregroundColor(.secondary)
+            RoundedRectangle(cornerRadius: 10)
+                .frame(height: 1.5)
+                .foregroundColor(.secondary)
+                .opacity(0.5)
+                .padding(.trailing, 30)
+        }
+        .frame(maxWidth: Constants.buttonMaxWidth)
     }
 }
 

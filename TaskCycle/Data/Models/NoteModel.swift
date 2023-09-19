@@ -17,10 +17,8 @@ struct NoteModel: FirebaseIdentifiable, Transferable {
     var items: [ToDoItemModel]
     var date: String
     var emoji: String?
-    var noteType: String
-    var toDoTasks: [NoteModel]
-    var inProgressTasks: [NoteModel]
-    var doneTasks: [NoteModel]
+    var noteType: String?
+    var kanbanColumns: [KanbanColumn]
 
     init(id: String = UUID().uuidString,
          title: String = "",
@@ -28,10 +26,8 @@ struct NoteModel: FirebaseIdentifiable, Transferable {
          items: [ToDoItemModel] = [],
          date: String = Date().weekdayFormat(),
          emoji: String? = nil,
-         noteType: String = NoteType.empty.rawValue,
-         toDoTasks: [NoteModel] = [],
-         inProgressTasks: [NoteModel] = [],
-         doneTasks: [NoteModel] = [])
+         noteType: String? = nil,
+         kanbanColumns: [KanbanColumn] = [KanbanColumn(title: "To Do"), KanbanColumn(title: "In Progress"), KanbanColumn(title: "Done")])
     {
         self.id = id
         self.title = title
@@ -40,13 +36,14 @@ struct NoteModel: FirebaseIdentifiable, Transferable {
         self.date = date
         self.emoji = emoji
         self.noteType = noteType
-        self.toDoTasks = toDoTasks
-        self.inProgressTasks = toDoTasks
-        self.doneTasks = toDoTasks
+        self.kanbanColumns = kanbanColumns
     }
 
-    func type() -> NoteType {
-        NoteType(rawValue: noteType) ?? NoteType.empty
+    func type() -> NoteType? {
+        if let noteType = noteType {
+            return NoteType(rawValue: noteType)
+        }
+        return nil
     }
 
     static var transferRepresentation: some TransferRepresentation {
@@ -68,4 +65,44 @@ enum NoteType: String, Hashable, CaseIterable {
         case .board:  return "tablecells"
         }
     }
+}
+
+extension NoteModel {
+
+    static func quickNote() -> NoteModel {
+        NoteModel(title: "Quick Note", description: "Complete your quick to do list!")
+    }
+}
+
+
+class Note: Identifiable {
+
+    @Published var id: String
+    @Published var title: String
+    @Published var description: String
+    @Published var items: [ToDoItemModel]
+    @Published var date: String
+    @Published var emoji: String?
+    @Published var noteType: String?
+    @Published var kanbanColumns: [KanbanColumn]
+
+    init(_ noteModel: NoteModel)
+    {
+        self.id = noteModel.id
+        self.title = noteModel.title
+        self.description = noteModel.description
+        self.items = noteModel.items
+        self.date = noteModel.date
+        self.emoji = noteModel.emoji
+        self.noteType = noteModel.noteType
+        self.kanbanColumns = noteModel.kanbanColumns
+    }
+
+    func type() -> NoteType? {
+        if let noteType = noteType {
+            return NoteType(rawValue: noteType)
+        }
+        return nil
+    }
+
 }

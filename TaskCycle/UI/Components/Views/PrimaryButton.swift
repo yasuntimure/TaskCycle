@@ -11,7 +11,6 @@ struct PrimaryButton: View {
     @EnvironmentObject var theme: Theme
 
     @State var title: String
-    @State var width: CGFloat = ScreenSize.defaultWidth
     @State var height: CGFloat = 50
     @State var action: () -> Void
 
@@ -20,11 +19,13 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .frame(width: width, height: height)
+                .frame(height: height)
+                .hSpacing(.center)
                 .foregroundColor(.white)
                 .font(.system(size: 20)).bold()
                 .layeredBackground(theme.mTintColor)
-                .cornerRadius(cornerRadius)
+                .padding(.horizontal)
+                .frame(maxWidth: Constants.buttonMaxWidth)
         }
     }
 

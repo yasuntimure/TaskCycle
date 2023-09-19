@@ -41,13 +41,13 @@ class NotesViewModel: ObservableObject {
     }
 
     func addTemplateNote() {
-        let note = NoteModel(title: "Quick Note",
-                             description: "Complete your quick to do list!")
+        let note = NoteModel.quickNote()
         executeDBOperation(.save(note))
+        notes.append(note)
     }
 
-    func saveNewNote(type: NoteType, completion: @escaping (NoteModel) -> Void) {
-        let note = NoteModel(noteType: type.rawValue)
+    func saveNewNote(completion: @escaping (NoteModel) -> Void) {
+        let note = NoteModel()
         executeDBOperation(.save(note))
         completion(note)
     }

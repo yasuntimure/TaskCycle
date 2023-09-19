@@ -38,22 +38,20 @@ struct TextFieldView: View {
         
         VStack (alignment: .leading, spacing: 5) {
             Text(input.validation.message())
-                .font(.system(size: 14))
+                .font(.caption2)
                 .foregroundColor(input.validation.status() == .approved ? .green : .red)
                 .bold()
 
                 if isSecure {
                     SecureField(input.placeholder, text: $input.text)
-                        .frame(height: ScreenSize.defaultHeight)
-                        .padding(.horizontal)
+                        .padding()
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
                                 .stroke(theme.mTintColor, lineWidth: 2)
                         )
                 } else {
                     TextField(input.placeholder, text: $input.text)
-                        .frame(height: ScreenSize.defaultHeight)
-                        .padding(.horizontal)
+                        .padding()
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .overlay(
@@ -63,7 +61,9 @@ struct TextFieldView: View {
                 }
 
         }
-
+        .hSpacing(.center)
+        .padding(.horizontal)
+        .frame(maxWidth: Constants.buttonMaxWidth)
     }
 
 }

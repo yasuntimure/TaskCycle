@@ -34,11 +34,11 @@ public struct ScreenSize {
         min(ScreenSize.width, ScreenSize.height)
     }
 
-    public static var defaultWidth: CGFloat {
-        ScreenSize.width - 50
-    }
-
     public static var defaultHeight: CGFloat {
         50
     }
+}
+
+public struct Constants {
+    public static var buttonMaxWidth: CGFloat = 380
 }

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ToDoRow: View {
-    @EnvironmentObject var theme: Theme
 
     @Binding var item: ToDoItemModel
-    @FocusState var isFocused: Bool
+    @FocusState var isFocused: Bool?
+    @EnvironmentObject var theme: Theme
 
     var body: some View {
         HStack (spacing: 0) {
@@ -22,7 +22,7 @@ struct ToDoRow: View {
             TextField("Write something . . .", text: $item.title, axis: .vertical)
                 .font(.headline)
                 .strikethrough(item.isDone)
-                .focused($isFocused)
+                .focused($isFocused, equals: true)
                 .padding([.vertical, .trailing])
         }
         .layeredBackground(Color.backgroundColor)

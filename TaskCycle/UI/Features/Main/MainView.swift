@@ -25,6 +25,8 @@ struct MainView: View {
 
                     }
                 NotesView(viewModel: notesViewModel)
+                    .environmentObject(notesViewModel)
+                    .environmentObject(theme)
                     .tabItem {
                         Label("Notes", systemImage: "list.clipboard")
                             .foregroundColor(theme.mTintColor)

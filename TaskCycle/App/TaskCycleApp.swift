@@ -27,20 +27,22 @@ public class Mock {
 
     static let userId = "5JK0lwRArPULkWLO6Xf9DPxdo073"
 
-    static let note = NoteModel(id: UUID().uuidString,
-                                title: "Mock Title",
-                                description: "",
-                                items: [item, item, item, item],
-                                date: Date().weekdayFormat(),
-                                noteType: NoteType.empty.rawValue)
+    static let note = NoteModel(title: "Mock Title",
+                                description: "Mock Description",
+                                items: [item1, item2, item3, item4])
 
-    static let item = ToDoItemModel(id: UUID().uuidString,
-                                    title: "Mock Item",
+    static let item = ToDoItemModel(title: "Mock Item",
+                                    description: "Mock Description")
+    static let item1 = ToDoItemModel(title: "Mock Item",
+                                    description: "Mock Description")
+    static let item2 = ToDoItemModel(title: "Mock Item",
+                                    description: "Mock Description")
+    static let item3 = ToDoItemModel(title: "Mock Item",
+                                    description: "Mock Description")
+    static let item4 = ToDoItemModel(title: "Mock Item",
                                     description: "Mock Description")
 
-    static let emptyItem = ToDoItemModel(id: UUID().uuidString,
-                                         title: "",
-                                         description: "")
+    static let emptyItem = ToDoItemModel()
 }
 
 

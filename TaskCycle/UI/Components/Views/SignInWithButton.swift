@@ -27,7 +27,6 @@ enum SignInType {
 
 struct SignInWithButton: View {
 
-    @State var width: CGFloat = ScreenSize.defaultWidth
     @State var height: CGFloat = 50
     @State var signInType: SignInType
     @State var action: () -> Void
@@ -48,8 +47,11 @@ struct SignInWithButton: View {
                     .padding(.leading, 5)
                     .padding(.trailing, 20)
             }
-            .frame(width: width, height: height)
+            .frame(height: height)
+            .hSpacing(.center)
             .layeredBackground(.white)
+            .padding(.horizontal)
+            .frame(maxWidth: Constants.buttonMaxWidth)
         }
 
     }

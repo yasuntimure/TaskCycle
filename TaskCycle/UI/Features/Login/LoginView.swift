@@ -27,7 +27,7 @@ struct LoginView: View {
             
             GradientView()
             
-            VStack {
+            VStack (spacing: 30) {
 
                 HeaderView()
 
@@ -35,49 +35,29 @@ struct LoginView: View {
                     .font(.system(size: 32)).bold()
                     .foregroundColor(.secondary)
                     .hSpacing(.leading)
-                    .padding([.leading], 30)
-                    .padding(.top)
+                    .padding(.horizontal)
+                    .frame(maxWidth: Constants.buttonMaxWidth)
 
                 TextFieldView(input: $viewModel.email)
-                    .frame(width: ScreenSize.defaultWidth)
                     .focused($focusedField, equals: .email)
                     .onSubmit(of: .text) {
                         focusedField = (focusedField == .email) ? .password : nil
                     }
+                    .padding(.bottom, -15)
 
                 TextFieldView(input: $viewModel.password, isSecure: true)
-                    .frame(width: ScreenSize.defaultWidth)
                     .focused($focusedField, equals: .password)
 
                 PrimaryButton(title: "Login") {
                     viewModel.login()
                 }
-                .padding(.top, ScreenSize.width/12)
 
-                HStack (spacing: 12) {
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(height: 1.5)
-                        .foregroundColor(.secondary)
-                        .opacity(0.5)
-                        .padding(.leading, 30)
-                    Text("with")
-                        .font(.system(size: 16)).bold()
-                        .foregroundColor(.secondary)
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(height: 1.5)
-                        .foregroundColor(.secondary)
-                        .opacity(0.5)
-                        .padding(.trailing, 30)
-                }
-                .padding([.top, .bottom], ScreenSize.width/20)
+                SeperatorView()
 
                 // Sign In with Google
-
                 SignInWithButton(signInType: .google) {
                     viewModel.signInWithGoogle()
                 }
-
-                .padding([.bottom], ScreenSize.width/10)
 
                 VStack (spacing: 5) {
                     Text("New around here?")
@@ -118,7 +98,29 @@ struct LoginView: View {
                     .foregroundColor(theme.mTintColor)
             }
         }
-        .hSpacing(.leading).padding(.leading, 30)
+        .hSpacing(.leading)
+        .frame(maxWidth: Constants.buttonMaxWidth)
+        .padding(.horizontal, 30)
+    }
+
+    @ViewBuilder
+    private func SeperatorView() -> some View {
+        HStack (spacing: 12) {
+            RoundedRectangle(cornerRadius: 10)
+                .frame(height: 1.5)
+                .foregroundColor(.secondary)
+                .opacity(0.5)
+                .padding(.leading, 30)
+            Text("with")
+                .font(.system(size: 16)).bold()
+                .foregroundColor(.secondary)
+            RoundedRectangle(cornerRadius: 10)
+                .frame(height: 1.5)
+                .foregroundColor(.secondary)
+                .opacity(0.5)
+                .padding(.trailing, 30)
+        }
+        .frame(maxWidth: Constants.buttonMaxWidth)
     }
 }
 
