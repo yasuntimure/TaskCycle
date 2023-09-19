@@ -18,6 +18,7 @@
 		D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */; };
 		D06F59202AB8BDF700E2510F /* KanbanColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */; };
 		D06F59222AB8C02500E2510F /* KanbanColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F59212AB8C02500E2510F /* KanbanColumn.swift */; };
+		D08271B32ABA37340003A55D /* Kanban.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08271B22ABA37340003A55D /* Kanban.swift */; };
 		D0907A4D2AB0F09F00353AAA /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */; };
 		D0907A4F2AB0FF6400353AAA /* FirebaseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */; };
 		D0907A522AB1059A00353AAA /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A512AB1059A00353AAA /* FirebaseError.swift */; };
@@ -120,6 +121,7 @@
 		D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumnView.swift; sourceTree = "<group>"; };
 		D06F59212AB8C02500E2510F /* KanbanColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumn.swift; sourceTree = "<group>"; };
+		D08271B22ABA37340003A55D /* Kanban.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kanban.swift; sourceTree = "<group>"; };
 		D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIdentifiable.swift; sourceTree = "<group>"; };
 		D0907A512AB1059A00353AAA /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 			children = (
 				D0A94FD62A91BA0000656814 /* BoardNoteView.swift */,
 				D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */,
+				D08271B22ABA37340003A55D /* Kanban.swift */,
 				D0DCCE4D2AB65DC400276F1D /* BoardNoteViewModel.swift */,
 				D0DCCE4F2AB6901900276F1D /* BoardService.swift */,
 			);
@@ -650,6 +653,7 @@
 				D0C996912A86C4D80085481B /* ToDoRow.swift in Sources */,
 				D0907A522AB1059A00353AAA /* FirebaseError.swift in Sources */,
 				D0ED2EFE2A81B20000828887 /* ProfileImage.swift in Sources */,
+				D08271B32ABA37340003A55D /* Kanban.swift in Sources */,
 				D0267E042A91300C0079F90E /* NoteModel.swift in Sources */,
 				D0ED2EE82A802D7800828887 /* WeekModel.swift in Sources */,
 				D0ED2EC82A802BE900828887 /* LoginView.swift in Sources */,

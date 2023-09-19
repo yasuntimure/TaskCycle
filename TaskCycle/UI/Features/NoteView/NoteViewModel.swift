@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
+import Algorithms
 
 @MainActor
 class NoteViewModel: ObservableObject {
@@ -26,7 +27,7 @@ class NoteViewModel: ObservableObject {
     @Published var date: String
     @Published var emoji: String?
     @Published var noteType: String?
-    @Published var kanbanColumns: [KanbanColumn]
+    @Published var kanbans: [Kanban]
 
     init(_ noteModel: NoteModel)
     {
@@ -37,8 +38,7 @@ class NoteViewModel: ObservableObject {
         self.date = noteModel.date
         self.emoji = noteModel.emoji
         self.noteType = noteModel.noteType
-        self.kanbanColumns = noteModel.kanbanColumns
-
+        self.kanbans = noteModel.kanbanModels.map { Kanban($0) }
         self.isNoteConfVisible = (noteModel.type() == nil)
     }
 
@@ -128,72 +128,85 @@ extension NoteViewModel {
 
 extension NoteViewModel {
 
-    func delete(_ kanbanColumn: KanbanColumn) {
-        var columns = kanbanColumns
-        columns.removeAll { $0.id == kanbanColumn.id }
-        kanbanColumns = columns
+    func delete(_ kanban: Kanban) {
+        var updatedKanbans = kanbans
+        updatedKanbans.removeAll { $0.id == kanban.id }
+        kanbans = updatedKanbans
     }
 
     func addKanbanColumn() {
-        var columns = kanbanColumns
-        columns.append(KanbanColumn())
-        kanbanColumns = columns
+        var updatedKanbans = kanbans
+        let kanbanModel = KanbanModel()
+        let kanban = Kanban(kanbanModel)
+        updatedKanbans.append(kanban)
+        kanbans = updatedKanbans
     }
 
 
-    func addTask(to kanbanColumn: KanbanColumn) {
-        var updatedColumns = kanbanColumns
-        for (index, column) in updatedColumns.enumerated() {
-            if column.id == kanbanColumn.id {
+    func addTask(to kanban: Kanban) {
+        let updatedKanbans = kanbans
+        for (index, kanbanItem) in updatedKanbans.enumerated() {
+            if kanbanItem.id == kanban.id {
                 let quickNote = NoteModel.quickNote()
-                updatedColumns[index].tasks.append(quickNote)
+                updatedKanbans[index].tasks.append(quickNote)
             }
         }
-        self.kanbanColumns = updatedColumns
+        self.kanbans = updatedKanbans
     }
 
 
-    func duplicate(_ kanbanColumn: KanbanColumn) {
-        let copiedColumn = KanbanColumn(
-            title: kanbanColumn.title,
-            tasks: kanbanColumn.tasks,
-            isTargeted: kanbanColumn.isTargeted
-        )
+    func duplicate(_ kanban: Kanban) {
+        let kanbanModel = KanbanModel(title: kanban.title, tasks: kanban.tasks)
+        let copiedKanban = Kanban(kanbanModel)
 
-        if let originalIndex = self.kanbanColumns.firstIndex(where: { $0.id == kanbanColumn.id }) {
-            self.kanbanColumns.insert(copiedColumn, at: originalIndex + 1)
+        if let originalIndex = self.kanbans.firstIndex(where: { $0.id == kanban.id }) {
+            self.kanbans.insert(copiedKanban, at: originalIndex + 1)
         }
     }
 
     /// Removes the dropped tasks from their source column.
-    func removeDroppedTasksFromSource(_ droppedTasks: [NoteModel]) {
-        for index in self.kanbanColumns.indices {
-            self.kanbanColumns[index].tasks.removeAll { task in
-                droppedTasks.contains(task)
+    func removeDroppedTasks(from kanban: Kanban, droppedTasks: [NoteModel]) {
+        var tempKanbans = kanbans
+        kanbans.enumerated().forEach { i, item in
+            if item.id != kanban.id {
+                tempKanbans[i].tasks.removeAll { droppedTasks.contains($0)}
             }
         }
+        kanbans = tempKanbans
     }
 
     /// Adds the dropped tasks to the destination column, ensuring there are no duplicates.
-    func addDroppedTasksToDestination(_ droppedTasks: [NoteModel], to column: KanbanColumn) {
-        if let index = self.kanbanColumns.firstIndex(where: { $0.id == column.id }) {
-            let updatedTasks = self.kanbanColumns[index].tasks + droppedTasks
-            self.kanbanColumns[index].tasks = Array(updatedTasks.uniqued())
+    func addDroppedTasks(to kanban: Kanban, droppedTasks: [NoteModel]) {
+        var tempKanbans = kanbans
+        kanbans.enumerated().forEach { i, item in
+            if item.id == kanban.id {
+                let updatedTasks = item.tasks + droppedTasks
+                tempKanbans[i].tasks = Array(updatedTasks.uniqued())
+            }
         }
+        kanbans = tempKanbans
     }
 }
 
 extension NoteViewModel {
 
     private func model() -> NoteModel {
-        NoteModel(id: self.id,
+
+        var kanbanColumns: [KanbanModel] = []
+
+        self.kanbans.forEach { kanban in
+            let kanbanModel = kanban.model()
+            kanbanColumns.append(kanbanModel)
+        }
+
+        return NoteModel(id: self.id,
                   title: self.title,
                   description: self.description,
                   items: self.items,
                   date: self.date,
                   emoji: self.emoji,
                   noteType: self.noteType,
-                  kanbanColumns: self.kanbanColumns)
+                  kanbanColumns: kanbanColumns)
 
     }
 }

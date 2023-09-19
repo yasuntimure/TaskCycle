@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import UniformTypeIdentifiers
 
-struct KanbanColumn: FirebaseIdentifiable {
+struct KanbanModel: FirebaseIdentifiable {
     var id: String
     var title: String
     var tasks: [NoteModel]

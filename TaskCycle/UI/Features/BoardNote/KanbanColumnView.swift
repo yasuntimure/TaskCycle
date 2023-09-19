@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import Algorithms
 
 struct KanbanColumnView: View {
 
     @EnvironmentObject var theme: Theme
     @EnvironmentObject var viewModel: NoteViewModel
 
-    @State var column: KanbanColumn
+    @State var kanban: Kanban
+
+    @State var isTargeted: Bool = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,7 +23,7 @@ struct KanbanColumnView: View {
                 ScrollView(showsIndicators: false) {
                     // Tasks
                     VStack (spacing: -12) {
-                        ForEach(column.tasks, id: \.id) { task in
+                        ForEach(kanban.tasks, id: \.id) { task in
                             TaskRow(note: task)
                                 .padding(.vertical, 12)
                                 .padding(.horizontal, 12)
@@ -33,15 +36,22 @@ struct KanbanColumnView: View {
                     SecondaryButton(imageName: "plus",
                                     title: "Add Task",
                                     backgroundColor: theme.mTintColor.opacity(0.15)) {
-                        viewModel.addTask(to: column)
+                        viewModel.addTask(to: kanban)
                     }.padding(.vertical, 6).padding(.horizontal, 12)
                 }
                 .hSpacing(.center)
             }
             .layeredBackground(
-                column.isTargeted ? theme.mTintColor.opacity(0.1) : .backgroundColor,
+                self.isTargeted ? theme.mTintColor.opacity(0.1) : .backgroundColor,
                 cornerRadius: 8
             )
+            .dropDestination(for: NoteModel.self) { droppedTasks, location in
+                viewModel.removeDroppedTasks(from: kanban, droppedTasks: droppedTasks)
+                viewModel.addDroppedTasks(to: kanban, droppedTasks: droppedTasks)
+                return true
+            } isTargeted: { isTargeted in
+                self.isTargeted = isTargeted
+            }
         }
         .padding(.horizontal, 8)
         .padding(.vertical)
@@ -84,7 +94,7 @@ struct KanbanColumnView: View {
 }
 
 #Preview {
-    KanbanColumnView(column: KanbanColumn())
+    KanbanColumnView(kanban: Kanban(KanbanModel()))
         .environmentObject(Theme())
         .environmentObject(NoteViewModel(Mock.note))
 }

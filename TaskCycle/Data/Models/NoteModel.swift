@@ -18,7 +18,7 @@ struct NoteModel: FirebaseIdentifiable, Transferable {
     var date: String
     var emoji: String?
     var noteType: String?
-    var kanbanColumns: [KanbanColumn]
+    var kanbanModels: [KanbanModel]
 
     init(id: String = UUID().uuidString,
          title: String = "",
@@ -27,7 +27,7 @@ struct NoteModel: FirebaseIdentifiable, Transferable {
          date: String = Date().weekdayFormat(),
          emoji: String? = nil,
          noteType: String? = nil,
-         kanbanColumns: [KanbanColumn] = [KanbanColumn(title: "To Do"), KanbanColumn(title: "In Progress"), KanbanColumn(title: "Done")])
+         kanbanColumns: [KanbanModel] = [KanbanModel(title: "To Do"), KanbanModel(title: "In Progress"), KanbanModel(title: "Done")])
     {
         self.id = id
         self.title = title
@@ -36,7 +36,7 @@ struct NoteModel: FirebaseIdentifiable, Transferable {
         self.date = date
         self.emoji = emoji
         self.noteType = noteType
-        self.kanbanColumns = kanbanColumns
+        self.kanbanModels = kanbanColumns
     }
 
     func type() -> NoteType? {

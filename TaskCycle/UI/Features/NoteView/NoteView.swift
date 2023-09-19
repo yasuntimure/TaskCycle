@@ -41,8 +41,25 @@ struct NoteView: View {
                         case .empty: Divider().opacity(0)
                         case .todo: ToDoListView()
                         case .board: 
-                            BoardNoteView(kanbanColumns: $viewModel.kanbanColumns)
-                                .environmentObject(viewModel)
+                            GeometryReader { geometry in
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack (alignment: .top) {
+                                        LazyVGrid(columns: getGridColumns()) {
+                                            ForEach($viewModel.kanbans, id: \.id) { $kanban in
+                                                VStack (spacing: -15) {
+                                                    KanbanHeader($kanban)
+                                                    KanbanColumnView(kanban: kanban)
+                                                        .frame(height: geometry.size.height)
+                                                        .environmentObject(viewModel)
+                                                }
+                                            }
+                                            AddColumnButton()
+                                                .frame(height: geometry.size.height)
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
+                            }
                         }
                     }
                 }
@@ -137,6 +154,67 @@ struct NoteView: View {
             }
             .hSpacing(.trailing).vSpacing(.bottom)
             .padding([.trailing, .bottom], 20)
+        }
+    }
+
+    func getGridColumns() -> [GridItem] {
+        var columns: [GridItem] = []
+        viewModel.kanbans.forEach { _ in
+            columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
+        }
+        columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
+        return columns
+    }
+
+
+    @ViewBuilder
+    private func KanbanHeader(_ bindingKanban: Binding<Kanban>) -> some View {
+        HStack {
+            TextField("Title...", text: bindingKanban.title)
+                .font(.body).bold()
+                .padding(10)
+            Spacer()
+            Menu {
+                Button(action: {
+                    withAnimation {
+                        viewModel.delete(bindingKanban.wrappedValue)
+                    }
+                }) {
+                    Label("Delete", systemImage: "trash")
+                }
+
+                Button(action: {
+                    withAnimation {
+                        viewModel.duplicate(bindingKanban.wrappedValue)
+                    }
+                }) {
+                    Label("Duplicate", systemImage: "plus.square.on.square")
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+                        .font(.body)
+                        .foregroundStyle(.black)
+                        .padding()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func AddColumnButton() -> some View {
+        Button {
+            withAnimation {
+                viewModel.addKanbanColumn()
+            }
+        } label: {
+            HStack {
+                Image(systemName: "plus")
+                Text("Add Column")
+            }
+            .font(.body).bold()
+            .foregroundColor(.secondary)
+            .hSpacing(.center).vSpacing(.center)
+            .layeredBackground(.backgroundColor.opacity(0.4), cornerRadius: 8)
+            .padding(.top, 42).padding(.bottom, 18).padding(.horizontal).padding(.leading, -8)
         }
     }
 }
