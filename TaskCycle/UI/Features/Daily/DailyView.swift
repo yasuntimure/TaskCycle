@@ -43,7 +43,6 @@ struct DailyView: View {
             .padding([.trailing,.bottom], 20)
             .padding(3)
         }
-        .toolbarKeyboardDismiss()
         .environmentObject(viewModel)
     }
 

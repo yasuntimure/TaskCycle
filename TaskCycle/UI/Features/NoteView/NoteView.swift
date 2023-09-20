@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-enum NoteTextFields: String {
-    case title
-    case description
+enum NoteTextFields: Hashable {
+    case noteTitle
+    case noteDescription
+    case kanbanTitle
+    case kanbanTaskTitle
+    case kanbanTaskDescription
 }
 
 struct NoteView: View {
@@ -19,55 +22,48 @@ struct NoteView: View {
     @FocusState var focusState: NoteTextFields?
 
     var body: some View {
-        ZStack {
-            VStack (alignment: .leading) {
-                TextField("Title...", text: $viewModel.title)
-                    .titleFont(for: viewModel.type() ?? .empty)
-                    .focused($focusState, equals: .title)
-                    .onSubmit { focusState = .description }
-                    .padding(.horizontal)
-
-                TextField("Description . . .", text: $viewModel.description, axis: .vertical)
-                    .descriptionFont(for: viewModel.type() ?? .empty)
-                    .foregroundColor(.secondary)
-                    .focused($focusState, equals: .description)
-                    .padding(.horizontal)
-
+        VStack (alignment: .leading) {
+            TextField("Title...", text: $viewModel.title)
+                .titleFont(for: viewModel.noteType ?? .empty)
+                .focused($focusState, equals: .noteTitle)
+                .onSubmit { focusState = .noteDescription }
+                .padding(.horizontal)
+            
+            TextField("Description . . .", text: $viewModel.description, axis: .vertical)
+                .descriptionFont(for: viewModel.noteType ?? .empty)
+                .foregroundColor(.secondary)
+                .focused($focusState, equals: .noteDescription)
+                .padding(.horizontal)
+                .descriptionPadding(for: viewModel.noteType)
+            
+            GeometryReader { geometry in
                 VStack (alignment: .leading) {
                     if viewModel.isNoteConfVisible {
                         NoteConfigurationView()
                     } else {
-                        switch viewModel.type() ?? .empty {
-                        case .empty: Divider().opacity(0)
+                        switch viewModel.noteType ?? .empty {
+                        case .empty: Divider().opacity(0).frame(height: 1)
                         case .todo: ToDoListView()
-                        case .board: 
-                            GeometryReader { geometry in
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack (alignment: .top) {
-                                        LazyVGrid(columns: getGridColumns()) {
-                                            ForEach($viewModel.kanbans, id: \.id) { $kanban in
-                                                VStack (spacing: -15) {
-                                                    KanbanColumnView(kanban: kanban)
-                                                        .frame(height: geometry.size.height)
-                                                        .environmentObject(viewModel)
-                                                }
-                                            }
-                                            AddColumnButton()
+                        case .board:
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    LazyVGrid(columns: getGridColumns()) {
+                                        ForEach($viewModel.kanbans, id: \.id) { $kanban in
+                                            KanbanColumnView(kanban: kanban)
                                                 .frame(height: geometry.size.height)
+                                                .environmentObject(viewModel)
                                         }
+                                        AddColumnButton()
                                     }
-                                    .padding(.horizontal)
                                 }
+                                .padding(.horizontal)
                             }
                         }
                     }
                 }
                 .hSpacing(.leading)
-
-                Spacer()
             }
         }
-        .toolbarKeyboardDismiss()
         .onAppear {
             focusState = viewModel.initialFocusState()
         }
@@ -79,9 +75,8 @@ struct NoteView: View {
             }
             parentVM.fetchNotes()
         }
-
     }
-
+    
     @ViewBuilder
     private func CustomButton(_ title: String,
                               image: String,
@@ -98,7 +93,7 @@ struct NoteView: View {
             .layeredBackground(Color.backgroundColor, cornerRadius: 8)
         }
     }
-
+    
     @ViewBuilder
     private func NoteConfigurationView() -> some View {
         VStack (alignment: .leading, spacing: 25) {
@@ -107,27 +102,27 @@ struct NoteView: View {
                     viewModel.isNoteConfVisible = false
                 }
             }
-
+            
             VStack (alignment: .leading, spacing: 10) {
                 Text("Add New")
                     .font(.footnote).bold()
                     .foregroundStyle(theme.mTintColor)
                 CustomButton("To Do List", image: "checkmark.square") {
                     withAnimation {
-                        viewModel.noteType = NoteType.todo.rawValue
+                        viewModel.noteType = .todo
                         viewModel.isNoteConfVisible = false
                     }
                 }
                 CustomButton("Kanban Board", image: "tablecells") {
                     withAnimation {
-                        viewModel.noteType = NoteType.board.rawValue
+                        viewModel.noteType = .board
                         viewModel.isNoteConfVisible = false
                     }
                 }
             }
         }.padding()
     }
-
+    
     @ViewBuilder
     func ToDoListView() -> some View {
         ZStack {
@@ -147,7 +142,7 @@ struct NoteView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) { EditButton() }
             }
-
+            
             PlusButton() {
                 viewModel.addNewItem()
             }
@@ -155,7 +150,7 @@ struct NoteView: View {
             .padding([.trailing, .bottom], 20)
         }
     }
-
+    
     func getGridColumns() -> [GridItem] {
         var columns: [GridItem] = []
         viewModel.kanbans.forEach { _ in
@@ -164,7 +159,7 @@ struct NoteView: View {
         columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
         return columns
     }
-
+    
     @ViewBuilder
     private func AddColumnButton() -> some View {
         Button {
@@ -202,7 +197,7 @@ fileprivate extension TextField {
             return self.font(.title2).bold()
         }
     }
-
+    
     func descriptionFont(for noteType: NoteType) -> some View {
         switch noteType {
         case .empty:
@@ -212,5 +207,32 @@ fileprivate extension TextField {
         case .board:
             return self.font(.body)
         }
+    }
+    
+}
+
+fileprivate extension View {
+    @ViewBuilder
+    func descriptionPadding(for noteType: NoteType?) -> some View {
+        if let noteType = noteType, noteType == .empty {
+            self.vSpacing(.top)
+        }
+        self
+    }
+}
+
+
+struct ResignKeyboardOnDragGesture: ViewModifier {
+    var gesture = DragGesture().onChanged { _ in
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+
+    func body(content: Content) -> some View {
+        content.gesture(gesture)
+    }
+}
+extension View {
+    func dismissKeyboard() -> some View {
+        return modifier(ResignKeyboardOnDragGesture())
     }
 }

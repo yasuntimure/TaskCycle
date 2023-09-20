@@ -12,6 +12,8 @@ import Algorithms
 @MainActor
 class NoteViewModel: ObservableObject {
 
+    @Published var taskIsEditable: Bool
+
     var uncompletedNote: Bool {
         (title.trimmingCharacters(in: .whitespaces).isEmpty) && (description.trimmingCharacters(in: .whitespaces).isEmpty)
     }
@@ -26,7 +28,7 @@ class NoteViewModel: ObservableObject {
     @Published var items: [ToDoItemModel]
     @Published var date: String
     @Published var emoji: String?
-    @Published var noteType: String?
+    @Published var noteType: NoteType? = nil
     @Published var kanbans: [Kanban]
 
     init(_ noteModel: NoteModel)
@@ -37,26 +39,35 @@ class NoteViewModel: ObservableObject {
         self.items = noteModel.items
         self.date = noteModel.date
         self.emoji = noteModel.emoji
-        self.noteType = noteModel.noteType
+
+        // Set Note Type
+        if let noteTypeString = noteModel.noteType {
+            self.noteType = NoteType(rawValue: noteTypeString)
+        } else {
+            self.noteType = nil
+        }
+
         self.kanbans = noteModel.kanbanModels.map { Kanban($0) }
         self.isNoteConfVisible = (noteModel.type() == nil)
+
+        self.taskIsEditable = noteModel.title.isEmpty
     }
 
     func initialFocusState() -> NoteTextFields? {
         if title.isEmpty {
-            return .title
+            return .noteTitle
         }
 
         if !title.isEmpty && description.isEmpty {
-            return .description
+            return .noteDescription
         }
 
         return nil
     }
 
-    func type() -> NoteType? {
-        if let noteType = noteType {
-            return NoteType(rawValue: noteType)
+    func getNoteType(from string: String?) -> NoteType? {
+        if let string = string {
+            return NoteType(rawValue: string)
         }
         return nil
     }
@@ -147,8 +158,7 @@ extension NoteViewModel {
         let updatedKanbans = kanbans
         for (index, kanbanItem) in updatedKanbans.enumerated() {
             if kanbanItem.id == kanban.id {
-                let quickNote = NoteModel.quickNote()
-                updatedKanbans[index].tasks.append(quickNote)
+                updatedKanbans[index].tasks.append(NoteModel())
             }
         }
         self.kanbans = updatedKanbans
@@ -190,7 +200,7 @@ extension NoteViewModel {
 
 extension NoteViewModel {
 
-    private func model() -> NoteModel {
+    func model() -> NoteModel {
 
         var kanbanColumns: [KanbanModel] = []
 
@@ -205,7 +215,7 @@ extension NoteViewModel {
                   items: self.items,
                   date: self.date,
                   emoji: self.emoji,
-                  noteType: self.noteType,
+                  noteType: self.noteType?.rawValue,
                   kanbanColumns: kanbanColumns)
 
     }

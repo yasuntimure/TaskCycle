@@ -14,34 +14,36 @@ struct KanbanColumnView: View {
     @EnvironmentObject var viewModel: NoteViewModel
 
     @State var kanban: Kanban
+    @FocusState var focusState: NoteTextFields?
 
     @State var isTargeted: Bool = false
 
     var body: some View {
         VStack(alignment: .leading) {
             KanbanHeader()
-            VStack {
-                ScrollView(showsIndicators: false) {
-                    // Tasks
-                    VStack (spacing: -12) {
-                        ForEach($kanban.tasks, id: \.id) { $task in
-                            KanbanTaskView(note: $task)
-                                .padding(.vertical, 12)
-                                .padding(.horizontal, 12)
-                                .draggable(task)
-                        }
-                    }
-                    .padding(.bottom, -12)
+                .padding(.horizontal, 5)
 
-                    // Add New Button
-                    SecondaryButton(imageName: "plus",
-                                    title: "Add Task",
-                                    backgroundColor: theme.mTintColor.opacity(0.15)) {
-                        viewModel.addTask(to: kanban)
-                    }.padding(.vertical, 6).padding(.horizontal, 12)
+            ScrollView(showsIndicators: false) {
+                // Tasks
+                VStack (spacing: -12) {
+                    ForEach($kanban.tasks, id: \.id) { $note in
+                        KanbanTaskView(note: $note)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 12)
+                            .draggable(note)
+                    }
                 }
-                .hSpacing(.center)
+                .padding(.bottom, -12)
+
+                // Add New Button
+                SecondaryButton(imageName: "plus",
+                                title: "Add Task",
+                                backgroundColor: theme.mTintColor.opacity(0.15)) {
+                    viewModel.addTask(to: kanban)
+                }.padding(.vertical, 6).padding(.horizontal, 12)
             }
+            .hSpacing(.center)
+            .padding(.top, 9)
             .layeredBackground(
                 self.isTargeted ? theme.mTintColor.opacity(0.1) : .backgroundColor,
                 cornerRadius: 8
@@ -53,9 +55,8 @@ struct KanbanColumnView: View {
             } isTargeted: { isTargeted in
                 self.isTargeted = isTargeted
             }
+
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical)
     }
 
     @ViewBuilder
@@ -64,6 +65,7 @@ struct KanbanColumnView: View {
             TextField("Title...", text: $kanban.title)
                 .font(.body).bold()
                 .padding([.vertical], 5)
+                .focused($focusState, equals: .kanbanTitle)
             Spacer()
             Menu {
                 Button(action: {
@@ -83,17 +85,17 @@ struct KanbanColumnView: View {
                 }
             } label: {
                 Image(systemName: "ellipsis")
-                        .font(.body)
-                        .foregroundStyle(.black)
-                        .padding([.vertical, .leading], 12)
-                        .padding(.trailing, 5)
+                    .font(.body)
+                    .foregroundStyle(.black)
+                    .padding([.vertical, .leading], 12)
+                    .padding(.trailing, 5)
             }
         }
     }
 }
 
 #Preview {
-    KanbanColumnView(kanban: Kanban(KanbanModel()))
+    KanbanColumnView(kanban: Kanban(KanbanModel()), isTargeted: false)
         .environmentObject(Theme())
         .environmentObject(NoteViewModel(Mock.note))
 }

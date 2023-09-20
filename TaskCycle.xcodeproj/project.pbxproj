@@ -46,6 +46,7 @@
 		D0C996912A86C4D80085481B /* ToDoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996902A86C4D80085481B /* ToDoRow.swift */; };
 		D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996922A86D74B0085481B /* KeyboardButton.swift */; };
 		D0C996962A886FF20085481B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C996952A886FF20085481B /* SettingsView.swift */; };
+		D0DA569C2ABB9D670068D7AD /* KanbanTaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA569B2ABB9D670068D7AD /* KanbanTaskDetailView.swift */; };
 		D0DA8B972A7D7DAF00458284 /* TaskCycleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA8B962A7D7DAF00458284 /* TaskCycleApp.swift */; };
 		D0DA8B9B2A7D7DB000458284 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0DA8B9A2A7D7DB000458284 /* Assets.xcassets */; };
 		D0DA8B9E2A7D7DB000458284 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0DA8B9D2A7D7DB000458284 /* Preview Assets.xcassets */; };
@@ -146,6 +147,7 @@
 		D0C996902A86C4D80085481B /* ToDoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoRow.swift; sourceTree = "<group>"; };
 		D0C996922A86D74B0085481B /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
 		D0C996952A886FF20085481B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D0DA569B2ABB9D670068D7AD /* KanbanTaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanTaskDetailView.swift; sourceTree = "<group>"; };
 		D0DA8B932A7D7DAF00458284 /* TaskCycle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskCycle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0DA8B962A7D7DAF00458284 /* TaskCycleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCycleApp.swift; sourceTree = "<group>"; };
 		D0DA8B9A2A7D7DB000458284 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			children = (
 				D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */,
 				D04004FF2ABA6C1200A9DEE2 /* KanbanTaskView.swift */,
+				D0DA569B2ABB9D670068D7AD /* KanbanTaskDetailView.swift */,
 				D08271B22ABA37340003A55D /* Kanban.swift */,
 				D0DCCE4D2AB65DC400276F1D /* BoardNoteViewModel.swift */,
 				D0DCCE4F2AB6901900276F1D /* BoardService.swift */,
@@ -627,6 +630,7 @@
 				D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */,
 				D0DCCE532AB76F2400276F1D /* NoteView.swift in Sources */,
 				D0ED2ED42A802C4600828887 /* RegisterViewModel.swift in Sources */,
+				D0DA569C2ABB9D670068D7AD /* KanbanTaskDetailView.swift in Sources */,
 				D04005002ABA6C1200A9DEE2 /* KanbanTaskView.swift in Sources */,
 				D0ED2ECC2A802C1200828887 /* StatefulPreviewWrapper.swift in Sources */,
 				D0ED2EEA2A802D7800828887 /* ToDoItemModel.swift in Sources */,

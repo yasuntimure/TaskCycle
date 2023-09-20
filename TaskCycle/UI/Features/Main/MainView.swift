@@ -40,9 +40,11 @@ struct MainView: View {
             .tint(theme.mTintColor)
             .environmentObject(viewModel)
             .environmentObject(theme)
+            .dismissKeyboard()
         } else {
             LoginView(viewModel: LoginViewModel())
                 .environmentObject(theme)
+                .dismissKeyboard()
         }
 
     }

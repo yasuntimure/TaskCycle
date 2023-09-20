@@ -10,11 +10,14 @@ import SwiftUI
 struct KanbanTaskView: View {
 
     @EnvironmentObject var theme: Theme
-
+    @FocusState var focusState: NoteTextFields?
     @Binding var note: NoteModel
+    @EnvironmentObject var viewModel: NoteViewModel
+
+    @State var taskIsEditable: Bool = false
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack {
             VStack {
                 if let emoji = note.emoji {
                     Text(emoji)
@@ -29,23 +32,66 @@ struct KanbanTaskView: View {
             }
 
             VStack (alignment: .leading, spacing: 2) {
-                TextField("Title...", text: $note.title, axis: .vertical)
-                    .font(.subheadline.bold())
-                    .multilineTextAlignment(.leading)
-
-                if !note.description.isEmpty {
-                    TextField("Description...", text: $note.description, axis: .vertical)
-                        .font(.footnote)
+                if taskIsEditable {
+                    TextField("Title...", text: $note.title)
+                        .font(.subheadline.bold())
                         .multilineTextAlignment(.leading)
-                        .foregroundColor(.secondary)
+                        .focused($focusState, equals: .kanbanTaskTitle)
+                        .onSubmit {
+                            viewModel.updateNote()
+                            taskIsEditable = false
+                        }
+
+                    if !note.description.isEmpty {
+                        TextField("Description...", text: $note.description)
+                            .font(.footnote)
+                            .multilineTextAlignment(.leading)
+                            .focused($focusState, equals: .kanbanTaskTitle)
+                            .onSubmit { taskIsEditable = false }
+                    }
+                } else {
+                    NavigationLink {
+                        KanbanTaskDetailView(note: $note)
+                    } label: {
+                        VStack (alignment: .leading, spacing: 2) {
+                            Text(note.title)
+                                .font(.subheadline.bold())
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(.primary)
+
+                            if !note.description.isEmpty {
+                                Text(note.description)
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.leading)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
                 }
             }
+            .hSpacing(.leading)
+
+            EditTaskButton()
         }
-        .hSpacing(.leading)
         .padding(.horizontal, 9)
         .padding(.vertical, 9)
         .layeredBackground(.white, cornerRadius: 8)
-        .border(.red)
+        .onAppear {
+            taskIsEditable = note.title.isEmpty
+        }
+    }
+
+    @ViewBuilder
+    private func EditTaskButton() -> some View {
+        Button(action: {
+            taskIsEditable = true
+            focusState = .kanbanTaskTitle
+        }, label: {
+            Image(systemName: "pencil")
+                .font(.caption)
+                .padding([.leading, .bottom], 5)
+                .vSpacing(.top)
+        })
     }
 }
 
@@ -56,42 +102,8 @@ struct KanbanTaskView: View {
 
         KanbanTaskView(note: .constant(Mock.note))
             .environmentObject(Theme())
-            .padding()
-            .padding(.trailing, 100)
-    }
-
-
-}
-
-
-struct TextFieldHeightView: View {
-    @Binding var text: String
-
-    var body: some View {
-        GeometryReader { geometry in
-            TextField("Title...", text: $text, axis: .vertical)
-                .font(.subheadline.bold())
-                .multilineTextAlignment(.leading)
-                .lineLimit(3)
-                .background(SizePreferenceSetter())
-        }
-        .onPreferenceChange(SizePreferenceKey.self) { size in
-            print("Height of TextField is: \(size.height)")
-        }
-    }
-}
-
-struct SizePreferenceSetter: View {
-    var body: some View {
-        GeometryReader { geometry in
-            Color.clear.preference(key: SizePreferenceKey.self, value: geometry.size)
-        }
-    }
-}
-
-struct SizePreferenceKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-        value = nextValue()
+            .environmentObject(NoteViewModel(NoteModel.quickNote()))
+            .padding(.horizontal, 50)
+            .padding(.vertical, 350)
     }
 }
