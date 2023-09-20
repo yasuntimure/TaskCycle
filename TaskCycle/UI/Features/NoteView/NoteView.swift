@@ -47,7 +47,6 @@ struct NoteView: View {
                                         LazyVGrid(columns: getGridColumns()) {
                                             ForEach($viewModel.kanbans, id: \.id) { $kanban in
                                                 VStack (spacing: -15) {
-                                                    KanbanHeader($kanban)
                                                     KanbanColumnView(kanban: kanban)
                                                         .frame(height: geometry.size.height)
                                                         .environmentObject(viewModel)
@@ -164,39 +163,6 @@ struct NoteView: View {
         }
         columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
         return columns
-    }
-
-
-    @ViewBuilder
-    private func KanbanHeader(_ bindingKanban: Binding<Kanban>) -> some View {
-        HStack {
-            TextField("Title...", text: bindingKanban.title)
-                .font(.body).bold()
-                .padding(10)
-            Spacer()
-            Menu {
-                Button(action: {
-                    withAnimation {
-                        viewModel.delete(bindingKanban.wrappedValue)
-                    }
-                }) {
-                    Label("Delete", systemImage: "trash")
-                }
-
-                Button(action: {
-                    withAnimation {
-                        viewModel.duplicate(bindingKanban.wrappedValue)
-                    }
-                }) {
-                    Label("Duplicate", systemImage: "plus.square.on.square")
-                }
-            } label: {
-                Image(systemName: "ellipsis")
-                        .font(.body)
-                        .foregroundStyle(.black)
-                        .padding()
-            }
-        }
     }
 
     @ViewBuilder

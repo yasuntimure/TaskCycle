@@ -19,12 +19,13 @@ struct KanbanColumnView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
+            KanbanHeader()
             VStack {
                 ScrollView(showsIndicators: false) {
                     // Tasks
                     VStack (spacing: -12) {
-                        ForEach(kanban.tasks, id: \.id) { task in
-                            TaskRow(note: task)
+                        ForEach($kanban.tasks, id: \.id) { $task in
+                            KanbanTaskView(note: $task)
                                 .padding(.vertical, 12)
                                 .padding(.horizontal, 12)
                                 .draggable(task)
@@ -57,40 +58,38 @@ struct KanbanColumnView: View {
         .padding(.vertical)
     }
 
-    @ViewBuilder func TaskRow(note: NoteModel) -> some View {
-        HStack(spacing: 10) {
-            VStack {
-                if let emoji = note.emoji {
-                    Text(emoji)
-                        .font(.largeTitle)
-                } else {
-                    Image(systemName: note.type()?.systemImage ?? NoteType.empty.systemImage)
-                        .font(.largeTitle)
-                        .foregroundColor(theme.mTintColor)
-                        .minimumScaleFactor(0.1)
-                        .scaledToFit()
+    @ViewBuilder
+    private func KanbanHeader() -> some View {
+        HStack {
+            TextField("Title...", text: $kanban.title)
+                .font(.body).bold()
+                .padding([.vertical], 5)
+            Spacer()
+            Menu {
+                Button(action: {
+                    withAnimation {
+                        viewModel.delete(kanban)
+                    }
+                }) {
+                    Label("Delete", systemImage: "trash")
                 }
-            }
 
-            VStack (alignment: .leading, spacing: 2) {
-                Text(note.title)
-                    .font(.headline)
-
-                if !note.description.isEmpty {
-                    Text(note.description)
+                Button(action: {
+                    withAnimation {
+                        viewModel.duplicate(kanban)
+                    }
+                }) {
+                    Label("Duplicate", systemImage: "plus.square.on.square")
+                }
+            } label: {
+                Image(systemName: "ellipsis")
                         .font(.body)
-                        .multilineTextAlignment(.leading)
-                        .foregroundColor(.secondary)
-                        .lineLimit(3)
-                }
+                        .foregroundStyle(.black)
+                        .padding([.vertical, .leading], 12)
+                        .padding(.trailing, 5)
             }
         }
-        .hSpacing(.leading)
-        .padding(.horizontal, 6)
-        .padding(.vertical, 6)
-        .layeredBackground(.white, cornerRadius: 8)
     }
-
 }
 
 #Preview {

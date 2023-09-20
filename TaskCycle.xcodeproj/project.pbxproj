@@ -15,6 +15,7 @@
 		D036B4C02A8AE92E007F121C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */; };
 		D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C12A8AF128007F121C /* AppDelegate.swift */; };
 		D036B4C42A8AF590007F121C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C32A8AF590007F121C /* MainView.swift */; };
+		D04005002ABA6C1200A9DEE2 /* KanbanTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04004FF2ABA6C1200A9DEE2 /* KanbanTaskView.swift */; };
 		D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */; };
 		D06F59202AB8BDF700E2510F /* KanbanColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */; };
 		D06F59222AB8C02500E2510F /* KanbanColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F59212AB8C02500E2510F /* KanbanColumn.swift */; };
@@ -33,7 +34,6 @@
 		D0A8AB9F2AB3D01A00C7A159 /* FirestorePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */; };
 		D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A94FCD2A91AB9E00656814 /* IconView.swift */; };
 		D0A94FD12A91B12F00656814 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = D0A94FD02A91B12F00656814 /* EmojiPicker */; };
-		D0A94FD72A91BA0000656814 /* BoardNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A94FD62A91BA0000656814 /* BoardNoteView.swift */; };
 		D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */; };
 		D0B3B0C72A8A938C001B14D1 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C62A8A938C001B14D1 /* GoogleSignInSwift */; };
 		D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */; };
@@ -118,6 +118,7 @@
 		D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D036B4C12A8AF128007F121C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D036B4C32A8AF590007F121C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		D04004FF2ABA6C1200A9DEE2 /* KanbanTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanTaskView.swift; sourceTree = "<group>"; };
 		D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumnView.swift; sourceTree = "<group>"; };
 		D06F59212AB8C02500E2510F /* KanbanColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumn.swift; sourceTree = "<group>"; };
@@ -134,7 +135,6 @@
 		D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesService.swift; sourceTree = "<group>"; };
 		D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePath.swift; sourceTree = "<group>"; };
 		D0A94FCD2A91AB9E00656814 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
-		D0A94FD62A91BA0000656814 /* BoardNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteView.swift; sourceTree = "<group>"; };
 		D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithButton.swift; sourceTree = "<group>"; };
 		D0C5F72D2A981FDA00D5CE44 /* TaskCycleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaskCycleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0C5F72F2A981FDA00D5CE44 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -336,8 +336,8 @@
 		D0DCCE4C2AB65DA500276F1D /* BoardNote */ = {
 			isa = PBXGroup;
 			children = (
-				D0A94FD62A91BA0000656814 /* BoardNoteView.swift */,
 				D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */,
+				D04004FF2ABA6C1200A9DEE2 /* KanbanTaskView.swift */,
 				D08271B22ABA37340003A55D /* Kanban.swift */,
 				D0DCCE4D2AB65DC400276F1D /* BoardNoteViewModel.swift */,
 				D0DCCE4F2AB6901900276F1D /* BoardService.swift */,
@@ -627,6 +627,7 @@
 				D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */,
 				D0DCCE532AB76F2400276F1D /* NoteView.swift in Sources */,
 				D0ED2ED42A802C4600828887 /* RegisterViewModel.swift in Sources */,
+				D04005002ABA6C1200A9DEE2 /* KanbanTaskView.swift in Sources */,
 				D0ED2ECC2A802C1200828887 /* StatefulPreviewWrapper.swift in Sources */,
 				D0ED2EEA2A802D7800828887 /* ToDoItemModel.swift in Sources */,
 				D0ED2EE12A802D4400828887 /* BindingExtension.swift in Sources */,
@@ -673,7 +674,6 @@
 				D0ED2EE32A802D4400828887 /* PreferenceKeyExtension.swift in Sources */,
 				D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */,
 				D06F59202AB8BDF700E2510F /* KanbanColumnView.swift in Sources */,
-				D0A94FD72A91BA0000656814 /* BoardNoteView.swift in Sources */,
 				D098D8192A84330D005E534C /* OffsetKey.swift in Sources */,
 				D0ED2EE92A802D7800828887 /* UserModel.swift in Sources */,
 				D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */,
