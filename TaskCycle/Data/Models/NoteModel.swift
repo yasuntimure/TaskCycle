@@ -10,15 +10,15 @@ import FirebaseFirestoreSwift
 import EmojiPicker
 import UniformTypeIdentifiers
 
-struct NoteModel: FirebaseIdentifiable, Transferable {
-    var id: String
-    var title: String
-    var description: String
-    var items: [ToDoItemModel]
-    var date: String
-    var emoji: String?
-    var noteType: String?
-    var kanbanModels: [KanbanModel]
+public struct NoteModel: FirebaseIdentifiable, Transferable {
+    public var id: String
+    public var title: String
+    public var description: String
+    public var items: [ToDoItemModel]
+    public var date: String
+    public var emoji: String?
+    public var noteType: String?
+    public var kanbanModels: [KanbanModel]
 
     init(id: String = UUID().uuidString,
          title: String = "",
@@ -46,7 +46,7 @@ struct NoteModel: FirebaseIdentifiable, Transferable {
         return nil
     }
 
-    static var transferRepresentation: some TransferRepresentation {
+    public static var transferRepresentation: some TransferRepresentation {
         CodableRepresentation (contentType: .noteModel)
     }
 }

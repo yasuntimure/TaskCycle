@@ -9,11 +9,11 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import UniformTypeIdentifiers
 
-struct KanbanModel: FirebaseIdentifiable {
-    var id: String
-    var title: String
-    var tasks: [NoteModel]
-    var isTargeted: Bool
+public struct KanbanModel: FirebaseIdentifiable {
+    public var id: String
+    public var title: String
+    public var tasks: [NoteModel]
+    public var isTargeted: Bool
 
     init(id: String = UUID().uuidString,
          title: String = "",

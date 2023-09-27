@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias Dictionary = [String: Any]
+public typealias Dictionary = [String: Any]
 
 extension Encodable {
 

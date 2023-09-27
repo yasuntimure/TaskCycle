@@ -22,8 +22,11 @@
 		D08271B32ABA37340003A55D /* Kanban.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08271B22ABA37340003A55D /* Kanban.swift */; };
 		D0907A4D2AB0F09F00353AAA /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */; };
 		D0907A4F2AB0FF6400353AAA /* FirebaseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */; };
-		D0907A522AB1059A00353AAA /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A512AB1059A00353AAA /* FirebaseError.swift */; };
+		D0907A522AB1059A00353AAA /* FirestoreServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A512AB1059A00353AAA /* FirestoreServiceError.swift */; };
 		D0907A552AB108FE00353AAA /* DailyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A542AB108FE00353AAA /* DailyService.swift */; };
+		D092C5C82AC32C13000EFD71 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C5C72AC32C13000EFD71 /* Networking.swift */; };
+		D092C5CA2AC332E7000EFD71 /* FirestoreEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C5C92AC332E7000EFD71 /* FirestoreEndpoint.swift */; };
+		D092C5CD2AC335A6000EFD71 /* NotesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */; };
 		D098D8192A84330D005E534C /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8182A84330D005E534C /* OffsetKey.swift */; };
 		D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D81A2A843570005E534C /* DailyViewModel.swift */; };
 		D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83A2A85A17C005E534C /* CustomDateView.swift */; };
@@ -31,7 +34,7 @@
 		D0A3315B2AB4EAC00047FA20 /* LayeredBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3315A2AB4EAC00047FA20 /* LayeredBackground.swift */; };
 		D0A3315E2AB5058B0047FA20 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = D0A3315D2AB5058B0047FA20 /* Algorithms */; };
 		D0A8AB9D2AB3CFBE00C7A159 /* NotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */; };
-		D0A8AB9F2AB3D01A00C7A159 /* FirestorePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */; };
+		D0A8AB9F2AB3D01A00C7A159 /* FirePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9E2AB3D01A00C7A159 /* FirePath.swift */; };
 		D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A94FCD2A91AB9E00656814 /* IconView.swift */; };
 		D0A94FD12A91B12F00656814 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = D0A94FD02A91B12F00656814 /* EmojiPicker */; };
 		D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */; };
@@ -126,15 +129,18 @@
 		D08271B22ABA37340003A55D /* Kanban.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kanban.swift; sourceTree = "<group>"; };
 		D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIdentifiable.swift; sourceTree = "<group>"; };
-		D0907A512AB1059A00353AAA /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
+		D0907A512AB1059A00353AAA /* FirestoreServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreServiceError.swift; sourceTree = "<group>"; };
 		D0907A542AB108FE00353AAA /* DailyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyService.swift; sourceTree = "<group>"; };
+		D092C5C72AC32C13000EFD71 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		D092C5C92AC332E7000EFD71 /* FirestoreEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreEndpoint.swift; sourceTree = "<group>"; };
+		D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEndpoint.swift; sourceTree = "<group>"; };
 		D098D8182A84330D005E534C /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
 		D098D81A2A843570005E534C /* DailyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewModel.swift; sourceTree = "<group>"; };
 		D098D83A2A85A17C005E534C /* CustomDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
 		D098D83C2A85A396005E534C /* WeekSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderView.swift; sourceTree = "<group>"; };
 		D0A3315A2AB4EAC00047FA20 /* LayeredBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayeredBackground.swift; sourceTree = "<group>"; };
 		D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesService.swift; sourceTree = "<group>"; };
-		D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePath.swift; sourceTree = "<group>"; };
+		D0A8AB9E2AB3D01A00C7A159 /* FirePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirePath.swift; sourceTree = "<group>"; };
 		D0A94FCD2A91AB9E00656814 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithButton.swift; sourceTree = "<group>"; };
 		D0C5F72D2A981FDA00D5CE44 /* TaskCycleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaskCycleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -247,8 +253,7 @@
 			children = (
 				D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */,
 				D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */,
-				D0907A512AB1059A00353AAA /* FirebaseError.swift */,
-				D0A8AB9E2AB3D01A00C7A159 /* FirestorePath.swift */,
+				D0A8AB9E2AB3D01A00C7A159 /* FirePath.swift */,
 			);
 			path = FirebaseService;
 			sourceTree = "<group>";
@@ -263,6 +268,24 @@
 				D0ED2EE72A802D7800828887 /* ToDoItemModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D092C5C62AC32C00000EFD71 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D092C5C72AC32C13000EFD71 /* Networking.swift */,
+				D092C5C92AC332E7000EFD71 /* FirestoreEndpoint.swift */,
+				D0907A512AB1059A00353AAA /* FirestoreServiceError.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		D092C5CB2AC3359A000EFD71 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */,
+			);
+			path = Endpoints;
 			sourceTree = "<group>";
 		};
 		D0C5F72E2A981FDA00D5CE44 /* Frameworks */ = {
@@ -469,6 +492,8 @@
 		D0ED2EE42A802D7800828887 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D092C5CB2AC3359A000EFD71 /* Endpoints */,
+				D092C5C62AC32C00000EFD71 /* Networking */,
 				D0907A532AB1073100353AAA /* Models */,
 				D0907A502AB1057100353AAA /* FirebaseService */,
 			);
@@ -631,6 +656,7 @@
 				D0DCCE532AB76F2400276F1D /* NoteView.swift in Sources */,
 				D0ED2ED42A802C4600828887 /* RegisterViewModel.swift in Sources */,
 				D0DA569C2ABB9D670068D7AD /* KanbanTaskDetailView.swift in Sources */,
+				D092C5CA2AC332E7000EFD71 /* FirestoreEndpoint.swift in Sources */,
 				D04005002ABA6C1200A9DEE2 /* KanbanTaskView.swift in Sources */,
 				D0ED2ECC2A802C1200828887 /* StatefulPreviewWrapper.swift in Sources */,
 				D0ED2EEA2A802D7800828887 /* ToDoItemModel.swift in Sources */,
@@ -653,10 +679,11 @@
 				D0ED2EB82A802BA700828887 /* TextFieldView.swift in Sources */,
 				D0ED2EEC2A802EB000828887 /* LogoView.swift in Sources */,
 				D0ED2EE22A802D4400828887 /* AlignmentExtension.swift in Sources */,
+				D092C5CD2AC335A6000EFD71 /* NotesEndpoint.swift in Sources */,
 				D0DA8B972A7D7DAF00458284 /* TaskCycleApp.swift in Sources */,
 				D0C996962A886FF20085481B /* SettingsView.swift in Sources */,
 				D0C996912A86C4D80085481B /* ToDoRow.swift in Sources */,
-				D0907A522AB1059A00353AAA /* FirebaseError.swift in Sources */,
+				D0907A522AB1059A00353AAA /* FirestoreServiceError.swift in Sources */,
 				D0ED2EFE2A81B20000828887 /* ProfileImage.swift in Sources */,
 				D08271B32ABA37340003A55D /* Kanban.swift in Sources */,
 				D0267E042A91300C0079F90E /* NoteModel.swift in Sources */,
@@ -665,7 +692,7 @@
 				D0DCCE572AB7833C00276F1D /* NoteBuilder.swift in Sources */,
 				D0ED2EE02A802D4400828887 /* EncodableExtension.swift in Sources */,
 				D0ED2EBF2A802BA700828887 /* LoadingView.swift in Sources */,
-				D0A8AB9F2AB3D01A00C7A159 /* FirestorePath.swift in Sources */,
+				D0A8AB9F2AB3D01A00C7A159 /* FirePath.swift in Sources */,
 				D06F59222AB8C02500E2510F /* KanbanColumn.swift in Sources */,
 				D036B4C42A8AF590007F121C /* MainView.swift in Sources */,
 				D0ED2EBC2A802BA700828887 /* ToggleButton.swift in Sources */,
@@ -682,6 +709,7 @@
 				D0ED2EE92A802D7800828887 /* UserModel.swift in Sources */,
 				D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */,
 				D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */,
+				D092C5C82AC32C13000EFD71 /* Networking.swift in Sources */,
 				D0ED2ED52A802C4600828887 /* RegisterView.swift in Sources */,
 				D0ED2EBB2A802BA700828887 /* PrimaryButton.swift in Sources */,
 				D0267DF62A8F09490079F90E /* MainViewModel.swift in Sources */,

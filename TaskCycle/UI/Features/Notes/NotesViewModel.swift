@@ -20,7 +20,10 @@ class NotesViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    init() {
+    let service: FirestoreServiceProtocol
+
+    init(service: FirestoreServiceProtocol) {
+        self.service = service
         self.fetchNotes()
     }
 
@@ -57,13 +60,13 @@ class NotesViewModel: ObservableObject {
             do {
                 switch action {
                 case .fetch:
-                    self.notes = try await NotesService.getNotes()
+                    self.notes = try await service.request(NoteModel.self, endpoint: NotesEndpoint.getNoteList) 
                     if notes.isEmpty {
                         self.addTemplateNote()
                         self.fetchNotes()
                     }
-                case .save(let note):
-                    try await NotesService.post(note)
+                case .save(let note): break
+//                    try await service.request(NoteModel.Type, endpoint: NotesEndpoint.)
                 case .delete(let note):
                     try await NotesService.delete(note)
                 }

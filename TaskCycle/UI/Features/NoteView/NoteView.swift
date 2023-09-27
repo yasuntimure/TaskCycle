@@ -183,7 +183,7 @@ struct NoteView: View {
 #Preview {
     NoteView(viewModel: NoteViewModel(Mock.note))
         .environmentObject(Theme())
-        .environmentObject(NotesViewModel())
+        .environmentObject(NotesViewModel(service: FirestoreService()))
 }
 
 fileprivate extension TextField {

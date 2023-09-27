@@ -9,12 +9,12 @@ import Foundation
 import FirebaseFirestoreSwift
 
 
-struct ToDoItemModel: FirebaseIdentifiable {
-    var id: String
-    var title: String
-    var description: String
-    var date: String
-    var isDone: Bool = false
+public struct ToDoItemModel: FirebaseIdentifiable {
+    public var id: String
+    public var title: String
+    public var description: String
+    public var date: String
+    public var isDone: Bool = false
 
     init(
         id: String = UUID().uuidString,
