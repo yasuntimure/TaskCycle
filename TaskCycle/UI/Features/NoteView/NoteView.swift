@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestoreSwift
 
 enum NoteTextFields: Hashable {
     case noteTitle
@@ -183,7 +184,7 @@ struct NoteView: View {
 #Preview {
     NoteView(viewModel: NoteViewModel(Mock.note))
         .environmentObject(Theme())
-        .environmentObject(NotesViewModel(service: FirestoreService()))
+        .environmentObject(NotesViewModel(repository: NotesRepository()))
 }
 
 fileprivate extension TextField {

@@ -109,7 +109,7 @@ extension NotesView {
 struct
 NotesView_Previews: PreviewProvider {
     static var previews: some View {
-        NotesView(viewModel: NotesViewModel(service: FirestoreService()))
+        NotesView(viewModel: NotesViewModel(repository: NotesRepository()))
             .environmentObject(Theme())
     }
 }

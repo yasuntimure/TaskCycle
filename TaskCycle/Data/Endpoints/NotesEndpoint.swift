@@ -16,6 +16,7 @@ extension FirestoreEndpoint {
 
 protocol NotesRepositoryProtocol {
     func getNoteList() async throws -> [NoteModel]
+    func createNote(_ note: NoteModel) async throws
 }
 
 struct NotesRepository: NotesRepositoryProtocol {
@@ -29,6 +30,11 @@ struct NotesRepository: NotesRepositoryProtocol {
     func getNoteList() async throws -> [NoteModel] {
         let endpoint = NotesEndpoint.getNoteList
         return try await service.request(NoteModel.self, endpoint: endpoint)
+    }
+
+    func createNote(_ note: NoteModel) async throws {
+        let endpoint = NotesEndpoint.createNote(note: note)
+        let _ = try await service.request(NoteModel.self, endpoint: endpoint)
     }
 
 }

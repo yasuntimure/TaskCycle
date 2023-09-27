@@ -7,8 +7,6 @@
 
 import Firebase
 import FirebaseFirestore
-import SwiftKeychainWrapper
-
 
 public enum FirestoreServiceError: Error {
     case invalidPath
@@ -16,6 +14,7 @@ public enum FirestoreServiceError: Error {
     case collectionNotFound
     case documentNotFound
     case unknownError
+    case parseError
     case invalidRequest
     case operationNotSupported
     case invalidQuery
@@ -45,7 +44,7 @@ public protocol FirestoreEndpoint {
     var task: FirestoreRequestPayload { get }
 }
 
-// MARK: - FirestoreTask
+// MARK: - FirestoreRequestPayload
 
 public enum FirestoreRequestPayload {
     case requestPlain
@@ -54,35 +53,24 @@ public enum FirestoreRequestPayload {
 }
 
 public protocol FirestoreServiceProtocol {
-    func request<T: FirebaseIdentifiable>(_ type: T.Type, endpoint: FirestoreEndpoint) async throws -> [T]
+    func request<T: FirebaseIdentifiable>(_ type: T.Type, endpoint: FirestoreEndpoint) async throws -> [T] where T: FirebaseIdentifiable
 }
 
 public final class FirestoreService: FirestoreServiceProtocol {
 
-    public func request<T: FirebaseIdentifiable>(_ type: T.Type, endpoint: FirestoreEndpoint) async throws -> [T] {
+    public func request<T>(_ type: T.Type, endpoint: FirestoreEndpoint) async throws -> [T] where T: FirebaseIdentifiable {
         switch endpoint.method {
         case .get:
             return try await handleGet(type, endpoint: endpoint)
         case .post:
-            try await handlePost(type, endpoint: endpoint)
+            try await handleSet(type, endpoint: endpoint)
+            return []
         case .put:
-            try await handlePut(type, endpoint: endpoint)
+            try await handleSet(type, endpoint: endpoint)
+            return []
         case .delete:
             try await handleDelete(endpoint: endpoint)
-        }
-        return []
-    }
-
-    public func request<T: FirebaseIdentifiable>(_ type: T.Type, endpoint: FirestoreEndpoint) async throws {
-        switch endpoint.method {
-        case .post:
-            try await handlePost(type, endpoint: endpoint)
-        case .put:
-            try await handlePut(type, endpoint: endpoint)
-        case .delete:
-            try await handleDelete(endpoint: endpoint)
-        default:
-            throw FirestoreServiceError.invalidRequest
+            return []
         }
     }
 
@@ -95,44 +83,23 @@ public final class FirestoreService: FirestoreServiceProtocol {
             let querySnapshot = try await ref.getDocuments()
             var response: [T] = []
             for document in querySnapshot.documents {
-                do {
-                    let data = try document.data(as: T.self)
+                if let data = try? document.data(as: T.self) {
                     response.append(data)
-                } catch {
-                    throw error
+                } else {
+                    throw FirestoreServiceError.parseError
                 }
             }
             return response
         case .document(let documentReference):
-            guard let ref = documentReference else {
+            guard let ref = documentReference, let singleResponse = try? await ref.getDocument(as: T.self) else {
                 throw FirestoreServiceError.invalidPath
             }
-            let data = try await ref.getDocument(as: T.self)
-            return [data]
+            return [singleResponse]
         }
     }
 
-    private func handlePost<T: FirebaseIdentifiable>(_ type: T.Type, endpoint: FirestoreEndpoint) async throws {
-        guard case let .createDocument(value) = endpoint.task,
-                var model = value as? T else {
-            throw FirestoreServiceError.invalidType
-        }
-
-        switch endpoint.path {
-        case .collection: 
-            throw FirestoreServiceError.operationNotAllowed
-        case .document(let documentReference):
-            guard let ref = documentReference else {
-                throw FirestoreServiceError.documentNotFound
-            }
-            model.id = ref.documentID
-            try ref.setData(from: model)
-        }
-    }
-
-    private func handlePut<T: FirebaseIdentifiable>(_ type: T.Type, endpoint: FirestoreEndpoint) async throws {
-        guard case let .updateDocument(value) = endpoint.task,
-              let model = value as? T else {
+    private func handleSet<T: FirebaseIdentifiable>(_ type: T.Type, endpoint: FirestoreEndpoint) async throws {
+        guard case let .updateDocument(value) = endpoint.task, var model = value as? T else {
             throw FirestoreServiceError.invalidType
         }
 
@@ -141,8 +108,13 @@ public final class FirestoreService: FirestoreServiceProtocol {
             throw FirestoreServiceError.operationNotAllowed
         case .document(let documentReference):
             guard let ref = documentReference else {
-                throw FirestoreServiceError.invalidPath
+                throw FirestoreServiceError.documentNotFound
             }
+
+            if endpoint.method == .post {
+                model.id = ref.documentID
+            }
+
             try ref.setData(from: model)
         }
     }
@@ -159,6 +131,7 @@ public final class FirestoreService: FirestoreServiceProtocol {
         }
     }
 }
+
 
 
 
