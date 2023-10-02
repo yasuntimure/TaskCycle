@@ -5,8 +5,8 @@
 //  Created by Eyüp on 2023-09-14.
 //
 
-import Firebase
 import FirebaseFirestore
+import FirestoreService
 import SwiftKeychainWrapper
 
 struct NotesService {

@@ -9,8 +9,9 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import EmojiPicker
 import UniformTypeIdentifiers
+import FirestoreService
 
-public struct NoteModel: FirebaseIdentifiable, Transferable {
+public struct NoteModel: FirestoreIdentifiable, Transferable {
     public var id: String
     public var title: String
     public var description: String

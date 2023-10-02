@@ -7,8 +7,9 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+import FirestoreService
 
-struct WeekDay: FirebaseIdentifiable {
+struct WeekDay: FirestoreIdentifiable {
     var id: String
     var date: Date
     var isSelected: Bool

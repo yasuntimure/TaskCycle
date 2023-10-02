@@ -8,6 +8,7 @@
 import Firebase
 import FirebaseFirestore
 import SwiftKeychainWrapper
+import FirestoreService
 
 struct DailyService {
 

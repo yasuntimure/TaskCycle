@@ -7,6 +7,7 @@
 
 import SwiftKeychainWrapper
 import FirebaseFirestore
+import FirestoreService
 
 extension FirestoreEndpoint {
     public var userID: String {

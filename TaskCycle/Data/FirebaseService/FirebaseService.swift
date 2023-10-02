@@ -5,11 +5,11 @@
 //  Created by Eyüp on 2023-09-12.
 //
 
-import Firebase
-import FirebaseFirestore
-import FirebaseFirestoreSwift
-import Foundation
 import SwiftUI
+
+import Combine
+import FirebaseFirestore
+import FirestoreService
 
 struct FirebaseService {
     static let shared = FirebaseService()
@@ -57,7 +57,7 @@ extension FirebaseService {
 
 extension FirebaseService {
 
-    func post<T: FirebaseIdentifiable>(_ value: T, to document: DocumentReference) async -> Result<Void, Error> {
+    func post<T: FirestoreIdentifiable>(_ value: T, to document: DocumentReference) async -> Result<Void, Error> {
         var valueToWrite: T = value
         valueToWrite.id = document.documentID
         do {
@@ -69,7 +69,7 @@ extension FirebaseService {
         }
     }
 
-    func put<T: FirebaseIdentifiable>(_ value: T, to document: DocumentReference) async -> Result<Void, Error> {
+    func put<T: FirestoreIdentifiable>(_ value: T, to document: DocumentReference) async -> Result<Void, Error> {
         do {
             try document.setData(from: value)
             return .success(())
