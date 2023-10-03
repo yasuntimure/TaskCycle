@@ -76,6 +76,13 @@ class NoteViewModel: ObservableObject {
         return nil
     }
 
+    func setNoteType(_ type: NoteType) {
+        withAnimation {
+            self.noteType = .empty
+            self.isNoteConfVisible = false
+        }
+    }
+
     func updateNote() {
         Task {
             do {
@@ -163,7 +170,7 @@ extension NoteViewModel {
         let updatedKanbans = kanbans
         for (index, kanbanItem) in updatedKanbans.enumerated() {
             if kanbanItem.id == kanban.id {
-                updatedKanbans[index].tasks.append(NoteModel())
+                updatedKanbans[index].tasks.append(TaskModel())
             }
         }
         self.kanbans = updatedKanbans
@@ -180,7 +187,7 @@ extension NoteViewModel {
     }
 
     /// Removes the dropped tasks from their source column.
-    func removeDroppedTasks(from kanban: Kanban, droppedTasks: [NoteModel]) {
+    func removeDroppedTasks(from kanban: Kanban, droppedTasks: [TaskModel]) {
         var tempKanbans = kanbans
         kanbans.enumerated().forEach { i, item in
             if item.id != kanban.id {
@@ -191,7 +198,7 @@ extension NoteViewModel {
     }
 
     /// Adds the dropped tasks to the destination column, ensuring there are no duplicates.
-    func addDroppedTasks(to kanban: Kanban, droppedTasks: [NoteModel]) {
+    func addDroppedTasks(to kanban: Kanban, droppedTasks: [TaskModel]) {
         var tempKanbans = kanbans
         kanbans.enumerated().forEach { i, item in
             if item.id == kanban.id {

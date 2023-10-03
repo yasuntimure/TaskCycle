@@ -31,6 +31,9 @@ public class Mock {
                                 description: "Mock Description",
                                 items: [item1, item2, item3, item4])
 
+    static let task = TaskModel(title: "Mock Task",
+                                description: "Mock Description")
+
     static let item = ToDoItemModel(title: "Mock Item",
                                     description: "Mock Description")
     static let item1 = ToDoItemModel(title: "Mock Item",

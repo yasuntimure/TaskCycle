@@ -17,9 +17,11 @@ enum NoteTextFields: Hashable {
 }
 
 struct NoteView: View {
-    @EnvironmentObject var parentVM: NotesViewModel
     @EnvironmentObject var theme: Theme
+    @EnvironmentObject var parentVM: NotesViewModel
+
     @ObservedObject var viewModel: NoteViewModel
+
     @FocusState var focusState: NoteTextFields?
 
     var body: some View {
@@ -43,14 +45,16 @@ struct NoteView: View {
                         NoteConfigurationView()
                     } else {
                         switch viewModel.noteType ?? .empty {
-                        case .empty: Divider().opacity(0).frame(height: 1)
-                        case .todo: ToDoListView()
+                        case .empty: 
+                            Divider().opacity(0).frame(height: 1)
+                        case .todo: 
+                            ToDoListView()
                         case .board:
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
                                     LazyVGrid(columns: getGridColumns()) {
                                         ForEach($viewModel.kanbans, id: \.id) { $kanban in
-                                            KanbanColumnView(kanban: kanban)
+                                            KanbanColumnView(kanban: $kanban)
                                                 .frame(height: geometry.size.height)
                                                 .environmentObject(viewModel)
                                         }
@@ -65,15 +69,12 @@ struct NoteView: View {
                 .hSpacing(.leading)
             }
         }
-        .onAppear {
-            focusState = viewModel.initialFocusState()
-        }
+        .onAppear { focusState = viewModel.initialFocusState() }
         .onDisappear {
-            if viewModel.uncompletedNote {
-                viewModel.deleteNote()
-            } else {
-                viewModel.updateNote()
+            if viewModel.title.isEmpty {
+                viewModel.title = "Quick Note"
             }
+            viewModel.updateNote()
             parentVM.fetchNotes()
         }
     }
@@ -99,9 +100,7 @@ struct NoteView: View {
     private func NoteConfigurationView() -> some View {
         VStack (alignment: .leading, spacing: 25) {
             CustomButton("Empty Page", image: "plus") {
-                withAnimation {
-                    viewModel.isNoteConfVisible = false
-                }
+                viewModel.setNoteType(.empty)
             }
             
             VStack (alignment: .leading, spacing: 10) {
@@ -109,16 +108,10 @@ struct NoteView: View {
                     .font(.footnote).bold()
                     .foregroundStyle(theme.mTintColor)
                 CustomButton("To Do List", image: "checkmark.square") {
-                    withAnimation {
-                        viewModel.noteType = .todo
-                        viewModel.isNoteConfVisible = false
-                    }
+                    viewModel.setNoteType(.todo)
                 }
                 CustomButton("Kanban Board", image: "tablecells") {
-                    withAnimation {
-                        viewModel.noteType = .board
-                        viewModel.isNoteConfVisible = false
-                    }
+                    viewModel.setNoteType(.board)
                 }
             }
         }.padding()

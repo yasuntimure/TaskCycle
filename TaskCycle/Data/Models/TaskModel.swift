@@ -1,8 +1,8 @@
 //
-//  NoteModel.swift
+//  TaskModel.swift
 //  TaskCycle
 //
-//  Created by Eyüp on 2023-08-19.
+//  Created by Eyüp on 2023-10-02.
 //
 
 import SwiftUI
@@ -11,10 +11,11 @@ import EmojiPicker
 import UniformTypeIdentifiers
 import FirestoreService
 
-public struct NoteModel: FirestoreIdentifiable, Transferable {
+public struct TaskModel: FirestoreIdentifiable, Transferable {
     public var id: String
     public var title: String
     public var description: String
+    public var items: [ToDoItemModel]
     public var date: String
     public var emoji: String?
     public var noteType: String?
@@ -22,6 +23,7 @@ public struct NoteModel: FirestoreIdentifiable, Transferable {
     init(id: String = UUID().uuidString,
          title: String = "",
          description: String = "",
+         items: [ToDoItemModel] = [],
          date: String = Date().weekdayFormat(),
          emoji: String? = nil,
          noteType: String? = nil)
@@ -29,6 +31,7 @@ public struct NoteModel: FirestoreIdentifiable, Transferable {
         self.id = id
         self.title = title
         self.description = description
+        self.items = items
         self.date = date
         self.emoji = emoji
         self.noteType = noteType
@@ -42,32 +45,12 @@ public struct NoteModel: FirestoreIdentifiable, Transferable {
     }
 
     public static var transferRepresentation: some TransferRepresentation {
-        CodableRepresentation (contentType: .noteModel)
+        CodableRepresentation (contentType: .taskModel)
     }
 }
 
 extension UTType {
-    static let noteModel = UTType(exportedAs: "com.eyupyasuntimur.noteModel")
-}
-
-enum NoteType: String, Hashable, CaseIterable {
-    case empty, todo, board
-
-    var systemImage: String {
-        switch self {
-        case .empty:  return "doc.text"
-        case .todo: return "checkmark.circle"
-        case .board:  return "tablecells"
-        }
-    }
-}
-
-extension NoteModel {
-
-    static func quickNote() -> NoteModel {
-        NoteModel(title: "Quick Note", description: "Complete your quick to do list!")
-    }
+    static let taskModel = UTType(exportedAs: "com.eyupyasuntimur.taskModel")
 }
 
 
-//kanbanColumns: [KanbanModel] = [KanbanModel(title: "To Do"), KanbanModel(title: "In Progress"), KanbanModel(title: "Done")]

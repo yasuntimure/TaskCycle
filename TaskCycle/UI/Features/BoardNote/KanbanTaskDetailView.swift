@@ -10,33 +10,33 @@ import SwiftUI
 struct KanbanTaskDetailView: View {
     @EnvironmentObject var theme: Theme
     @EnvironmentObject var viewModel: NoteViewModel
-    @FocusState var focusState: NoteTextFields?
-
-    @Binding var note: NoteModel
 
     @State private var isNoteConfVisible: Bool = true
+    @FocusState var focusState: NoteTextFields?
+
+    @State var task: TaskModel
 
     var body: some View {
         VStack (alignment: .leading) {
-            TextField("Title...", text: $note.title)
-                .titleFont(for: note.type() ?? .empty)
+            TextField("Title...", text: $task.title)
+                .titleFont(for: task.type() ?? .empty)
                 .focused($focusState, equals: .noteTitle)
                 .onSubmit { focusState = .noteDescription }
                 .padding(.horizontal)
 
-            TextField("Description . . .", text: $note.description, axis: .vertical)
-                .descriptionFont(for: note.type() ?? .empty)
+            TextField("Description . . .", text: $task.description, axis: .vertical)
+                .descriptionFont(for: task.type() ?? .empty)
                 .foregroundColor(.secondary)
                 .focused($focusState, equals: .noteDescription)
                 .padding(.horizontal)
-                .descriptionPadding(for: note.type())
+                .descriptionPadding(for: task.type())
 
 
             VStack (alignment: .leading) {
                 if isNoteConfVisible {
                     NoteConfigurationView()
                 } else {
-                    if note.noteType == NoteType.todo.rawValue {
+                    if task.noteType == NoteType.todo.rawValue {
                         ToDoListView()
                     }
                 }
@@ -84,7 +84,7 @@ struct KanbanTaskDetailView: View {
                     .foregroundStyle(theme.mTintColor)
                 CustomButton("To Do List", image: "checkmark.square") {
                     withAnimation {
-                        note.noteType = NoteType.todo.rawValue
+                        task.noteType = NoteType.todo.rawValue
                         isNoteConfVisible = false
                     }
                 }
@@ -96,7 +96,7 @@ struct KanbanTaskDetailView: View {
     func ToDoListView() -> some View {
         ZStack {
             List {
-                ForEach ($note.items) { $item in
+                ForEach ($task.items) { $item in
                     ToDoRow(item: $item)
                         .padding(.vertical, -5)
                         .hSpacing(.leading)
@@ -123,7 +123,7 @@ struct KanbanTaskDetailView: View {
 }
 
 #Preview {
-    KanbanTaskDetailView(note: .constant(Mock.note))
+    KanbanTaskDetailView(task: Mock.task)
         .environmentObject(Theme())
         .environmentObject(NoteViewModel(Mock.note))
 }

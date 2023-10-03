@@ -13,16 +13,13 @@ import FirestoreService
 public struct KanbanModel: FirestoreIdentifiable {
     public var id: String
     public var title: String
-    public var tasks: [NoteModel]
-    public var isTargeted: Bool
+    public var tasks: [TaskModel]
 
     init(id: String = UUID().uuidString,
          title: String = "",
-         tasks: [NoteModel] = [],
-         isTargeted: Bool = false) {
+         tasks: [TaskModel] = []) {
         self.id = id
         self.title = title
         self.tasks = tasks
-        self.isTargeted = isTargeted
     }
 }

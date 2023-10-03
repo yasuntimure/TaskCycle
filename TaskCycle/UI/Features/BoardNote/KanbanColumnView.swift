@@ -9,14 +9,14 @@ import SwiftUI
 import Algorithms
 
 struct KanbanColumnView: View {
-
     @EnvironmentObject var theme: Theme
     @EnvironmentObject var viewModel: NoteViewModel
 
-    @State var kanban: Kanban
-    @FocusState var focusState: NoteTextFields?
+    @Binding var kanban: Kanban
 
     @State var isTargeted: Bool = false
+
+    @FocusState var focusState: NoteTextFields?
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,11 +26,11 @@ struct KanbanColumnView: View {
             ScrollView(showsIndicators: false) {
                 // Tasks
                 VStack (spacing: -12) {
-                    ForEach($kanban.tasks, id: \.id) { $note in
-                        KanbanTaskView(note: $note)
+                    ForEach($kanban.tasks, id: \.id) { $task in
+                        KanbanTaskView(task: $task)
                             .padding(.vertical, 12)
                             .padding(.horizontal, 12)
-                            .draggable(note)
+                            .draggable(task)
                     }
                 }
                 .padding(.bottom, -12)
@@ -38,9 +38,11 @@ struct KanbanColumnView: View {
                 // Add New Button
                 SecondaryButton(imageName: "plus",
                                 title: "Add Task",
-                                backgroundColor: theme.mTintColor.opacity(0.15)) {
+                                backgroundColor: theme.mTintColor.opacity(0.15)) 
+                {
                     viewModel.addTask(to: kanban)
-                }.padding(.vertical, 6).padding(.horizontal, 12)
+                }
+                .padding(.vertical, 6).padding(.horizontal, 12)
             }
             .hSpacing(.center)
             .padding(.top, 9)
@@ -48,7 +50,7 @@ struct KanbanColumnView: View {
                 self.isTargeted ? theme.mTintColor.opacity(0.1) : .backgroundColor,
                 cornerRadius: 8
             )
-            .dropDestination(for: NoteModel.self) { droppedTasks, location in
+            .dropDestination(for: TaskModel.self) { droppedTasks, location in
                 viewModel.removeDroppedTasks(from: kanban, droppedTasks: droppedTasks)
                 viewModel.addDroppedTasks(to: kanban, droppedTasks: droppedTasks)
                 return true
@@ -95,7 +97,7 @@ struct KanbanColumnView: View {
 }
 
 #Preview {
-    KanbanColumnView(kanban: Kanban(KanbanModel()), isTargeted: false)
+    KanbanColumnView(kanban: .constant(Kanban(KanbanModel())))
         .environmentObject(Theme())
         .environmentObject(NoteViewModel(Mock.note))
 }

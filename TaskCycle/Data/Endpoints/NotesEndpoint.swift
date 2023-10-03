@@ -8,7 +8,6 @@
 import FirebaseFirestore
 import FirestoreService
 
-
 public enum NotesEndpoint: FirestoreEndpoint {
 
     case getNoteList
