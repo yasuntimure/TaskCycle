@@ -68,6 +68,3 @@ extension NoteModel {
         NoteModel(title: "Quick Note", description: "Complete your quick to do list!")
     }
 }
-
-
-//kanbanColumns: [KanbanModel] = [KanbanModel(title: "To Do"), KanbanModel(title: "In Progress"), KanbanModel(title: "Done")]

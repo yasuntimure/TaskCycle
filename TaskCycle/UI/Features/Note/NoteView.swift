@@ -50,19 +50,8 @@ struct NoteView: View {
                         case .todo: 
                             ToDoListView(viewModel: ToDoListViewModel(service: ToDoNoteService(noteId: viewModel.id)))
                         case .board:
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    LazyVGrid(columns: getGridColumns()) {
-                                        ForEach($viewModel.kanbans, id: \.id) { $kanban in
-                                            KanbanColumnView(kanban: $kanban)
-                                                .frame(height: geometry.size.height)
-                                                .environmentObject(viewModel)
-                                        }
-                                        AddColumnButton()
-                                    }
-                                }
-                                .padding(.horizontal)
-                            }
+                            BoardNoteBuilder.make(id: viewModel.id,
+                                                  height: geometry.size.height)
                         }
                     }
                 }
@@ -110,45 +99,14 @@ struct NoteView: View {
                     .foregroundStyle(theme.mTintColor)
                 CustomButton("To Do List", image: "checkmark.square") {
                     viewModel.setNoteType(.todo)
-                    // TODO: Add Empty ToDo Item with "items" path
-                    // TODO: Update Note
                 }
                 CustomButton("Kanban Board", image: "tablecells") {
                     viewModel.setNoteType(.board)
-                    // TODO: Add Base Kanban Columns with "kanbans" path
-                    // TODO: Update Note
                 }
             }
         }.padding()
     }
 
-    func getGridColumns() -> [GridItem] {
-        var columns: [GridItem] = []
-        viewModel.kanbans.forEach { _ in
-            columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
-        }
-        columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
-        return columns
-    }
-    
-    @ViewBuilder
-    private func AddColumnButton() -> some View {
-        Button {
-            withAnimation {
-                viewModel.addKanbanColumn()
-            }
-        } label: {
-            HStack {
-                Image(systemName: "plus")
-                Text("Add Column")
-            }
-            .font(.body).bold()
-            .foregroundColor(.secondary)
-            .hSpacing(.center).vSpacing(.center)
-            .layeredBackground(.backgroundColor.opacity(0.4), cornerRadius: 8)
-            .padding(.top, 42).padding(.bottom, 18).padding(.horizontal).padding(.leading, -8)
-        }
-    }
 }
 
 #Preview {

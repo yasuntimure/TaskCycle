@@ -24,6 +24,11 @@
 		D048A6C62ACBC32600D5B92E /* ToDoNoteEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C52ACBC32600D5B92E /* ToDoNoteEndpoint.swift */; };
 		D048A6C82ACBC87500D5B92E /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C72ACBC87500D5B92E /* ToDoListView.swift */; };
 		D048A6CA2ACBC90800D5B92E /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C92ACBC90800D5B92E /* ToDoListViewModel.swift */; };
+		D048A6CD2ACBCFA300D5B92E /* BoardNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6CC2ACBCFA300D5B92E /* BoardNoteView.swift */; };
+		D048A6CF2ACBD00000D5B92E /* BoardNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6CE2ACBD00000D5B92E /* BoardNoteViewModel.swift */; };
+		D048A6D12ACBD0FD00D5B92E /* BoardNoteEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6D02ACBD0FD00D5B92E /* BoardNoteEndpoint.swift */; };
+		D048A6D32ACBD26700D5B92E /* BoardNoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6D22ACBD26700D5B92E /* BoardNoteService.swift */; };
+		D048A6D52ACBD4E200D5B92E /* BoardNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6D42ACBD4E200D5B92E /* BoardNoteBuilder.swift */; };
 		D04C5B192AC4C1D6002D4A2A /* FirestoreService in Frameworks */ = {isa = PBXBuildFile; productRef = D04C5B182AC4C1D6002D4A2A /* FirestoreService */; };
 		D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */; };
 		D06F59202AB8BDF700E2510F /* KanbanColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */; };
@@ -131,6 +136,11 @@
 		D048A6C52ACBC32600D5B92E /* ToDoNoteEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoNoteEndpoint.swift; sourceTree = "<group>"; };
 		D048A6C72ACBC87500D5B92E /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
 		D048A6C92ACBC90800D5B92E /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
+		D048A6CC2ACBCFA300D5B92E /* BoardNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteView.swift; sourceTree = "<group>"; };
+		D048A6CE2ACBD00000D5B92E /* BoardNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteViewModel.swift; sourceTree = "<group>"; };
+		D048A6D02ACBD0FD00D5B92E /* BoardNoteEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteEndpoint.swift; sourceTree = "<group>"; };
+		D048A6D22ACBD26700D5B92E /* BoardNoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteService.swift; sourceTree = "<group>"; };
+		D048A6D42ACBD4E200D5B92E /* BoardNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteBuilder.swift; sourceTree = "<group>"; };
 		D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumnView.swift; sourceTree = "<group>"; };
 		D06F59212AB8C02500E2510F /* KanbanColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumn.swift; sourceTree = "<group>"; };
@@ -253,6 +263,7 @@
 				D048A6BB2ACB7CC400D5B92E /* NotesService.swift */,
 				D0907A542AB108FE00353AAA /* DailyService.swift */,
 				D048A6C32ACBAE3500D5B92E /* ToDoNoteService.swift */,
+				D048A6D22ACBD26700D5B92E /* BoardNoteService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -285,6 +296,7 @@
 				D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */,
 				D048A6C52ACBC32600D5B92E /* ToDoNoteEndpoint.swift */,
 				D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */,
+				D048A6D02ACBD0FD00D5B92E /* BoardNoteEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -362,22 +374,26 @@
 		D0DCCE4C2AB65DA500276F1D /* BoardNoteView */ = {
 			isa = PBXGroup;
 			children = (
+				D048A6CC2ACBCFA300D5B92E /* BoardNoteView.swift */,
+				D048A6CE2ACBD00000D5B92E /* BoardNoteViewModel.swift */,
 				D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */,
 				D04004FF2ABA6C1200A9DEE2 /* KanbanTaskView.swift */,
 				D0DA569B2ABB9D670068D7AD /* KanbanTaskDetailView.swift */,
 				D08271B22ABA37340003A55D /* Kanban.swift */,
+				D048A6D42ACBD4E200D5B92E /* BoardNoteBuilder.swift */,
 			);
 			path = BoardNoteView;
 			sourceTree = "<group>";
 		};
-		D0DCCE512AB76F1900276F1D /* NoteView */ = {
+		D0DCCE512AB76F1900276F1D /* Note */ = {
 			isa = PBXGroup;
 			children = (
-				D048A6CB2ACBCF0300D5B92E /* ToDoListView */,
 				D0DCCE522AB76F2400276F1D /* NoteView.swift */,
 				D0DCCE542AB76F4D00276F1D /* NoteViewModel.swift */,
+				D0DCCE4C2AB65DA500276F1D /* BoardNoteView */,
+				D048A6CB2ACBCF0300D5B92E /* ToDoListView */,
 			);
-			path = NoteView;
+			path = Note;
 			sourceTree = "<group>";
 		};
 		D0ED2EA22A802AE300828887 /* App */ = {
@@ -392,8 +408,7 @@
 		D0ED2EA32A802AED00828887 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				D0DCCE512AB76F1900276F1D /* NoteView */,
-				D0DCCE4C2AB65DA500276F1D /* BoardNoteView */,
+				D0DCCE512AB76F1900276F1D /* Note */,
 				D0267E0D2A91343A0079F90E /* Main */,
 				D0ED2EEF2A80332600828887 /* Daily */,
 				D0267DF72A9073DD0079F90E /* Notes */,
@@ -503,9 +518,9 @@
 		D0ED2EEF2A80332600828887 /* Daily */ = {
 			isa = PBXGroup;
 			children = (
-				D0ED2EF02A80332E00828887 /* SubViews */,
 				D0ED2EED2A80330D00828887 /* DailyView.swift */,
 				D098D81A2A843570005E534C /* DailyViewModel.swift */,
+				D0ED2EF02A80332E00828887 /* SubViews */,
 			);
 			path = Daily;
 			sourceTree = "<group>";
@@ -686,6 +701,7 @@
 				D08271B32ABA37340003A55D /* Kanban.swift in Sources */,
 				D048A6BE2ACB81F500D5B92E /* DailyEndpoint.swift in Sources */,
 				D0267E042A91300C0079F90E /* NoteModel.swift in Sources */,
+				D048A6D12ACBD0FD00D5B92E /* BoardNoteEndpoint.swift in Sources */,
 				D0ED2EE82A802D7800828887 /* WeekModel.swift in Sources */,
 				D0ED2EC82A802BE900828887 /* LoginView.swift in Sources */,
 				D0DCCE572AB7833C00276F1D /* NoteBuilder.swift in Sources */,
@@ -695,6 +711,8 @@
 				D036B4C42A8AF590007F121C /* MainView.swift in Sources */,
 				D048A6C22ACB9C1600D5B92E /* TaskModel.swift in Sources */,
 				D0ED2EBC2A802BA700828887 /* ToggleButton.swift in Sources */,
+				D048A6CD2ACBCFA300D5B92E /* BoardNoteView.swift in Sources */,
+				D048A6D32ACBD26700D5B92E /* BoardNoteService.swift in Sources */,
 				D0ED2EB92A802BA700828887 /* PlusButton.swift in Sources */,
 				D0267DFE2A912D080079F90E /* NoteRow.swift in Sources */,
 				D048A6C82ACBC87500D5B92E /* ToDoListView.swift in Sources */,
@@ -710,7 +728,9 @@
 				D0ED2EE92A802D7800828887 /* UserModel.swift in Sources */,
 				D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */,
 				D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */,
+				D048A6D52ACBD4E200D5B92E /* BoardNoteBuilder.swift in Sources */,
 				D0ED2ED52A802C4600828887 /* RegisterView.swift in Sources */,
+				D048A6CF2ACBD00000D5B92E /* BoardNoteViewModel.swift in Sources */,
 				D0ED2EBB2A802BA700828887 /* PrimaryButton.swift in Sources */,
 				D0267DF62A8F09490079F90E /* MainViewModel.swift in Sources */,
 			);

@@ -10,9 +10,9 @@ import Algorithms
 
 struct KanbanColumnView: View {
     @EnvironmentObject var theme: Theme
-    @EnvironmentObject var viewModel: NoteViewModel
+    @EnvironmentObject var viewModel: BoardNoteViewModel
 
-    @Binding var kanban: Kanban
+    @State var kanban: KanbanModel
 
     @State var isTargeted: Bool = false
 
@@ -27,7 +27,9 @@ struct KanbanColumnView: View {
                 // Tasks
                 VStack (spacing: -12) {
                     ForEach($kanban.tasks, id: \.id) { $task in
-                        KanbanTaskView(task: $task)
+                        KanbanTaskView(task: $task.onNewValue {
+                            viewModel.update(kanban)
+                        })
                             .padding(.vertical, 12)
                             .padding(.horizontal, 12)
                             .draggable(task)
@@ -97,7 +99,7 @@ struct KanbanColumnView: View {
 }
 
 #Preview {
-    KanbanColumnView(kanban: .constant(Kanban(KanbanModel())))
+    KanbanColumnView(kanban: KanbanModel())
         .environmentObject(Theme())
         .environmentObject(NoteViewModel(Mock.note))
 }
