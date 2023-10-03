@@ -31,7 +31,9 @@ class NoteViewModel: ObservableObject {
     @Published var noteType: NoteType? = nil
     @Published var kanbans: [Kanban]
 
-    init(_ noteModel: NoteModel)
+    let service: NotesServiceProtocol
+
+    init(_ noteModel: NoteModel, service: NotesServiceProtocol = NotesService())
     {
         self.id = noteModel.id
         self.title = noteModel.title
@@ -51,6 +53,8 @@ class NoteViewModel: ObservableObject {
         self.isNoteConfVisible = (noteModel.type() == nil)
 
         self.taskIsEditable = noteModel.title.isEmpty
+
+        self.service = service
     }
 
     func initialFocusState() -> NoteTextFields? {
@@ -75,7 +79,7 @@ class NoteViewModel: ObservableObject {
     func updateNote() {
         Task {
             do {
-                try await NotesService.put(self.model())
+                try await service.updateNote(self.model())
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -86,7 +90,7 @@ class NoteViewModel: ObservableObject {
     func deleteNote() {
         Task {
             do {
-                try await NotesService.delete(self.model())
+                try await service.deleteNote(self.model())
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -112,8 +116,9 @@ extension NoteViewModel {
         indexSet.forEach { index in
             Task {
                 do {
+                    let note = self.model()
                     let item = items[index]
-                    try await NotesService.delete(self.model(), of: item)
+                    try await service.deleteNoteItem(note, of: item)
                 } catch {
                     showAlert = true
                     errorMessage = error.localizedDescription

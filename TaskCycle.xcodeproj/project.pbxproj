@@ -16,13 +16,14 @@
 		D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C12A8AF128007F121C /* AppDelegate.swift */; };
 		D036B4C42A8AF590007F121C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C32A8AF590007F121C /* MainView.swift */; };
 		D04005002ABA6C1200A9DEE2 /* KanbanTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04004FF2ABA6C1200A9DEE2 /* KanbanTaskView.swift */; };
+		D048A6BC2ACB7CC400D5B92E /* NotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6BB2ACB7CC400D5B92E /* NotesService.swift */; };
+		D048A6BE2ACB81F500D5B92E /* DailyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */; };
+		D048A6C02ACB8A1200D5B92E /* FirestoreEndpointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6BF2ACB8A1200D5B92E /* FirestoreEndpointExtension.swift */; };
 		D04C5B192AC4C1D6002D4A2A /* FirestoreService in Frameworks */ = {isa = PBXBuildFile; productRef = D04C5B182AC4C1D6002D4A2A /* FirestoreService */; };
 		D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */; };
 		D06F59202AB8BDF700E2510F /* KanbanColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */; };
 		D06F59222AB8C02500E2510F /* KanbanColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F59212AB8C02500E2510F /* KanbanColumn.swift */; };
 		D08271B32ABA37340003A55D /* Kanban.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08271B22ABA37340003A55D /* Kanban.swift */; };
-		D0907A4D2AB0F09F00353AAA /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */; };
-		D0907A4F2AB0FF6400353AAA /* FirebaseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */; };
 		D0907A552AB108FE00353AAA /* DailyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A542AB108FE00353AAA /* DailyService.swift */; };
 		D092C5CD2AC335A6000EFD71 /* NotesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */; };
 		D098D8192A84330D005E534C /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8182A84330D005E534C /* OffsetKey.swift */; };
@@ -31,7 +32,6 @@
 		D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D83C2A85A396005E534C /* WeekSliderView.swift */; };
 		D0A3315B2AB4EAC00047FA20 /* LayeredBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3315A2AB4EAC00047FA20 /* LayeredBackground.swift */; };
 		D0A3315E2AB5058B0047FA20 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = D0A3315D2AB5058B0047FA20 /* Algorithms */; };
-		D0A8AB9D2AB3CFBE00C7A159 /* NotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */; };
 		D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A94FCD2A91AB9E00656814 /* IconView.swift */; };
 		D0A94FD12A91B12F00656814 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = D0A94FD02A91B12F00656814 /* EmojiPicker */; };
 		D0B3B0C52A8A938C001B14D1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D0B3B0C42A8A938C001B14D1 /* GoogleSignIn */; };
@@ -120,12 +120,13 @@
 		D036B4C12A8AF128007F121C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D036B4C32A8AF590007F121C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D04004FF2ABA6C1200A9DEE2 /* KanbanTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanTaskView.swift; sourceTree = "<group>"; };
+		D048A6BB2ACB7CC400D5B92E /* NotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesService.swift; sourceTree = "<group>"; };
+		D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyEndpoint.swift; sourceTree = "<group>"; };
+		D048A6BF2ACB8A1200D5B92E /* FirestoreEndpointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreEndpointExtension.swift; sourceTree = "<group>"; };
 		D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumnView.swift; sourceTree = "<group>"; };
 		D06F59212AB8C02500E2510F /* KanbanColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumn.swift; sourceTree = "<group>"; };
 		D08271B22ABA37340003A55D /* Kanban.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kanban.swift; sourceTree = "<group>"; };
-		D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
-		D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIdentifiable.swift; sourceTree = "<group>"; };
 		D0907A542AB108FE00353AAA /* DailyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyService.swift; sourceTree = "<group>"; };
 		D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEndpoint.swift; sourceTree = "<group>"; };
 		D098D8182A84330D005E534C /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
@@ -133,7 +134,6 @@
 		D098D83A2A85A17C005E534C /* CustomDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateView.swift; sourceTree = "<group>"; };
 		D098D83C2A85A396005E534C /* WeekSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekSliderView.swift; sourceTree = "<group>"; };
 		D0A3315A2AB4EAC00047FA20 /* LayeredBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayeredBackground.swift; sourceTree = "<group>"; };
-		D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesService.swift; sourceTree = "<group>"; };
 		D0A94FCD2A91AB9E00656814 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		D0B3B0CD2A8A9A94001B14D1 /* SignInWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithButton.swift; sourceTree = "<group>"; };
 		D0C5F72D2A981FDA00D5CE44 /* TaskCycleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaskCycleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,7 +218,6 @@
 				D0267DF82A9073EA0079F90E /* NotesView.swift */,
 				D0267DFF2A912DDB0079F90E /* NotesViewModel.swift */,
 				D0267E0C2A9132690079F90E /* Subviews */,
-				D0A8AB9C2AB3CFBE00C7A159 /* NotesService.swift */,
 				D0DCCE562AB7833C00276F1D /* NoteBuilder.swift */,
 			);
 			path = Notes;
@@ -242,13 +241,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		D0907A502AB1057100353AAA /* FirebaseService */ = {
+		D048A6BA2ACB7C5600D5B92E /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D0907A4C2AB0F09F00353AAA /* FirebaseService.swift */,
-				D0907A4E2AB0FF6400353AAA /* FirebaseIdentifiable.swift */,
+				D048A6BB2ACB7CC400D5B92E /* NotesService.swift */,
+				D0907A542AB108FE00353AAA /* DailyService.swift */,
 			);
-			path = FirebaseService;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		D0907A532AB1073100353AAA /* Models */ = {
@@ -267,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */,
+				D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -462,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				D0ED2EDD2A802D4400828887 /* BindingExtension.swift */,
+				D048A6BF2ACB8A1200D5B92E /* FirestoreEndpointExtension.swift */,
 				D0ED2EDC2A802D4400828887 /* EncodableExtension.swift */,
 				D0ED2EDE2A802D4400828887 /* AlignmentExtension.swift */,
 				D0ED2EFB2A81AA2500828887 /* DateExtension.swift */,
@@ -475,9 +476,9 @@
 		D0ED2EE42A802D7800828887 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D048A6BA2ACB7C5600D5B92E /* Services */,
 				D092C5CB2AC3359A000EFD71 /* Endpoints */,
 				D0907A532AB1073100353AAA /* Models */,
-				D0907A502AB1057100353AAA /* FirebaseService */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -485,7 +486,6 @@
 		D0ED2EEF2A80332600828887 /* Daily */ = {
 			isa = PBXGroup;
 			children = (
-				D0907A542AB108FE00353AAA /* DailyService.swift */,
 				D0ED2EF02A80332E00828887 /* SubViews */,
 				D0ED2EED2A80330D00828887 /* DailyView.swift */,
 				D098D81A2A843570005E534C /* DailyViewModel.swift */,
@@ -636,7 +636,9 @@
 			files = (
 				D0A3315B2AB4EAC00047FA20 /* LayeredBackground.swift in Sources */,
 				D0267E002A912DDB0079F90E /* NotesViewModel.swift in Sources */,
+				D048A6C02ACB8A1200D5B92E /* FirestoreEndpointExtension.swift in Sources */,
 				D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */,
+				D048A6BC2ACB7CC400D5B92E /* NotesService.swift in Sources */,
 				D0DCCE532AB76F2400276F1D /* NoteView.swift in Sources */,
 				D0ED2ED42A802C4600828887 /* RegisterViewModel.swift in Sources */,
 				D0DA569C2ABB9D670068D7AD /* KanbanTaskDetailView.swift in Sources */,
@@ -648,14 +650,11 @@
 				D0ED2EFC2A81AA2500828887 /* DateExtension.swift in Sources */,
 				D0ED2EF62A81A2D600828887 /* ColorExtension.swift in Sources */,
 				D0DCCE4E2AB65DC400276F1D /* BoardNoteViewModel.swift in Sources */,
-				D0907A4D2AB0F09F00353AAA /* FirebaseService.swift in Sources */,
 				D098D83B2A85A17C005E534C /* CustomDateView.swift in Sources */,
 				D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */,
-				D0907A4F2AB0FF6400353AAA /* FirebaseIdentifiable.swift in Sources */,
 				D0ED2ECD2A802C1200828887 /* ScreenSize.swift in Sources */,
 				D0DCCE502AB6901900276F1D /* BoardService.swift in Sources */,
 				D0DCCE552AB76F4D00276F1D /* NoteViewModel.swift in Sources */,
-				D0A8AB9D2AB3CFBE00C7A159 /* NotesService.swift in Sources */,
 				D0ED2EEE2A80330D00828887 /* DailyView.swift in Sources */,
 				D0ED2EBE2A802BA700828887 /* GradientView.swift in Sources */,
 				D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */,
@@ -668,6 +667,7 @@
 				D0C996912A86C4D80085481B /* ToDoRow.swift in Sources */,
 				D0ED2EFE2A81B20000828887 /* ProfileImage.swift in Sources */,
 				D08271B32ABA37340003A55D /* Kanban.swift in Sources */,
+				D048A6BE2ACB81F500D5B92E /* DailyEndpoint.swift in Sources */,
 				D0267E042A91300C0079F90E /* NoteModel.swift in Sources */,
 				D0ED2EE82A802D7800828887 /* WeekModel.swift in Sources */,
 				D0ED2EC82A802BE900828887 /* LoginView.swift in Sources */,

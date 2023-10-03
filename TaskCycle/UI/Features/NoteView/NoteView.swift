@@ -184,7 +184,7 @@ struct NoteView: View {
 #Preview {
     NoteView(viewModel: NoteViewModel(Mock.note))
         .environmentObject(Theme())
-        .environmentObject(NotesViewModel(repository: NotesRepository()))
+        .environmentObject(NotesViewModel())
 }
 
 fileprivate extension TextField {

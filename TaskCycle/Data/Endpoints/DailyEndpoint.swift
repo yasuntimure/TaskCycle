@@ -1,0 +1,53 @@
+//
+//  DailyEndpoint.swift
+//  TaskCycle
+//
+//  Created by Eyüp on 2023-10-02.
+//
+
+import FirestoreService
+import FirebaseFirestore
+
+public enum DailyEndpoint: FirestoreEndpoint {
+
+    case getItems(forDate: String)
+    case createItem(ToDoItemModel)
+    case deleteItem(ToDoItemModel)
+    case updateItem(ToDoItemModel)
+
+    public var path: FirestorePath {
+        let weekdaysRef = Firestore.firestore().collection("users").document(userID).collection("weekdays")
+        switch self {
+        case .getItems(let date):
+            return .collection(weekdaysRef.document(date).collection("items"))
+        case .createItem(let item), .deleteItem(let item), .updateItem(let item):
+            return .document(weekdaysRef.document(item.date).collection("items").document(item.id))
+        }
+    }
+
+    public var method: FirestoreMethod {
+        switch self {
+        case .getItems:
+            return .get
+        case .createItem:
+            return .post
+        case .deleteItem:
+            return .delete
+        case .updateItem:
+            return .put
+        }
+    }
+
+    public var task: FirestoreRequestPayload {
+        switch self {
+        case .getItems:
+            return .requestPlain
+        case .createItem(let item):
+            return .createDocument(item)
+        case .deleteItem:
+            return .requestPlain
+        case .updateItem(let item):
+            return .updateDocument(item)
+        }
+    }
+}

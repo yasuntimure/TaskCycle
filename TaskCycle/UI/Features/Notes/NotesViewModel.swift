@@ -20,10 +20,10 @@ class NotesViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    let repository: NotesRepositoryProtocol
+    let service: NotesServiceProtocol
 
-    init(repository: NotesRepositoryProtocol = NotesRepository()) {
-        self.repository = repository
+    init(service: NotesServiceProtocol = NotesService()) {
+        self.service = service
         self.fetchNotes()
     }
 
@@ -60,15 +60,15 @@ class NotesViewModel: ObservableObject {
             do {
                 switch action {
                 case .fetch:
-                    self.notes = try await repository.getNoteList()
+                    self.notes = try await service.getNoteList()
                     if notes.isEmpty {
                         self.addTemplateNote()
                         self.fetchNotes()
                     }
                 case .save(let note):
-                    try await repository.createNote(note)
+                    try await service.createNote(note)
                 case .delete(let note):
-                    try await NotesService.delete(note)
+                    try await service.deleteNote(note)
                 }
             } catch {
                 showAlert = true

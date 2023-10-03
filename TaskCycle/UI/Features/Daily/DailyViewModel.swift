@@ -23,7 +23,10 @@ final class DailyViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    init() {
+    let service: DailyServiceProtocol
+
+    init(service: DailyServiceProtocol = DailyService()) {
+        self.service = service
         selectedDay = WeekDay(date: Date())
         fetchItems()
     }
@@ -116,15 +119,16 @@ extension DailyViewModel {
             do {
                 switch action {
                 case .fetch:
-                    self.items = try await DailyService.getItems(for: selectedDay.date.weekdayFormat())
+                    let date = selectedDay.date.weekdayFormat()
+                    self.items = try await service.getItems(for: date)
                     if items.isEmpty { insertAndSaveEmptyItem() }
                     sortItems()
                 case .update(let item):
-                    try await DailyService.put(item)
+                    try await service.updateItem(item)
                 case .save(let item):
-                    try await DailyService.post(item)
+                    try await service.createItem(item)
                 case .delete(let item):
-                    try await DailyService.delete(item)
+                    try await service.deleteItem(item)
                 }
             } catch {
                 showAlert = true

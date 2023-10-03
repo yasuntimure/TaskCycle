@@ -5,53 +5,27 @@
 //  Created by Eyüp on 2023-09-26.
 //
 
-import SwiftKeychainWrapper
 import FirebaseFirestore
 import FirestoreService
 
-extension FirestoreEndpoint {
-    public var userID: String {
-        return KeychainWrapper.standard.string(forKey: "userIdKey") ?? ""
-    }
-}
-
-protocol NotesRepositoryProtocol {
-    func getNoteList() async throws -> [NoteModel]
-    func createNote(_ note: NoteModel) async throws
-}
-
-struct NotesRepository: NotesRepositoryProtocol {
-
-    let service: FirestoreServiceProtocol
-
-    init(service: FirestoreServiceProtocol = FirestoreService()) {
-        self.service = service
-    }
-
-    func getNoteList() async throws -> [NoteModel] {
-        let endpoint = NotesEndpoint.getNoteList
-        return try await service.request(NoteModel.self, endpoint: endpoint)
-    }
-
-    func createNote(_ note: NoteModel) async throws {
-        let endpoint = NotesEndpoint.createNote(note: note)
-        let _ = try await service.request(NoteModel.self, endpoint: endpoint)
-    }
-
-}
 
 public enum NotesEndpoint: FirestoreEndpoint {
 
     case getNoteList
-    case createNote(note: NoteModel)
+    case createNote(NoteModel)
+    case deleteNote(NoteModel)
+    case deleteNoteItem(note: NoteModel, item: ToDoItemModel)
+    case updateNote(NoteModel)
 
     public var path: FirestorePath {
-        let db = Firestore.firestore()
+        let notesRef = Firestore.firestore().collection("users").document(userID).collection("notes")
         switch self {
         case .getNoteList:
-            return .collection(db.collection("users").document(userID).collection("notes"))
-        case .createNote(let note):
-            return .document(db.collection("users").document(userID).collection("notes").document(note.id))
+            return .collection(notesRef)
+        case .createNote(let note), .deleteNote(let note), .updateNote(let note):
+            return .document(notesRef.document(note.id))
+        case .deleteNoteItem(let note, let item):
+            return .document(notesRef.document(note.id).collection("items").document(item.id))
         }
     }
 
@@ -61,6 +35,10 @@ public enum NotesEndpoint: FirestoreEndpoint {
             return .get
         case .createNote:
             return .post
+        case .deleteNote, .deleteNoteItem:
+            return .delete
+        case .updateNote:
+            return .put
         }
     }
 
@@ -70,6 +48,10 @@ public enum NotesEndpoint: FirestoreEndpoint {
             return .requestPlain
         case .createNote(let note):
             return .createDocument(note)
+        case .deleteNote, .deleteNoteItem:
+            return .requestPlain
+        case .updateNote(let note):
+            return .updateDocument(note)
         }
     }
 }

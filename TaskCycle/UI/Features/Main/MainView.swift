@@ -11,7 +11,7 @@ struct MainView: View {
 
     @StateObject var viewModel = MainViewModel()
     @StateObject var dailyViewModel = DailyViewModel()
-    @StateObject var notesViewModel = NotesViewModel(repository: NotesRepository())
+    @StateObject var notesViewModel = NotesViewModel()
 
     @StateObject var theme: Theme = Theme()
 
