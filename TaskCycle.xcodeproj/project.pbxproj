@@ -20,6 +20,10 @@
 		D048A6BE2ACB81F500D5B92E /* DailyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */; };
 		D048A6C02ACB8A1200D5B92E /* FirestoreEndpointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6BF2ACB8A1200D5B92E /* FirestoreEndpointExtension.swift */; };
 		D048A6C22ACB9C1600D5B92E /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C12ACB9C1600D5B92E /* TaskModel.swift */; };
+		D048A6C42ACBAE3500D5B92E /* ToDoNoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C32ACBAE3500D5B92E /* ToDoNoteService.swift */; };
+		D048A6C62ACBC32600D5B92E /* ToDoNoteEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C52ACBC32600D5B92E /* ToDoNoteEndpoint.swift */; };
+		D048A6C82ACBC87500D5B92E /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C72ACBC87500D5B92E /* ToDoListView.swift */; };
+		D048A6CA2ACBC90800D5B92E /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C92ACBC90800D5B92E /* ToDoListViewModel.swift */; };
 		D04C5B192AC4C1D6002D4A2A /* FirestoreService in Frameworks */ = {isa = PBXBuildFile; productRef = D04C5B182AC4C1D6002D4A2A /* FirestoreService */; };
 		D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */; };
 		D06F59202AB8BDF700E2510F /* KanbanColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */; };
@@ -123,6 +127,10 @@
 		D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyEndpoint.swift; sourceTree = "<group>"; };
 		D048A6BF2ACB8A1200D5B92E /* FirestoreEndpointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreEndpointExtension.swift; sourceTree = "<group>"; };
 		D048A6C12ACB9C1600D5B92E /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		D048A6C32ACBAE3500D5B92E /* ToDoNoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoNoteService.swift; sourceTree = "<group>"; };
+		D048A6C52ACBC32600D5B92E /* ToDoNoteEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoNoteEndpoint.swift; sourceTree = "<group>"; };
+		D048A6C72ACBC87500D5B92E /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
+		D048A6C92ACBC90800D5B92E /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
 		D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumnView.swift; sourceTree = "<group>"; };
 		D06F59212AB8C02500E2510F /* KanbanColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumn.swift; sourceTree = "<group>"; };
@@ -244,8 +252,18 @@
 			children = (
 				D048A6BB2ACB7CC400D5B92E /* NotesService.swift */,
 				D0907A542AB108FE00353AAA /* DailyService.swift */,
+				D048A6C32ACBAE3500D5B92E /* ToDoNoteService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		D048A6CB2ACBCF0300D5B92E /* ToDoListView */ = {
+			isa = PBXGroup;
+			children = (
+				D048A6C72ACBC87500D5B92E /* ToDoListView.swift */,
+				D048A6C92ACBC90800D5B92E /* ToDoListViewModel.swift */,
+			);
+			path = ToDoListView;
 			sourceTree = "<group>";
 		};
 		D0907A532AB1073100353AAA /* Models */ = {
@@ -265,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */,
+				D048A6C52ACBC32600D5B92E /* ToDoNoteEndpoint.swift */,
 				D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */,
 			);
 			path = Endpoints;
@@ -340,7 +359,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		D0DCCE4C2AB65DA500276F1D /* BoardNote */ = {
+		D0DCCE4C2AB65DA500276F1D /* BoardNoteView */ = {
 			isa = PBXGroup;
 			children = (
 				D06F591F2AB8BDF700E2510F /* KanbanColumnView.swift */,
@@ -348,12 +367,13 @@
 				D0DA569B2ABB9D670068D7AD /* KanbanTaskDetailView.swift */,
 				D08271B22ABA37340003A55D /* Kanban.swift */,
 			);
-			path = BoardNote;
+			path = BoardNoteView;
 			sourceTree = "<group>";
 		};
 		D0DCCE512AB76F1900276F1D /* NoteView */ = {
 			isa = PBXGroup;
 			children = (
+				D048A6CB2ACBCF0300D5B92E /* ToDoListView */,
 				D0DCCE522AB76F2400276F1D /* NoteView.swift */,
 				D0DCCE542AB76F4D00276F1D /* NoteViewModel.swift */,
 			);
@@ -373,7 +393,7 @@
 			isa = PBXGroup;
 			children = (
 				D0DCCE512AB76F1900276F1D /* NoteView */,
-				D0DCCE4C2AB65DA500276F1D /* BoardNote */,
+				D0DCCE4C2AB65DA500276F1D /* BoardNoteView */,
 				D0267E0D2A91343A0079F90E /* Main */,
 				D0ED2EEF2A80332600828887 /* Daily */,
 				D0267DF72A9073DD0079F90E /* Notes */,
@@ -650,7 +670,9 @@
 				D0A94FCE2A91AB9E00656814 /* IconView.swift in Sources */,
 				D0ED2ECD2A802C1200828887 /* ScreenSize.swift in Sources */,
 				D0DCCE552AB76F4D00276F1D /* NoteViewModel.swift in Sources */,
+				D048A6C62ACBC32600D5B92E /* ToDoNoteEndpoint.swift in Sources */,
 				D0ED2EEE2A80330D00828887 /* DailyView.swift in Sources */,
+				D048A6C42ACBAE3500D5B92E /* ToDoNoteService.swift in Sources */,
 				D0ED2EBE2A802BA700828887 /* GradientView.swift in Sources */,
 				D0B3B0CE2A8A9A94001B14D1 /* SignInWithButton.swift in Sources */,
 				D0ED2EB82A802BA700828887 /* TextFieldView.swift in Sources */,
@@ -675,7 +697,9 @@
 				D0ED2EBC2A802BA700828887 /* ToggleButton.swift in Sources */,
 				D0ED2EB92A802BA700828887 /* PlusButton.swift in Sources */,
 				D0267DFE2A912D080079F90E /* NoteRow.swift in Sources */,
+				D048A6C82ACBC87500D5B92E /* ToDoListView.swift in Sources */,
 				D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */,
+				D048A6CA2ACBC90800D5B92E /* ToDoListViewModel.swift in Sources */,
 				D0267DF92A9073EA0079F90E /* NotesView.swift in Sources */,
 				D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */,
 				D0907A552AB108FE00353AAA /* DailyService.swift in Sources */,

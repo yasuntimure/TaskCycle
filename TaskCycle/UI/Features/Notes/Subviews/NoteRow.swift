@@ -52,7 +52,6 @@ struct NoteRow_Previews: PreviewProvider {
         id: UUID().uuidString,
         title: "Buy some milk 🥛",
         description: "Get lactose free one Get lactose free one Get lactose free one Get lactose free one Get lactose free one",
-        items: [],
         date: Date().weekdayFormat(),
         noteType: NoteType.empty.rawValue
     )
@@ -61,7 +60,6 @@ struct NoteRow_Previews: PreviewProvider {
         id: UUID().uuidString,
         title: "Buy some milk 🥛",
         description: "",
-        items: [],
         date: Date().weekdayFormat(),
         noteType: NoteType.empty.rawValue
     )

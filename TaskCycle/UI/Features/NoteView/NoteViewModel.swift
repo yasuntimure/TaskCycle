@@ -12,8 +12,6 @@ import Algorithms
 @MainActor
 class NoteViewModel: ObservableObject {
 
-    @Published var taskIsEditable: Bool
-
     var uncompletedNote: Bool {
         (title.trimmingCharacters(in: .whitespaces).isEmpty) && (description.trimmingCharacters(in: .whitespaces).isEmpty)
     }
@@ -25,20 +23,19 @@ class NoteViewModel: ObservableObject {
     @Published var id: String
     @Published var title: String
     @Published var description: String
-    @Published var items: [ToDoItemModel]
     @Published var date: String
     @Published var emoji: String?
     @Published var noteType: NoteType? = nil
-    @Published var kanbans: [Kanban]
+
+    @Published var items: [ToDoItemModel] = []
+    @Published var kanbans: [Kanban] = []
 
     let service: NotesServiceProtocol
 
-    init(_ noteModel: NoteModel, service: NotesServiceProtocol = NotesService())
-    {
+    init(_ noteModel: NoteModel, service: NotesServiceProtocol = NotesService()) {
         self.id = noteModel.id
         self.title = noteModel.title
         self.description = noteModel.description
-        self.items = noteModel.items
         self.date = noteModel.date
         self.emoji = noteModel.emoji
 
@@ -49,10 +46,7 @@ class NoteViewModel: ObservableObject {
             self.noteType = nil
         }
 
-        self.kanbans = noteModel.kanbanModels.map { Kanban($0) }
         self.isNoteConfVisible = (noteModel.type() == nil)
-
-        self.taskIsEditable = noteModel.title.isEmpty
 
         self.service = service
     }
@@ -78,7 +72,7 @@ class NoteViewModel: ObservableObject {
 
     func setNoteType(_ type: NoteType) {
         withAnimation {
-            self.noteType = .empty
+            self.noteType = type
             self.isNoteConfVisible = false
         }
     }
@@ -125,7 +119,7 @@ extension NoteViewModel {
                 do {
                     let note = self.model()
                     let item = items[index]
-                    try await service.deleteNoteItem(note, of: item)
+//                    try await service.deleteNoteItem(note, of: item)
                 } catch {
                     showAlert = true
                     errorMessage = error.localizedDescription
@@ -158,24 +152,18 @@ extension NoteViewModel {
     }
 
     func addKanbanColumn() {
-        var updatedKanbans = kanbans
         let kanbanModel = KanbanModel()
         let kanban = Kanban(kanbanModel)
-        updatedKanbans.append(kanban)
-        kanbans = updatedKanbans
+        kanbans.append(kanban)
     }
-
 
     func addTask(to kanban: Kanban) {
-        let updatedKanbans = kanbans
-        for (index, kanbanItem) in updatedKanbans.enumerated() {
+        for (index, kanbanItem) in kanbans.enumerated() {
             if kanbanItem.id == kanban.id {
-                updatedKanbans[index].tasks.append(TaskModel())
+                kanbans[index].tasks.append(TaskModel())
             }
         }
-        self.kanbans = updatedKanbans
     }
-
 
     func duplicate(_ kanban: Kanban) {
         let kanbanModel = KanbanModel(title: kanban.title, tasks: kanban.tasks)
@@ -213,23 +201,12 @@ extension NoteViewModel {
 extension NoteViewModel {
 
     func model() -> NoteModel {
-
-        var kanbanColumns: [KanbanModel] = []
-
-        self.kanbans.forEach { kanban in
-            let kanbanModel = kanban.model()
-            kanbanColumns.append(kanbanModel)
-        }
-
         return NoteModel(id: self.id,
-                  title: self.title,
-                  description: self.description,
-                  items: self.items,
-                  date: self.date,
-                  emoji: self.emoji,
-                  noteType: self.noteType?.rawValue,
-                  kanbanColumns: kanbanColumns)
-
+                         title: self.title,
+                         description: self.description,
+                         date: self.date,
+                         emoji: self.emoji,
+                         noteType: self.noteType?.rawValue)
     }
 }
 

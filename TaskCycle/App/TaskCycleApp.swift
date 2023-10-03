@@ -28,8 +28,7 @@ public class Mock {
     static let userId = "5JK0lwRArPULkWLO6Xf9DPxdo073"
 
     static let note = NoteModel(title: "Mock Title",
-                                description: "Mock Description",
-                                items: [item1, item2, item3, item4])
+                                description: "Mock Description")
 
     static let task = TaskModel(title: "Mock Task",
                                 description: "Mock Description")

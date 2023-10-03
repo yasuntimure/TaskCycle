@@ -12,7 +12,6 @@ protocol NotesServiceProtocol {
     func createNote(_ note: NoteModel) async throws
     func updateNote(_ note: NoteModel) async throws
     func deleteNote(_ note: NoteModel) async throws
-    func deleteNoteItem(_ note: NoteModel, of item: ToDoItemModel) async throws
 }
 
 struct NotesService: NotesServiceProtocol {
@@ -43,8 +42,4 @@ struct NotesService: NotesServiceProtocol {
         _ = try await service.request(NoteModel.self, endpoint: endpoint)
     }
 
-    func deleteNoteItem(_ note: NoteModel, of item: ToDoItemModel) async throws {
-        let endpoint = NotesEndpoint.deleteNoteItem(note: note, item: item)
-        _ = try await service.request(NoteModel.self, endpoint: endpoint)
-    }
 }

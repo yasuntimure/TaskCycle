@@ -13,7 +13,6 @@ public enum NotesEndpoint: FirestoreEndpoint {
     case getNoteList
     case createNote(NoteModel)
     case deleteNote(NoteModel)
-    case deleteNoteItem(note: NoteModel, item: ToDoItemModel)
     case updateNote(NoteModel)
 
     public var path: FirestorePath {
@@ -23,8 +22,6 @@ public enum NotesEndpoint: FirestoreEndpoint {
             return .collection(notesRef)
         case .createNote(let note), .deleteNote(let note), .updateNote(let note):
             return .document(notesRef.document(note.id))
-        case .deleteNoteItem(let note, let item):
-            return .document(notesRef.document(note.id).collection("items").document(item.id))
         }
     }
 
@@ -34,7 +31,7 @@ public enum NotesEndpoint: FirestoreEndpoint {
             return .get
         case .createNote:
             return .post
-        case .deleteNote, .deleteNoteItem:
+        case .deleteNote:
             return .delete
         case .updateNote:
             return .put
@@ -47,7 +44,7 @@ public enum NotesEndpoint: FirestoreEndpoint {
             return .requestPlain
         case .createNote(let note):
             return .createDocument(note)
-        case .deleteNote, .deleteNoteItem:
+        case .deleteNote:
             return .requestPlain
         case .updateNote(let note):
             return .updateDocument(note)

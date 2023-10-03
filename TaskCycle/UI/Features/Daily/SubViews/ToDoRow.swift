@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ToDoRow: View {
+    @EnvironmentObject var theme: Theme
 
     @Binding var item: ToDoItemModel
     @FocusState var isFocused: Bool?
-    @EnvironmentObject var theme: Theme
 
     var body: some View {
         HStack (spacing: 0) {

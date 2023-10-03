@@ -48,7 +48,7 @@ struct NoteView: View {
                         case .empty: 
                             Divider().opacity(0).frame(height: 1)
                         case .todo: 
-                            ToDoListView()
+                            ToDoListView(viewModel: ToDoListViewModel(service: ToDoNoteService(noteId: viewModel.id)))
                         case .board:
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
@@ -101,6 +101,7 @@ struct NoteView: View {
         VStack (alignment: .leading, spacing: 25) {
             CustomButton("Empty Page", image: "plus") {
                 viewModel.setNoteType(.empty)
+                viewModel.updateNote()
             }
             
             VStack (alignment: .leading, spacing: 10) {
@@ -109,42 +110,18 @@ struct NoteView: View {
                     .foregroundStyle(theme.mTintColor)
                 CustomButton("To Do List", image: "checkmark.square") {
                     viewModel.setNoteType(.todo)
+                    // TODO: Add Empty ToDo Item with "items" path
+                    // TODO: Update Note
                 }
                 CustomButton("Kanban Board", image: "tablecells") {
                     viewModel.setNoteType(.board)
+                    // TODO: Add Base Kanban Columns with "kanbans" path
+                    // TODO: Update Note
                 }
             }
         }.padding()
     }
-    
-    @ViewBuilder
-    func ToDoListView() -> some View {
-        ZStack {
-            List {
-                ForEach ($viewModel.items) { $item in
-                    ToDoRow(item: $item)
-                        .padding(.vertical, -5)
-                        .hSpacing(.leading)
-                }
-                .onDelete(perform: viewModel.deleteItems(at:))
-                .onMove(perform: viewModel.moveItems(from:to:))
-                .listSectionSeparator(.hidden)
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-            }
-            .listStyle(.plain)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) { EditButton() }
-            }
-            
-            PlusButton() {
-                viewModel.addNewItem()
-            }
-            .hSpacing(.trailing).vSpacing(.bottom)
-            .padding([.trailing, .bottom], 20)
-        }
-    }
-    
+
     func getGridColumns() -> [GridItem] {
         var columns: [GridItem] = []
         viewModel.kanbans.forEach { _ in
