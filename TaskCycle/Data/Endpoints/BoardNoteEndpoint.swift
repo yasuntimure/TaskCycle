@@ -45,14 +45,10 @@ public enum BoardNoteEndpoint: FirestoreEndpoint {
 
     public var task: FirestoreRequestPayload {
         switch self {
-        case .getKanbans:
+        case .getKanbans, .deleteKanban:
             return .requestPlain
-        case .createKanban(let dto):
-            return .createDocument(dto.kanban)
-        case .deleteKanban:
-            return .requestPlain
-        case .updateKanban(let dto):
-            return .updateDocument(dto.kanban)
+        case .createKanban(let dto), .updateKanban(let dto):
+            return .setDocument(dto.kanban)
         }
     }
 }

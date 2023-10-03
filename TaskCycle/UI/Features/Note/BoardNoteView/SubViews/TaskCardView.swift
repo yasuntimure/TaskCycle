@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-struct KanbanTaskView: View {
+struct TaskCardView: View {
     // Environment Objects
     @EnvironmentObject var theme: Theme
-    @EnvironmentObject var viewModel: NoteViewModel
-
+    @EnvironmentObject var viewModel: BoardNoteViewModel
 
     // View Properties
-    @Binding var task: TaskModel
+    @Binding var task: NoteModel
     @State var taskIsEditable: Bool = false
     @FocusState var focusState: NoteTextFields?
 
@@ -29,7 +28,7 @@ struct KanbanTaskView: View {
                     EditableTaskInputs()
                 } else {
                     NavigationLink {
-                        KanbanTaskDetailView(task: task)
+                        TaskDetailView(task: task)
                             .environmentObject(viewModel)
                     } label: {
                         UnEditableTaskTextView()
@@ -129,7 +128,7 @@ struct KanbanTaskView: View {
         Color.backgroundColor
             .ignoresSafeArea()
 
-        KanbanTaskView(task: .constant(Mock.task))
+        TaskCardView(task: .constant(Mock.note))
             .environmentObject(Theme())
             .environmentObject(NoteViewModel(NoteModel.quickNote()))
             .padding(.horizontal, 50)

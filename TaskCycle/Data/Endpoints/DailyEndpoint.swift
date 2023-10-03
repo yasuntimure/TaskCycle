@@ -40,14 +40,10 @@ public enum DailyEndpoint: FirestoreEndpoint {
 
     public var task: FirestoreRequestPayload {
         switch self {
-        case .getItems:
+        case .getItems, .deleteItem:
             return .requestPlain
-        case .createItem(let item):
-            return .createDocument(item)
-        case .deleteItem:
-            return .requestPlain
-        case .updateItem(let item):
-            return .updateDocument(item)
+        case .createItem(let item), .updateItem(let item):
+            return .setDocument(item)
         }
     }
 }

@@ -17,7 +17,7 @@ struct BoardNoteView: View {
                 HStack {
                     LazyVGrid(columns: getGridColumns()) {
                         ForEach($viewModel.kanbans, id: \.id) { $kanban in
-                            KanbanColumnView(kanban: kanban)
+                            BoardColumnView(kanban: $kanban)
                                 .frame(height: geometry.size.height)
                                 .environmentObject(viewModel)
                         }
@@ -26,6 +26,12 @@ struct BoardNoteView: View {
                 }
                 .padding(.horizontal)
             }
+            .onAppear {
+                viewModel.fetchKanbans()
+            }
+            .alert("Error", isPresented: $viewModel.showAlert) {
+                Text(viewModel.errorMessage)
+            }
         }
     }
 
@@ -33,7 +39,7 @@ struct BoardNoteView: View {
     private func AddColumnButton() -> some View {
         Button {
             withAnimation {
-//                viewModel.addKanbanColumn()
+                viewModel.addNewColumn()
             }
         } label: {
             HStack {

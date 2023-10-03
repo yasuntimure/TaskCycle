@@ -160,7 +160,7 @@ extension NoteViewModel {
     func addTask(to kanban: Kanban) {
         for (index, kanbanItem) in kanbans.enumerated() {
             if kanbanItem.id == kanban.id {
-                kanbans[index].tasks.append(TaskModel())
+                kanbans[index].tasks.append(NoteModel())
             }
         }
     }
@@ -175,7 +175,7 @@ extension NoteViewModel {
     }
 
     /// Removes the dropped tasks from their source column.
-    func removeDroppedTasks(from kanban: Kanban, droppedTasks: [TaskModel]) {
+    func removeDroppedTasks(from kanban: Kanban, droppedTasks: [NoteModel]) {
         var tempKanbans = kanbans
         kanbans.enumerated().forEach { i, item in
             if item.id != kanban.id {
@@ -186,7 +186,7 @@ extension NoteViewModel {
     }
 
     /// Adds the dropped tasks to the destination column, ensuring there are no duplicates.
-    func addDroppedTasks(to kanban: Kanban, droppedTasks: [TaskModel]) {
+    func addDroppedTasks(to kanban: Kanban, droppedTasks: [NoteModel]) {
         var tempKanbans = kanbans
         kanbans.enumerated().forEach { i, item in
             if item.id == kanban.id {

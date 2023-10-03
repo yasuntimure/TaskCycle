@@ -12,7 +12,7 @@ class Kanban: ObservableObject {
 
     @Published var id: String
     @Published var title: String
-    @Published var tasks: [TaskModel]
+    @Published var tasks: [NoteModel]
 
     init(_ kanbanModel: KanbanModel) {
         self.id = kanbanModel.id

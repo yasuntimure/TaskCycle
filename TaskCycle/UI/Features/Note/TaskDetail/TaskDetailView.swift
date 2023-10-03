@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct KanbanTaskDetailView: View {
+struct TaskDetailView: View {
     @EnvironmentObject var theme: Theme
-    @EnvironmentObject var viewModel: NoteViewModel
+    @EnvironmentObject var viewModel: BoardNoteViewModel
 
     @State private var isNoteConfVisible: Bool = true
     @FocusState var focusState: NoteTextFields?
 
-    @State var task: TaskModel
+    @State var task: NoteModel
 
     var body: some View {
         VStack (alignment: .leading) {
@@ -45,10 +45,10 @@ struct KanbanTaskDetailView: View {
             .vSpacing(.top)
         }
         .onAppear {
-            focusState = viewModel.initialFocusState()
+//            focusState = viewModel.initialFocusState()
         }
         .onDisappear {
-            viewModel.updateNote()
+//            viewModel.updateNote()
         }
     }
 
@@ -95,25 +95,25 @@ struct KanbanTaskDetailView: View {
     @ViewBuilder
     func ToDoListView() -> some View {
         ZStack {
-            List {
-                ForEach ($task.items) { $item in
-                    ToDoRow(item: $item)
-                        .padding(.vertical, -5)
-                        .hSpacing(.leading)
-                }
-//                .onDelete(perform: viewModel.deleteItems(at:))
-//                .onMove(perform: viewModel.moveItems(from:to:))
-                .listSectionSeparator(.hidden)
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-            }
-            .listStyle(.plain)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) { EditButton() }
-            }
+//            List {
+//                ForEach ($task.items) { $item in
+//                    ToDoRow(item: $item)
+//                        .padding(.vertical, -5)
+//                        .hSpacing(.leading)
+//                }
+////                .onDelete(perform: viewModel.deleteItems(at:))
+////                .onMove(perform: viewModel.moveItems(from:to:))
+//                .listSectionSeparator(.hidden)
+//                .listRowSeparator(.hidden)
+//                .listRowBackground(Color.clear)
+//            }
+//            .listStyle(.plain)
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) { EditButton() }
+//            }
 
             PlusButton() {
-                viewModel.addNewItem()
+//                viewModel.addNewItem()
             }
             .hSpacing(.trailing).vSpacing(.bottom)
             .padding([.trailing, .bottom], 20)
@@ -123,7 +123,7 @@ struct KanbanTaskDetailView: View {
 }
 
 #Preview {
-    KanbanTaskDetailView(task: Mock.task)
+    TaskDetailView(task: Mock.note)
         .environmentObject(Theme())
         .environmentObject(NoteViewModel(Mock.note))
 }

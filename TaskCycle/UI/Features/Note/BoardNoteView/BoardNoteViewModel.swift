@@ -19,9 +19,7 @@ class BoardNoteViewModel: ObservableObject {
 
     init(service: BoardNoteServiceProtocol) {
         self.service = service
-        self.fetchKanbans()
     }
-
 }
 
 extension BoardNoteViewModel {
@@ -29,8 +27,11 @@ extension BoardNoteViewModel {
     func fetchKanbans() {
         Task {
             do {
-                self.kanbans = try await service.getKanbans()
-                if kanbans.isEmpty { addTemplateKanbans() }
+                let kanbans = try await service.getKanbans()
+                if kanbans.isEmpty {
+                    self.addTemplateColumns()
+                }
+                self.kanbans = kanbans
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -41,7 +42,7 @@ extension BoardNoteViewModel {
     func update(_ kanban: KanbanModel) {
         Task {
             do {
-                try await service.updateKanban(kanban)
+                try await service.update(kanban)
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -52,7 +53,7 @@ extension BoardNoteViewModel {
     func create(_ kanban: KanbanModel) {
         Task {
             do {
-                try await service.createKanban(kanban)
+                try await service.create(kanban)
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -61,12 +62,12 @@ extension BoardNoteViewModel {
     }
 
     func addNewColumn() {
-        let emptyItem = KanbanModel()
-        kanbans.insert(emptyItem, at: 0)
-        create(emptyItem)
+        let newColumn = KanbanModel()
+        kanbans.append(newColumn)
+        create(newColumn)
     }
 
-    func addTemplateKanbans() {
+    func addTemplateColumns() {
         let kanbanColumns: [KanbanModel] = [KanbanModel(title: "To Do"), KanbanModel(title: "In Progress"), KanbanModel(title: "Done")]
         kanbanColumns.forEach { kanban in
             kanbans.append(kanban)
@@ -80,7 +81,7 @@ extension BoardNoteViewModel {
             kanbans.remove(at: index)
             Task {
                 do {
-                    try await service.deleteKanban(kanban)
+                    try await service.delete(kanban)
                 } catch {
                     showAlert = true
                     errorMessage = error.localizedDescription
@@ -99,17 +100,13 @@ extension BoardNoteViewModel {
         kanbans.removeAll { $0.id == kanban.id }
     }
 
-    func addKanbanColumn() {
-        let kanban = KanbanModel()
-        kanbans.append(kanban)
-    }
-
     func addTask(to kanban: KanbanModel) {
         for (index, kanbanItem) in kanbans.enumerated() {
             if kanbanItem.id == kanban.id {
-                kanbans[index].tasks.append(TaskModel())
+                kanbans[index].tasks.append(NoteModel())
             }
         }
+        update(kanban)
     }
 
     func duplicate(_ kanban: KanbanModel) {
@@ -117,25 +114,19 @@ extension BoardNoteViewModel {
         if let originalIndex = self.kanbans.firstIndex(where: { $0.id == kanban.id }) {
             self.kanbans.insert(copiedKanban, at: originalIndex + 1)
         }
+        self.create(copiedKanban)
     }
 
     /// Removes the dropped tasks from their source column.
-    func removeDroppedTasks(from kanban: KanbanModel, droppedTasks: [TaskModel]) {
-        kanbans.enumerated().forEach { i, item in
-            if item.id != kanban.id {
-                kanbans[i].tasks.removeAll { droppedTasks.contains($0)}
+    func removeDroppedTask(_ droppedTasks: [NoteModel], kanban: KanbanModel) {
+        guard let droppedTask = droppedTasks.first else { return }
+        kanbans.enumerated().forEach { i, kanbanItem in
+            if kanbanItem.id != kanban.id {
+                kanbans[i].tasks.removeAll(where: { $0.id == droppedTask.id })
+                update(kanbans[i])
             }
         }
     }
 
-    /// Adds the dropped tasks to the destination column, ensuring there are no duplicates.
-    func addDroppedTasks(to kanban: KanbanModel, droppedTasks: [TaskModel]) {
-        kanbans.enumerated().forEach { i, item in
-            if item.id == kanban.id {
-                let updatedTasks = item.tasks + droppedTasks
-                kanbans[i].tasks = Array(updatedTasks.uniqued())
-            }
-        }
-    }
 }
 

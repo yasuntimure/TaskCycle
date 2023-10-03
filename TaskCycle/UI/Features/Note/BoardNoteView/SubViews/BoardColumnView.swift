@@ -8,58 +8,37 @@
 import SwiftUI
 import Algorithms
 
-struct KanbanColumnView: View {
+struct BoardColumnView: View {
     @EnvironmentObject var theme: Theme
     @EnvironmentObject var viewModel: BoardNoteViewModel
 
-    @State var kanban: KanbanModel
-
     @State var isTargeted: Bool = false
-
     @FocusState var focusState: NoteTextFields?
+
+    @Binding var kanban: KanbanModel {
+        didSet {
+            viewModel.update(kanban)
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading) {
             KanbanHeader()
                 .padding(.horizontal, 5)
 
-            ScrollView(showsIndicators: false) {
-                // Tasks
-                VStack (spacing: -12) {
-                    ForEach($kanban.tasks, id: \.id) { $task in
-                        KanbanTaskView(task: $task.onNewValue {
-                            viewModel.update(kanban)
-                        })
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 12)
-                            .draggable(task)
-                    }
+            KanbanBody()
+                .hSpacing(.center).padding(.top, 9)
+                .layeredBackground(
+                    self.isTargeted ? theme.mTintColor.opacity(0.1) : .backgroundColor,
+                    cornerRadius: 8
+                )
+                .dropDestination(for: NoteModel.self) { droppedTasks, location in
+                    kanban.tasks += droppedTasks
+                    viewModel.removeDroppedTask(droppedTasks, kanban: kanban)
+                    return true
+                } isTargeted: { isTargeted in
+                    self.isTargeted = isTargeted
                 }
-                .padding(.bottom, -12)
-
-                // Add New Button
-                SecondaryButton(imageName: "plus",
-                                title: "Add Task",
-                                backgroundColor: theme.mTintColor.opacity(0.15)) 
-                {
-                    viewModel.addTask(to: kanban)
-                }
-                .padding(.vertical, 6).padding(.horizontal, 12)
-            }
-            .hSpacing(.center)
-            .padding(.top, 9)
-            .layeredBackground(
-                self.isTargeted ? theme.mTintColor.opacity(0.1) : .backgroundColor,
-                cornerRadius: 8
-            )
-            .dropDestination(for: TaskModel.self) { droppedTasks, location in
-                viewModel.removeDroppedTasks(from: kanban, droppedTasks: droppedTasks)
-                viewModel.addDroppedTasks(to: kanban, droppedTasks: droppedTasks)
-                return true
-            } isTargeted: { isTargeted in
-                self.isTargeted = isTargeted
-            }
-
         }
     }
 
@@ -96,10 +75,34 @@ struct KanbanColumnView: View {
             }
         }
     }
+
+    @ViewBuilder
+    private func KanbanBody() -> some View {
+        ScrollView(showsIndicators: false) {
+            // Tasks
+            VStack (spacing: -12) {
+                ForEach($kanban.tasks, id: \.id) { $taskCard in
+                    TaskCardView(task: $taskCard)
+                    .draggable(taskCard)
+                    .padding(12)
+                }
+            }
+            .padding(.bottom, -12)
+
+            // Add Task Button
+            SecondaryButton(imageName: "plus", title: "Add Task",
+                            backgroundColor: theme.mTintColor.opacity(0.15))
+            {
+                kanban.tasks.append(NoteModel())
+            }
+            .padding(.vertical, 6).padding(.horizontal, 12)
+        }
+    }
+
 }
 
 #Preview {
-    KanbanColumnView(kanban: KanbanModel())
+    BoardColumnView(kanban: .constant(KanbanModel()))
         .environmentObject(Theme())
         .environmentObject(NoteViewModel(Mock.note))
 }

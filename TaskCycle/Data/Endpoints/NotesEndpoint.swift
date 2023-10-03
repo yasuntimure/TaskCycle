@@ -40,14 +40,10 @@ public enum NotesEndpoint: FirestoreEndpoint {
 
     public var task: FirestoreRequestPayload {
         switch self {
-        case .getNoteList:
+        case .getNoteList, .deleteNote:
             return .requestPlain
-        case .createNote(let note):
-            return .createDocument(note)
-        case .deleteNote:
-            return .requestPlain
-        case .updateNote(let note):
-            return .updateDocument(note)
+        case .createNote(let note), .updateNote(let note):
+            return .setDocument(note)
         }
     }
 }

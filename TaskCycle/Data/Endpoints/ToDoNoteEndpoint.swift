@@ -45,14 +45,10 @@ public enum ToDoNoteEndpoint: FirestoreEndpoint {
 
     public var task: FirestoreRequestPayload {
         switch self {
-        case .getItems:
+        case .getItems, .deleteItem:
             return .requestPlain
-        case .createItem(let dto):
-            return .createDocument(dto.item)
-        case .deleteItem:
-            return .requestPlain
-        case .updateItem(let dto):
-            return .updateDocument(dto.item)
+        case .createItem(let dto), .updateItem(let dto):
+            return .setDocument(dto.item)
         }
     }
 }
