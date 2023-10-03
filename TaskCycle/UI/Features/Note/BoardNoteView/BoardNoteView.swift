@@ -11,21 +11,21 @@ struct BoardNoteView: View {
 
     @StateObject var viewModel: BoardNoteViewModel
 
-    @State var height: CGFloat
-
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                LazyVGrid(columns: getGridColumns()) {
-                    ForEach($viewModel.kanbans, id: \.id) { $kanban in
-                        KanbanColumnView(kanban: kanban)
-                            .frame(height: height)
-                            .environmentObject(viewModel)
+        GeometryReader { geometry in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    LazyVGrid(columns: getGridColumns()) {
+                        ForEach($viewModel.kanbans, id: \.id) { $kanban in
+                            KanbanColumnView(kanban: kanban)
+                                .frame(height: geometry.size.height)
+                                .environmentObject(viewModel)
+                        }
+                        AddColumnButton()
                     }
-                    AddColumnButton()
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
         }
     }
 
@@ -60,5 +60,5 @@ struct BoardNoteView: View {
 }
 
 #Preview {
-    BoardNoteBuilder.make(id: Mock.note.id, height: 600)
+    BoardNoteBuilder.make(id: Mock.note.id)
 }

@@ -10,9 +10,9 @@ import SwiftUI
 struct BoardNoteBuilder {
 
     @MainActor
-    static func make(id: String, height: CGFloat) -> some View {
+    static func make(id: String) -> some View {
         let service = BoardNoteService(noteId: id)
         let viewModel = BoardNoteViewModel(service: service)
-        return BoardNoteView(viewModel: viewModel, height: height)
+        return BoardNoteView(viewModel: viewModel)
     }
 }

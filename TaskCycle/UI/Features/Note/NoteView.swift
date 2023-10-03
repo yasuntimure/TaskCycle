@@ -38,25 +38,23 @@ struct NoteView: View {
                 .focused($focusState, equals: .noteDescription)
                 .padding(.horizontal)
                 .descriptionPadding(for: viewModel.noteType)
-            
-            GeometryReader { geometry in
-                VStack (alignment: .leading) {
-                    if viewModel.isNoteConfVisible {
-                        NoteConfigurationView()
-                    } else {
-                        switch viewModel.noteType ?? .empty {
-                        case .empty: 
-                            Divider().opacity(0).frame(height: 1)
-                        case .todo: 
-                            ToDoListView(viewModel: ToDoListViewModel(service: ToDoNoteService(noteId: viewModel.id)))
-                        case .board:
-                            BoardNoteBuilder.make(id: viewModel.id,
-                                                  height: geometry.size.height)
-                        }
+
+            VStack (alignment: .leading) {
+                if viewModel.isNoteConfVisible {
+                    NoteConfigurationView()
+                } else {
+                    switch viewModel.noteType ?? .empty {
+                    case .empty: 
+                        Divider().opacity(0).frame(height: 1)
+                    case .todo: 
+                        ToDoListView(viewModel: ToDoListViewModel(service: ToDoNoteService(noteId: viewModel.id)))
+                    case .board:
+                        BoardNoteBuilder.make(id: viewModel.id)
                     }
                 }
-                .hSpacing(.leading)
             }
+            .hSpacing(.leading)
+            .vSpacing(.top)
         }
         .onAppear { focusState = viewModel.initialFocusState() }
         .onDisappear {
