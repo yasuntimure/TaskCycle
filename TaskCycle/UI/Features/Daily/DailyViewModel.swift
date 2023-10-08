@@ -18,7 +18,7 @@ final class DailyViewModel: ObservableObject {
     @Published var createWeek: Bool = false
 
     /// To Do List Properties
-    @Published var items: [ToDoItemModel] = []
+    @Published var items: [ToDoItem] = []
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
@@ -86,18 +86,18 @@ extension DailyViewModel {
         executeDBOperation(.fetch)
     }
 
-    func update(_ item: ToDoItemModel) {
+    func update(_ item: ToDoItem) {
         executeDBOperation(.update(item))
         sortItems()
     }
 
-    func save(_ item: ToDoItemModel) {
+    func save(_ item: ToDoItem) {
         executeDBOperation(.save(item))
     }
 
     func insertAndSaveEmptyItem() {
         let date = selectedDay.date.weekdayFormat()
-        let emptyItem = ToDoItemModel(date: date)
+        let emptyItem = ToDoItem(date: date)
         items.insert(emptyItem, at: 0)
         save(emptyItem)
     }
@@ -148,7 +148,7 @@ extension DailyViewModel {
 
 fileprivate enum DailyServiceActions {
     case fetch
-    case update(ToDoItemModel)
-    case save(ToDoItemModel)
-    case delete(ToDoItemModel)
+    case update(ToDoItem)
+    case save(ToDoItem)
+    case delete(ToDoItem)
 }

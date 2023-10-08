@@ -13,7 +13,7 @@ class BoardNoteViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    @Published var kanbans: [KanbanModel] = []
+    @Published var columns: BoardColumns = []
 
     let service: BoardNoteServiceProtocol
 
@@ -24,14 +24,14 @@ class BoardNoteViewModel: ObservableObject {
 
 extension BoardNoteViewModel {
 
-    func fetchKanbans() {
+    func fetchColumns() {
         Task {
             do {
                 let kanbans = try await service.getKanbans()
                 if kanbans.isEmpty {
                     self.addTemplateColumns()
                 }
-                self.kanbans = kanbans
+                self.columns = kanbans
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -39,10 +39,10 @@ extension BoardNoteViewModel {
         }
     }
 
-    func update(_ kanban: KanbanModel) {
+    func update(_ column: BoardColumn) {
         Task {
             do {
-                try await service.update(kanban)
+                try await service.update(column)
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -50,10 +50,10 @@ extension BoardNoteViewModel {
         }
     }
 
-    func create(_ kanban: KanbanModel) {
+    func create(_ column: BoardColumn) {
         Task {
             do {
-                try await service.create(kanban)
+                try await service.create(column)
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -62,23 +62,23 @@ extension BoardNoteViewModel {
     }
 
     func addNewColumn() {
-        let newColumn = KanbanModel()
-        kanbans.append(newColumn)
+        let newColumn = BoardColumn()
+        columns.append(newColumn)
         create(newColumn)
     }
 
     func addTemplateColumns() {
-        let kanbanColumns: [KanbanModel] = [KanbanModel(title: "To Do"), KanbanModel(title: "In Progress"), KanbanModel(title: "Done")]
-        kanbanColumns.forEach { kanban in
-            kanbans.append(kanban)
-            create(kanban)
+        let kanbanColumns: [BoardColumn] = [BoardColumn(title: "To Do"), BoardColumn(title: "In Progress"), BoardColumn(title: "Done")]
+        kanbanColumns.forEach { column in
+            columns.append(column)
+            create(column)
         }
     }
 
     func deleteTask(at indexSet: IndexSet) {
         indexSet.forEach { index in
-            let kanban = self.kanbans[index]
-            kanbans.remove(at: index)
+            let kanban = self.columns[index]
+            columns.remove(at: index)
             Task {
                 do {
                     try await service.delete(kanban)
@@ -96,34 +96,34 @@ extension BoardNoteViewModel {
 
 extension BoardNoteViewModel {
 
-    func delete(_ kanban: KanbanModel) {
-        kanbans.removeAll { $0.id == kanban.id }
+    func delete(_ kanban: BoardColumn) {
+        columns.removeAll { $0.id == kanban.id }
     }
 
-    func addTask(to kanban: KanbanModel) {
-        for (index, kanbanItem) in kanbans.enumerated() {
+    func addTask(to kanban: BoardColumn) {
+        for (index, kanbanItem) in columns.enumerated() {
             if kanbanItem.id == kanban.id {
-                kanbans[index].tasks.append(NoteModel())
+                columns[index].tasks.append(Note())
             }
         }
         update(kanban)
     }
 
-    func duplicate(_ kanban: KanbanModel) {
-        let copiedKanban = KanbanModel(title: kanban.title, tasks: kanban.tasks)
-        if let originalIndex = self.kanbans.firstIndex(where: { $0.id == kanban.id }) {
-            self.kanbans.insert(copiedKanban, at: originalIndex + 1)
+    func duplicate(_ kanban: BoardColumn) {
+        let copiedKanban = BoardColumn(title: kanban.title, tasks: kanban.tasks)
+        if let originalIndex = self.columns.firstIndex(where: { $0.id == kanban.id }) {
+            self.columns.insert(copiedKanban, at: originalIndex + 1)
         }
         self.create(copiedKanban)
     }
 
     /// Removes the dropped tasks from their source column.
-    func removeDroppedTask(_ droppedTasks: [NoteModel], kanban: KanbanModel) {
+    func removeDroppedTask(_ droppedTasks: [Note], kanban: BoardColumn) {
         guard let droppedTask = droppedTasks.first else { return }
-        kanbans.enumerated().forEach { i, kanbanItem in
+        columns.enumerated().forEach { i, kanbanItem in
             if kanbanItem.id != kanban.id {
-                kanbans[i].tasks.removeAll(where: { $0.id == droppedTask.id })
-                update(kanbans[i])
+                columns[i].tasks.removeAll(where: { $0.id == droppedTask.id })
+                update(columns[i])
             }
         }
     }

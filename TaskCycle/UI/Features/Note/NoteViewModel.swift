@@ -27,12 +27,9 @@ class NoteViewModel: ObservableObject {
     @Published var emoji: String?
     @Published var noteType: NoteType? = nil
 
-    @Published var items: [ToDoItemModel] = []
-    @Published var kanbans: [Kanban] = []
-
     let service: NotesServiceProtocol
 
-    init(_ noteModel: NoteModel, service: NotesServiceProtocol = NotesService()) {
+    init(_ noteModel: Note, service: NotesServiceProtocol = NotesService()) {
         self.id = noteModel.id
         self.title = noteModel.title
         self.description = noteModel.description
@@ -100,108 +97,10 @@ class NoteViewModel: ObservableObject {
     }
 }
 
-
-// MARK: - To Do List Configurations
-
 extension NoteViewModel {
 
-    func reorder() {
-        if items.contains(where: { $0.title.isEmpty }) {
-            items.sort(by: { ($0.title.isEmpty && !$1.title.isEmpty) || (!$0.isDone && $1.isDone) })
-        } else {
-            items.sort(by: { !$0.isDone && $1.isDone })
-        }
-    }
-
-    func deleteItems(at indexSet: IndexSet) {
-        indexSet.forEach { index in
-            Task {
-                do {
-                    let note = self.model()
-                    let item = items[index]
-//                    try await service.deleteNoteItem(note, of: item)
-                } catch {
-                    showAlert = true
-                    errorMessage = error.localizedDescription
-                }
-            }
-        }
-        items.remove(atOffsets: indexSet)
-    }
-
-    func moveItems(from indexSet: IndexSet, to newIndex: Int) {
-        items.move(fromOffsets: indexSet, toOffset: newIndex)
-    }
-
-    func addNewItem() {
-        let item = ToDoItemModel()
-        items.append(item)
-    }
-
-}
-
-
-// MARK: - Board Note Configurations
-
-extension NoteViewModel {
-
-    func delete(_ kanban: Kanban) {
-        var updatedKanbans = kanbans
-        updatedKanbans.removeAll { $0.id == kanban.id }
-        kanbans = updatedKanbans
-    }
-
-    func addKanbanColumn() {
-        let kanbanModel = KanbanModel()
-        let kanban = Kanban(kanbanModel)
-        kanbans.append(kanban)
-    }
-
-    func addTask(to kanban: Kanban) {
-        for (index, kanbanItem) in kanbans.enumerated() {
-            if kanbanItem.id == kanban.id {
-                kanbans[index].tasks.append(NoteModel())
-            }
-        }
-    }
-
-    func duplicate(_ kanban: Kanban) {
-        let kanbanModel = KanbanModel(title: kanban.title, tasks: kanban.tasks)
-        let copiedKanban = Kanban(kanbanModel)
-
-        if let originalIndex = self.kanbans.firstIndex(where: { $0.id == kanban.id }) {
-            self.kanbans.insert(copiedKanban, at: originalIndex + 1)
-        }
-    }
-
-    /// Removes the dropped tasks from their source column.
-    func removeDroppedTasks(from kanban: Kanban, droppedTasks: [NoteModel]) {
-        var tempKanbans = kanbans
-        kanbans.enumerated().forEach { i, item in
-            if item.id != kanban.id {
-                tempKanbans[i].tasks.removeAll { droppedTasks.contains($0)}
-            }
-        }
-        kanbans = tempKanbans
-    }
-
-    /// Adds the dropped tasks to the destination column, ensuring there are no duplicates.
-    func addDroppedTasks(to kanban: Kanban, droppedTasks: [NoteModel]) {
-        var tempKanbans = kanbans
-        kanbans.enumerated().forEach { i, item in
-            if item.id == kanban.id {
-                let updatedTasks = item.tasks + droppedTasks
-                tempKanbans[i].tasks = Array(updatedTasks.uniqued())
-            }
-        }
-        kanbans = tempKanbans
-    }
-}
-
-extension NoteViewModel {
-
-    func model() -> NoteModel {
-        return NoteModel(id: self.id,
+    func model() -> Note {
+        return Note(id: self.id,
                          title: self.title,
                          description: self.description,
                          date: self.date,

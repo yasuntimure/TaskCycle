@@ -8,10 +8,10 @@
 import FirestoreService
 
 protocol BoardNoteServiceProtocol {
-    func getKanbans() async throws -> [KanbanModel]
-    func create(_ kanban: KanbanModel) async throws
-    func update(_ kanban: KanbanModel) async throws
-    func delete(_ kanban: KanbanModel) async throws
+    func getKanbans() async throws -> [BoardColumn]
+    func create(_ kanban: BoardColumn) async throws
+    func update(_ kanban: BoardColumn) async throws
+    func delete(_ kanban: BoardColumn) async throws
 }
 
 struct BoardNoteService: BoardNoteServiceProtocol {
@@ -25,27 +25,27 @@ struct BoardNoteService: BoardNoteServiceProtocol {
         self.service = service
     }
 
-    func getKanbans() async throws -> [KanbanModel] {
-        let endpoint = BoardNoteEndpoint.getKanbans(noteId: self.noteId)
-        return try await service.request(KanbanModel.self, endpoint: endpoint)
+    func getKanbans() async throws -> [BoardColumn] {
+        let endpoint = BoardNoteEndpoint.getColumns(noteId: self.noteId)
+        return try await service.request(BoardColumn.self, endpoint: endpoint)
     }
 
-    func create(_ kanban: KanbanModel) async throws {
-        let dto = BoardNoteDTO(noteId: self.noteId, kanban: kanban)
-        let endpoint = BoardNoteEndpoint.createKanban(dto: dto)
-        _ = try await service.request(KanbanModel.self, endpoint: endpoint)
+    func create(_ kanban: BoardColumn) async throws {
+        let dto = BoardNoteDTO(noteId: self.noteId, column: kanban)
+        let endpoint = BoardNoteEndpoint.postColumn(dto: dto)
+        _ = try await service.request(BoardColumn.self, endpoint: endpoint)
     }
 
-    func update(_ kanban: KanbanModel) async throws {
-        let dto = BoardNoteDTO(noteId: self.noteId, kanban: kanban)
-        let endpoint = BoardNoteEndpoint.updateKanban(dto: dto)
-        _ = try await service.request(KanbanModel.self, endpoint: endpoint)
+    func update(_ kanban: BoardColumn) async throws {
+        let dto = BoardNoteDTO(noteId: self.noteId, column: kanban)
+        let endpoint = BoardNoteEndpoint.putColumn(dto: dto)
+        _ = try await service.request(BoardColumn.self, endpoint: endpoint)
     }
 
-    func delete(_ kanban: KanbanModel) async throws {
-        let dto = BoardNoteDTO(noteId: self.noteId, kanban: kanban)
-        let endpoint = BoardNoteEndpoint.deleteKanban(dto: dto)
-        _ = try await service.request(KanbanModel.self, endpoint: endpoint)
+    func delete(_ kanban: BoardColumn) async throws {
+        let dto = BoardNoteDTO(noteId: self.noteId, column: kanban)
+        let endpoint = BoardNoteEndpoint.deleteColumn(dto: dto)
+        _ = try await service.request(BoardColumn.self, endpoint: endpoint)
     }
 }
 

@@ -12,7 +12,7 @@ struct NotesView: View {
 
     @ObservedObject var viewModel: NotesViewModel
 
-    @State var noteStack: [NoteModel] = []
+    @State var noteStack: [Note] = []
 
     var body: some View {
         NavigationStack(path: $noteStack) {
@@ -38,7 +38,7 @@ struct NotesView: View {
                     .padding([.trailing,.bottom], 20)
                 }
             }
-            .navigationDestination(for: NoteModel.self) { note in
+            .navigationDestination(for: Note.self) { note in
                 NoteBuilder.make(note)
             }
         }

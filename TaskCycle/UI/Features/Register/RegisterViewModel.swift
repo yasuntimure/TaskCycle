@@ -68,7 +68,7 @@ class RegisterViewModel: ObservableObject {
         let password = self.inputs.password.text
 
         self.createUser(withEmail: email, password: password) { [weak self] userId in
-            let newUser = UserModel (
+            let newUser = User (
                 id: userId,
                 name: name,
                 email: email,
@@ -109,7 +109,7 @@ class RegisterViewModel: ObservableObject {
             }
 
             self?.createUser(withEmail: email, password: password) { [weak self] userId in
-                let newUser = UserModel (
+                let newUser = User (
                     id: userId,
                     name: name,
                     email: email,
@@ -134,7 +134,7 @@ class RegisterViewModel: ObservableObject {
         }
     }
 
-    private func insertUserToFirestore(_ user: UserModel) {
+    private func insertUserToFirestore(_ user: User) {
         Firestore.firestore().collection("users")
             .document(user.id)
             .setData(user.asDictionary())

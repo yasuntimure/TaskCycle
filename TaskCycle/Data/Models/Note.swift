@@ -11,7 +11,7 @@ import EmojiPicker
 import UniformTypeIdentifiers
 import FirestoreService
 
-public struct NoteModel: FirestoreIdentifiable, Transferable {
+public struct Note: FirestoreIdentifiable, Transferable {
     public var id: String
     public var title: String
     public var description: String
@@ -62,9 +62,9 @@ enum NoteType: String, Hashable, CaseIterable {
     }
 }
 
-extension NoteModel {
+extension Note {
 
-    static func quickNote() -> NoteModel {
-        NoteModel(title: "Quick Note", description: "Complete your quick to do list!")
+    static func quickNote() -> Note {
+        Note(title: "Quick Note", description: "Complete your quick to do list!")
     }
 }

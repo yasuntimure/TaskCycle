@@ -10,45 +10,46 @@ import FirebaseFirestore
 
 public struct BoardNoteDTO {
     let noteId: String
-    let kanban: KanbanModel
+    let column: BoardColumn
 }
 
 public enum BoardNoteEndpoint: FirestoreEndpoint {
 
-    case getKanbans(noteId: String)
-    case createKanban(dto: BoardNoteDTO)
-    case deleteKanban(dto: BoardNoteDTO)
-    case updateKanban(dto: BoardNoteDTO)
+    case getColumns(noteId: String)
+    case getColumn(dto: BoardNoteDTO)
+    case postColumn(dto: BoardNoteDTO)
+    case deleteColumn(dto: BoardNoteDTO)
+    case putColumn(dto: BoardNoteDTO)
 
     public var path: FirestorePath {
         let notesRef = Firestore.firestore().collection("users").document(userID).collection("notes")
         switch self {
-        case .getKanbans(let noteId):
-            return .collection(notesRef.document(noteId).collection("kanbans"))
-        case .createKanban(let dto), .deleteKanban(let dto), .updateKanban(let dto):
-            return .document(notesRef.document(dto.noteId).collection("kanbans").document(dto.kanban.id))
+        case .getColumns(let noteId):
+            return .collection(notesRef.document(noteId).collection("columns"))
+        case .postColumn(let dto), .deleteColumn(let dto), .putColumn(let dto), .getColumn(let dto):
+            return .document(notesRef.document(dto.noteId).collection("columns").document(dto.column.id))
         }
     }
 
     public var method: FirestoreMethod {
         switch self {
-        case .getKanbans:
+        case .getColumns, .getColumn:
             return .get
-        case .createKanban:
+        case .postColumn:
             return .post
-        case .deleteKanban:
+        case .deleteColumn:
             return .delete
-        case .updateKanban:
+        case .putColumn:
             return .put
         }
     }
 
     public var task: FirestoreRequestPayload {
         switch self {
-        case .getKanbans, .deleteKanban:
+        case .getColumns, .deleteColumn, .getColumn:
             return .requestPlain
-        case .createKanban(let dto), .updateKanban(let dto):
-            return .setDocument(dto.kanban)
+        case .postColumn(let dto), .putColumn(let dto):
+            return .setDocument(dto.column)
         }
     }
 }

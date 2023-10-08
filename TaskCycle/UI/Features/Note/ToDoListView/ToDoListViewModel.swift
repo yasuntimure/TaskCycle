@@ -13,7 +13,7 @@ class ToDoListViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    @Published var items: [ToDoItemModel] = []
+    @Published var items: [ToDoItem] = []
 
     let service: ToDoNoteServiceProtocol
 
@@ -38,7 +38,7 @@ extension ToDoListViewModel {
         }
     }
 
-    func update(_ item: ToDoItemModel) {
+    func update(_ item: ToDoItem) {
         Task {
             do {
                 try await service.updateItem(item)
@@ -50,7 +50,7 @@ extension ToDoListViewModel {
         sortItems()
     }
 
-    func create(_ item: ToDoItemModel) {
+    func create(_ item: ToDoItem) {
         Task {
             do {
                 try await service.createItem(item)
@@ -62,7 +62,7 @@ extension ToDoListViewModel {
     }
 
     func addNewItem() {
-        let emptyItem = ToDoItemModel()
+        let emptyItem = ToDoItem()
         items.insert(emptyItem, at: 0)
         create(emptyItem)
     }

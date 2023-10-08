@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UserModel: Codable {
+struct User: Codable {
     let id: String
     let name: String
     let email: String

@@ -11,9 +11,9 @@ import FirestoreService
 public enum NotesEndpoint: FirestoreEndpoint {
 
     case getNoteList
-    case createNote(NoteModel)
-    case deleteNote(NoteModel)
-    case updateNote(NoteModel)
+    case createNote(Note)
+    case deleteNote(Note)
+    case updateNote(Note)
 
     public var path: FirestorePath {
         let notesRef = Firestore.firestore().collection("users").document(userID).collection("notes")

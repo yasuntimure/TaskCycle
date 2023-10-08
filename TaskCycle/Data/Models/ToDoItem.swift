@@ -10,7 +10,7 @@ import FirebaseFirestoreSwift
 import FirestoreService
 
 
-public struct ToDoItemModel: FirestoreIdentifiable {
+public struct ToDoItem: FirestoreIdentifiable {
     public var id: String
     public var title: String
     public var description: String

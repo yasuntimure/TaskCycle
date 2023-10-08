@@ -10,7 +10,7 @@ import SwiftUI
 struct ToDoRow: View {
     @EnvironmentObject var theme: Theme
 
-    @Binding var item: ToDoItemModel
+    @Binding var item: ToDoItem
     @FocusState var isFocused: Bool?
 
     var body: some View {
@@ -63,7 +63,7 @@ struct ToDoRow: View {
 
 struct ToDoRow_Previews: PreviewProvider {
 
-    static let item = ToDoItemModel(title: "Drink Water")
+    static let item = ToDoItem(title: "Drink Water")
 
     static var previews: some View {
         ToDoRow(item: .constant(item))

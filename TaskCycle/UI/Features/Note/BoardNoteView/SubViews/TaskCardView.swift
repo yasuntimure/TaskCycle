@@ -13,7 +13,7 @@ struct TaskCardView: View {
     @EnvironmentObject var viewModel: BoardNoteViewModel
 
     // View Properties
-    @Binding var task: NoteModel
+    @Binding var task: Note
     @State var taskIsEditable: Bool = false
     @FocusState var focusState: NoteTextFields?
 
@@ -130,7 +130,7 @@ struct TaskCardView: View {
 
         TaskCardView(task: .constant(Mock.note))
             .environmentObject(Theme())
-            .environmentObject(NoteViewModel(NoteModel.quickNote()))
+            .environmentObject(NoteViewModel(Note.quickNote()))
             .padding(.horizontal, 50)
             .padding(.vertical, 350)
     }

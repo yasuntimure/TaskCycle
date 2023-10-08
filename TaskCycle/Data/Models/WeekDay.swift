@@ -1,5 +1,5 @@
 //
-//  WeekModel.swift
+//  WeekDay.swift
 //  ToDoList
 //
 //  Created by Eyüp on 2023-07-28.
@@ -13,13 +13,13 @@ struct WeekDay: FirestoreIdentifiable {
     var id: String
     var date: Date
     var isSelected: Bool
-    var items: [ToDoItemModel]
+    var items: [ToDoItem]
 
     init(
         id: String = UUID().uuidString,
         date: Date,
         isSelected: Bool = false,
-        items: [ToDoItemModel] = []
+        items: [ToDoItem] = []
     ) {
         self.id = id
         self.date = date

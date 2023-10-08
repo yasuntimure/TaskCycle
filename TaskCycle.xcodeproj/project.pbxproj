@@ -11,7 +11,7 @@
 		D0267DF92A9073EA0079F90E /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0267DF82A9073EA0079F90E /* NotesView.swift */; };
 		D0267DFE2A912D080079F90E /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0267DFC2A912D080079F90E /* NoteRow.swift */; };
 		D0267E002A912DDB0079F90E /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0267DFF2A912DDB0079F90E /* NotesViewModel.swift */; };
-		D0267E042A91300C0079F90E /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0267E032A91300C0079F90E /* NoteModel.swift */; };
+		D0267E042A91300C0079F90E /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0267E032A91300C0079F90E /* Note.swift */; };
 		D036B4C02A8AE92E007F121C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */; };
 		D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C12A8AF128007F121C /* AppDelegate.swift */; };
 		D036B4C42A8AF590007F121C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C32A8AF590007F121C /* MainView.swift */; };
@@ -32,8 +32,7 @@
 		D04C5B192AC4C1D6002D4A2A /* FirestoreService in Frameworks */ = {isa = PBXBuildFile; productRef = D04C5B182AC4C1D6002D4A2A /* FirestoreService */; };
 		D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */; };
 		D06F59202AB8BDF700E2510F /* BoardColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591F2AB8BDF700E2510F /* BoardColumnView.swift */; };
-		D06F59222AB8C02500E2510F /* KanbanColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F59212AB8C02500E2510F /* KanbanColumn.swift */; };
-		D08271B32ABA37340003A55D /* Kanban.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08271B22ABA37340003A55D /* Kanban.swift */; };
+		D06F59222AB8C02500E2510F /* BoardColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F59212AB8C02500E2510F /* BoardColumn.swift */; };
 		D0907A552AB108FE00353AAA /* DailyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A542AB108FE00353AAA /* DailyService.swift */; };
 		D092C5CD2AC335A6000EFD71 /* NotesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */; };
 		D098D8192A84330D005E534C /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8182A84330D005E534C /* OffsetKey.swift */; };
@@ -83,9 +82,9 @@
 		D0ED2EE12A802D4400828887 /* BindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EDD2A802D4400828887 /* BindingExtension.swift */; };
 		D0ED2EE22A802D4400828887 /* AlignmentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EDE2A802D4400828887 /* AlignmentExtension.swift */; };
 		D0ED2EE32A802D4400828887 /* PreferenceKeyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EDF2A802D4400828887 /* PreferenceKeyExtension.swift */; };
-		D0ED2EE82A802D7800828887 /* WeekModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EE52A802D7800828887 /* WeekModel.swift */; };
-		D0ED2EE92A802D7800828887 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EE62A802D7800828887 /* UserModel.swift */; };
-		D0ED2EEA2A802D7800828887 /* ToDoItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EE72A802D7800828887 /* ToDoItemModel.swift */; };
+		D0ED2EE82A802D7800828887 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EE52A802D7800828887 /* WeekDay.swift */; };
+		D0ED2EE92A802D7800828887 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EE62A802D7800828887 /* User.swift */; };
+		D0ED2EEA2A802D7800828887 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EE72A802D7800828887 /* ToDoItem.swift */; };
 		D0ED2EEC2A802EB000828887 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EEB2A802EB000828887 /* LogoView.swift */; };
 		D0ED2EEE2A80330D00828887 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EED2A80330D00828887 /* DailyView.swift */; };
 		D0ED2EF62A81A2D600828887 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED2EF52A81A2D600828887 /* ColorExtension.swift */; };
@@ -123,7 +122,7 @@
 		D0267DF82A9073EA0079F90E /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		D0267DFC2A912D080079F90E /* NoteRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteRow.swift; sourceTree = "<group>"; };
 		D0267DFF2A912DDB0079F90E /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
-		D0267E032A91300C0079F90E /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
+		D0267E032A91300C0079F90E /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		D036B4BF2A8AE92D007F121C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D036B4C12A8AF128007F121C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D036B4C32A8AF590007F121C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -143,8 +142,7 @@
 		D048A6D42ACBD4E200D5B92E /* BoardNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteBuilder.swift; sourceTree = "<group>"; };
 		D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D06F591F2AB8BDF700E2510F /* BoardColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumnView.swift; sourceTree = "<group>"; };
-		D06F59212AB8C02500E2510F /* KanbanColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanColumn.swift; sourceTree = "<group>"; };
-		D08271B22ABA37340003A55D /* Kanban.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kanban.swift; sourceTree = "<group>"; };
+		D06F59212AB8C02500E2510F /* BoardColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumn.swift; sourceTree = "<group>"; };
 		D0907A542AB108FE00353AAA /* DailyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyService.swift; sourceTree = "<group>"; };
 		D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEndpoint.swift; sourceTree = "<group>"; };
 		D098D8182A84330D005E534C /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
@@ -188,9 +186,9 @@
 		D0ED2EDD2A802D4400828887 /* BindingExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
 		D0ED2EDE2A802D4400828887 /* AlignmentExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlignmentExtension.swift; sourceTree = "<group>"; };
 		D0ED2EDF2A802D4400828887 /* PreferenceKeyExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceKeyExtension.swift; sourceTree = "<group>"; };
-		D0ED2EE52A802D7800828887 /* WeekModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekModel.swift; sourceTree = "<group>"; };
-		D0ED2EE62A802D7800828887 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		D0ED2EE72A802D7800828887 /* ToDoItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoItemModel.swift; sourceTree = "<group>"; };
+		D0ED2EE52A802D7800828887 /* WeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
+		D0ED2EE62A802D7800828887 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D0ED2EE72A802D7800828887 /* ToDoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
 		D0ED2EEB2A802EB000828887 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		D0ED2EED2A80330D00828887 /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
 		D0ED2EF52A81A2D600828887 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
@@ -297,12 +295,11 @@
 		D0907A532AB1073100353AAA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D08271B22ABA37340003A55D /* Kanban.swift */,
-				D0ED2EE52A802D7800828887 /* WeekModel.swift */,
-				D0ED2EE62A802D7800828887 /* UserModel.swift */,
-				D0267E032A91300C0079F90E /* NoteModel.swift */,
-				D06F59212AB8C02500E2510F /* KanbanColumn.swift */,
-				D0ED2EE72A802D7800828887 /* ToDoItemModel.swift */,
+				D0ED2EE52A802D7800828887 /* WeekDay.swift */,
+				D0ED2EE62A802D7800828887 /* User.swift */,
+				D0267E032A91300C0079F90E /* Note.swift */,
+				D06F59212AB8C02500E2510F /* BoardColumn.swift */,
+				D0ED2EE72A802D7800828887 /* ToDoItem.swift */,
 				D048A6C12ACB9C1600D5B92E /* TaskModel.swift */,
 			);
 			path = Models;
@@ -692,7 +689,7 @@
 				D0DA569C2ABB9D670068D7AD /* TaskDetailView.swift in Sources */,
 				D04005002ABA6C1200A9DEE2 /* TaskCardView.swift in Sources */,
 				D0ED2ECC2A802C1200828887 /* StatefulPreviewWrapper.swift in Sources */,
-				D0ED2EEA2A802D7800828887 /* ToDoItemModel.swift in Sources */,
+				D0ED2EEA2A802D7800828887 /* ToDoItem.swift in Sources */,
 				D0ED2EE12A802D4400828887 /* BindingExtension.swift in Sources */,
 				D0ED2EC72A802BE900828887 /* LoginViewModel.swift in Sources */,
 				D0ED2EFC2A81AA2500828887 /* DateExtension.swift in Sources */,
@@ -714,16 +711,15 @@
 				D0C996962A886FF20085481B /* SettingsView.swift in Sources */,
 				D0C996912A86C4D80085481B /* ToDoRow.swift in Sources */,
 				D0ED2EFE2A81B20000828887 /* ProfileImage.swift in Sources */,
-				D08271B32ABA37340003A55D /* Kanban.swift in Sources */,
 				D048A6BE2ACB81F500D5B92E /* DailyEndpoint.swift in Sources */,
-				D0267E042A91300C0079F90E /* NoteModel.swift in Sources */,
+				D0267E042A91300C0079F90E /* Note.swift in Sources */,
 				D048A6D12ACBD0FD00D5B92E /* BoardNoteEndpoint.swift in Sources */,
-				D0ED2EE82A802D7800828887 /* WeekModel.swift in Sources */,
+				D0ED2EE82A802D7800828887 /* WeekDay.swift in Sources */,
 				D0ED2EC82A802BE900828887 /* LoginView.swift in Sources */,
 				D0DCCE572AB7833C00276F1D /* NoteBuilder.swift in Sources */,
 				D0ED2EE02A802D4400828887 /* EncodableExtension.swift in Sources */,
 				D0ED2EBF2A802BA700828887 /* LoadingView.swift in Sources */,
-				D06F59222AB8C02500E2510F /* KanbanColumn.swift in Sources */,
+				D06F59222AB8C02500E2510F /* BoardColumn.swift in Sources */,
 				D036B4C42A8AF590007F121C /* MainView.swift in Sources */,
 				D048A6C22ACB9C1600D5B92E /* TaskModel.swift in Sources */,
 				D0ED2EBC2A802BA700828887 /* ToggleButton.swift in Sources */,
@@ -741,7 +737,7 @@
 				D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */,
 				D06F59202AB8BDF700E2510F /* BoardColumnView.swift in Sources */,
 				D098D8192A84330D005E534C /* OffsetKey.swift in Sources */,
-				D0ED2EE92A802D7800828887 /* UserModel.swift in Sources */,
+				D0ED2EE92A802D7800828887 /* User.swift in Sources */,
 				D098D83D2A85A396005E534C /* WeekSliderView.swift in Sources */,
 				D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */,
 				D048A6D52ACBD4E200D5B92E /* BoardNoteBuilder.swift in Sources */,

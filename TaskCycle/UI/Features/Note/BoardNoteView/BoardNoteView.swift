@@ -16,8 +16,8 @@ struct BoardNoteView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     LazyVGrid(columns: getGridColumns()) {
-                        ForEach($viewModel.kanbans, id: \.id) { $kanban in
-                            BoardColumnView(kanban: $kanban)
+                        ForEach($viewModel.columns, id: \.id) { $kanban in
+                            BoardColumnView(column: $kanban)
                                 .frame(height: geometry.size.height)
                                 .environmentObject(viewModel)
                         }
@@ -27,11 +27,29 @@ struct BoardNoteView: View {
                 .padding(.horizontal)
             }
             .onAppear {
-                viewModel.fetchKanbans()
+                viewModel.fetchColumns()
             }
             .alert("Error", isPresented: $viewModel.showAlert) {
                 Text(viewModel.errorMessage)
             }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+
+                    Button(action: { hideKeyboard() },
+                           label: { Image(systemName: "keyboard.chevron.compact.down.fill")
+                            .font(.headline)
+                            .tint(.secondary) })
+
+                    Spacer()
+
+                    Button(action: { }, label: {
+                        Text("Save")
+                            .font(.headline).bold()
+                            .tint(.primary)
+                    })
+                }
+            }
+
         }
     }
 
@@ -56,7 +74,7 @@ struct BoardNoteView: View {
 
     func getGridColumns() -> [GridItem] {
         var columns: [GridItem] = []
-        viewModel.kanbans.forEach { _ in
+        viewModel.columns.forEach { _ in
             columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
         }
         columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))

@@ -15,7 +15,7 @@ class NotesViewModel: ObservableObject {
 
     @Published var settingsPresented: Bool = false
 
-    @Published var notes: [NoteModel] = []
+    @Published var notes: [Note] = []
 
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
@@ -44,13 +44,13 @@ class NotesViewModel: ObservableObject {
     }
 
     func addTemplateNote() {
-        let note = NoteModel.quickNote()
+        let note = Note.quickNote()
         executeDBOperation(.save(note))
         notes.append(note)
     }
 
-    func saveNewNote(completion: @escaping (NoteModel) -> Void) {
-        let note = NoteModel()
+    func saveNewNote(completion: @escaping (Note) -> Void) {
+        let note = Note()
         executeDBOperation(.save(note))
         completion(note)
     }
@@ -81,6 +81,6 @@ class NotesViewModel: ObservableObject {
 
 enum NotesServiceActions {
     case fetch
-    case save(NoteModel)
-    case delete(NoteModel)
+    case save(Note)
+    case delete(Note)
 }

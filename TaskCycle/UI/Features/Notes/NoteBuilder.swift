@@ -10,7 +10,7 @@ import SwiftUI
 struct NoteBuilder {
 
     @MainActor
-    static func make(_ noteModel: NoteModel) -> some View {
+    static func make(_ noteModel: Note) -> some View {
         let viewModel = NoteViewModel(noteModel)
         return NoteView(viewModel: viewModel)
     }

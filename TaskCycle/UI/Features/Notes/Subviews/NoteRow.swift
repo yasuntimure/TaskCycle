@@ -10,7 +10,7 @@ import SwiftUI
 struct NoteRow: View {
     @EnvironmentObject var theme: Theme
 
-    @Binding var note: NoteModel
+    @Binding var note: Note
 
     var body: some View {
         HStack {
@@ -48,7 +48,7 @@ struct NoteRow: View {
 
 struct NoteRow_Previews: PreviewProvider {
     
-    static let todoItemWithDescription = NoteModel(
+    static let todoItemWithDescription = Note(
         id: UUID().uuidString,
         title: "Buy some milk 🥛",
         description: "Get lactose free one Get lactose free one Get lactose free one Get lactose free one Get lactose free one",
@@ -56,7 +56,7 @@ struct NoteRow_Previews: PreviewProvider {
         noteType: NoteType.empty.rawValue
     )
 
-    static let todoItemWithoutDescription = NoteModel(
+    static let todoItemWithoutDescription = Note(
         id: UUID().uuidString,
         title: "Buy some milk 🥛",
         description: "",

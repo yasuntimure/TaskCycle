@@ -11,9 +11,9 @@ import FirebaseFirestore
 public enum DailyEndpoint: FirestoreEndpoint {
 
     case getItems(forDate: String)
-    case createItem(ToDoItemModel)
-    case deleteItem(ToDoItemModel)
-    case updateItem(ToDoItemModel)
+    case createItem(ToDoItem)
+    case deleteItem(ToDoItem)
+    case updateItem(ToDoItem)
 
     public var path: FirestorePath {
         let weekdaysRef = Firestore.firestore().collection("users").document(userID).collection("weekdays")

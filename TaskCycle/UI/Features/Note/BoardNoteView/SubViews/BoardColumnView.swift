@@ -15,11 +15,7 @@ struct BoardColumnView: View {
     @State var isTargeted: Bool = false
     @FocusState var focusState: NoteTextFields?
 
-    @Binding var kanban: KanbanModel {
-        didSet {
-            viewModel.update(kanban)
-        }
-    }
+    @Binding var column: BoardColumn
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,9 +28,9 @@ struct BoardColumnView: View {
                     self.isTargeted ? theme.mTintColor.opacity(0.1) : .backgroundColor,
                     cornerRadius: 8
                 )
-                .dropDestination(for: NoteModel.self) { droppedTasks, location in
-                    kanban.tasks += droppedTasks
-                    viewModel.removeDroppedTask(droppedTasks, kanban: kanban)
+                .dropDestination(for: Note.self) { droppedTasks, location in
+                    column.tasks += droppedTasks
+                    viewModel.removeDroppedTask(droppedTasks, kanban: column)
                     return true
                 } isTargeted: { isTargeted in
                     self.isTargeted = isTargeted
@@ -45,7 +41,7 @@ struct BoardColumnView: View {
     @ViewBuilder
     private func KanbanHeader() -> some View {
         HStack {
-            TextField("Title...", text: $kanban.title)
+            TextField("Title...", text: $column.title)
                 .font(.body).bold()
                 .padding([.vertical], 5)
                 .focused($focusState, equals: .kanbanTitle)
@@ -53,7 +49,7 @@ struct BoardColumnView: View {
             Menu {
                 Button(action: {
                     withAnimation {
-                        viewModel.delete(kanban)
+                        viewModel.delete(column)
                     }
                 }) {
                     Label("Delete", systemImage: "trash")
@@ -61,7 +57,7 @@ struct BoardColumnView: View {
 
                 Button(action: {
                     withAnimation {
-                        viewModel.duplicate(kanban)
+                        viewModel.duplicate(column)
                     }
                 }) {
                     Label("Duplicate", systemImage: "plus.square.on.square")
@@ -81,7 +77,7 @@ struct BoardColumnView: View {
         ScrollView(showsIndicators: false) {
             // Tasks
             VStack (spacing: -12) {
-                ForEach($kanban.tasks, id: \.id) { $taskCard in
+                ForEach($column.tasks, id: \.id) { $taskCard in
                     TaskCardView(task: $taskCard)
                     .draggable(taskCard)
                     .padding(12)
@@ -93,7 +89,7 @@ struct BoardColumnView: View {
             SecondaryButton(imageName: "plus", title: "Add Task",
                             backgroundColor: theme.mTintColor.opacity(0.15))
             {
-                kanban.tasks.append(NoteModel())
+                column.tasks.append(Note())
             }
             .padding(.vertical, 6).padding(.horizontal, 12)
         }
@@ -102,7 +98,14 @@ struct BoardColumnView: View {
 }
 
 #Preview {
-    BoardColumnView(kanban: .constant(KanbanModel()))
+    BoardColumnView(column: .constant(BoardColumn()))
         .environmentObject(Theme())
         .environmentObject(NoteViewModel(Mock.note))
+}
+
+
+protocol BoardColumnActions {
+    func deleteColumn(noteID: String, columnId: String) // header delete column
+    func updateColumn(noteID: String, columnId: String) // when new tasks added
+    func createColumn(noteID: String, columnId: String) // when new addNewColumn
 }

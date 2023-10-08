@@ -10,14 +10,16 @@ import FirebaseFirestoreSwift
 import UniformTypeIdentifiers
 import FirestoreService
 
-public struct KanbanModel: FirestoreIdentifiable {
+typealias BoardColumns = [BoardColumn]
+
+public struct BoardColumn: FirestoreIdentifiable {
     public var id: String
     public var title: String
-    public var tasks: [NoteModel]
+    public var tasks: [Note]
 
     init(id: String = UUID().uuidString,
          title: String = "",
-         tasks: [NoteModel] = []) {
+         tasks: [Note] = []) {
         self.id = id
         self.title = title
         self.tasks = tasks

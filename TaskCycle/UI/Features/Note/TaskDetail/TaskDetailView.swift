@@ -14,7 +14,7 @@ struct TaskDetailView: View {
     @State private var isNoteConfVisible: Bool = true
     @FocusState var focusState: NoteTextFields?
 
-    @State var task: NoteModel
+    @State var task: Note
 
     var body: some View {
         VStack (alignment: .leading) {

@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 public struct ToDoNoteDTO {
     let noteId: String
-    let item: ToDoItemModel
+    let item: ToDoItem
 }
 
 public enum ToDoNoteEndpoint: FirestoreEndpoint {
