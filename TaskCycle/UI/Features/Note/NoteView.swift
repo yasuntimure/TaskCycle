@@ -20,50 +20,48 @@ struct NoteView: View {
     @EnvironmentObject var theme: Theme
     @EnvironmentObject var parentVM: NotesViewModel
 
-    @ObservedObject var viewModel: NoteViewModel
+    @ObservedObject var vm: NoteViewModel
 
     @FocusState var focusState: NoteTextFields?
 
     var body: some View {
         VStack (alignment: .leading) {
-            TextField("Title...", text: $viewModel.title)
-                .titleFont(for: viewModel.noteType ?? .empty)
+            TextField("Title...", text: $vm.title)
+                .titleFont(for: vm.noteType ?? .empty)
                 .focused($focusState, equals: .noteTitle)
                 .onSubmit { focusState = .noteDescription }
                 .padding(.horizontal)
-            
-            TextField("Description . . .", text: $viewModel.description, axis: .vertical)
-                .descriptionFont(for: viewModel.noteType ?? .empty)
-                .foregroundColor(.secondary)
-                .focused($focusState, equals: .noteDescription)
-                .padding(.horizontal)
-                .descriptionPadding(for: viewModel.noteType)
 
             VStack (alignment: .leading) {
-                if viewModel.isNoteConfVisible {
+                if vm.isNoteConfVisible {
                     NoteConfigurationView()
                 } else {
-                    switch viewModel.noteType ?? .empty {
+                    switch vm.noteType ?? .empty {
                     case .empty: 
-                        Divider().opacity(0).frame(height: 1)
-                    case .todo: 
-                        ToDoListView(viewModel: ToDoListViewModel(service: ToDoNoteService(noteId: viewModel.id)))
+                        TextField("Description . . .", text: $vm.description, axis: .vertical)
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+                            .focused($focusState, equals: .noteDescription)
+                            .padding([.horizontal,.top])
+                    case .todo:
+                        ToDoListView()
                     case .board:
-                        BoardNoteBuilder.make(id: viewModel.id)
+                        BoardNoteView()
                     }
                 }
             }
             .hSpacing(.leading)
             .vSpacing(.top)
         }
-        .onAppear { focusState = viewModel.initialFocusState() }
+        .onAppear { focusState = vm.initialFocusState() }
         .onDisappear {
-            if viewModel.title.isEmpty {
-                viewModel.title = "Quick Note"
+            if vm.title.isEmpty {
+                vm.title = "Quick Note"
             }
-            viewModel.updateNote()
+            vm.updateNote()
             parentVM.fetchNotes()
         }
+        .environmentObject(vm)
     }
     
     @ViewBuilder
@@ -87,8 +85,7 @@ struct NoteView: View {
     private func NoteConfigurationView() -> some View {
         VStack (alignment: .leading, spacing: 25) {
             CustomButton("Empty Page", image: "plus") {
-                viewModel.setNoteType(.empty)
-                viewModel.updateNote()
+                vm.setNoteType(.empty)
             }
             
             VStack (alignment: .leading, spacing: 10) {
@@ -96,10 +93,12 @@ struct NoteView: View {
                     .font(.footnote).bold()
                     .foregroundStyle(theme.mTintColor)
                 CustomButton("To Do List", image: "checkmark.square") {
-                    viewModel.setNoteType(.todo)
+                    vm.setNoteType(.todo)
                 }
-                CustomButton("Kanban Board", image: "tablecells") {
-                    viewModel.setNoteType(.board)
+                if !vm.isCardDetail {
+                    CustomButton("Kanban Board", image: "tablecells") {
+                        vm.setNoteType(.board)
+                    }
                 }
             }
         }.padding()
@@ -108,7 +107,7 @@ struct NoteView: View {
 }
 
 #Preview {
-    NoteView(viewModel: NoteViewModel(Mock.note))
+    NoteView(vm: NoteViewModel(Mock.note))
         .environmentObject(Theme())
         .environmentObject(NotesViewModel())
 }
@@ -124,30 +123,8 @@ fileprivate extension TextField {
             return self.font(.title2).bold()
         }
     }
-    
-    func descriptionFont(for noteType: NoteType) -> some View {
-        switch noteType {
-        case .empty:
-            return self.font(.title2)
-        case .todo:
-            return self.font(.title3)
-        case .board:
-            return self.font(.body)
-        }
-    }
-    
-}
 
-fileprivate extension View {
-    @ViewBuilder
-    func descriptionPadding(for noteType: NoteType?) -> some View {
-        if let noteType = noteType, noteType == .empty {
-            self.vSpacing(.top)
-        }
-        self
-    }
 }
-
 
 struct ResignKeyboardOnDragGesture: ViewModifier {
     var gesture = DragGesture().onChanged { _ in

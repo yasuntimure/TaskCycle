@@ -7,30 +7,27 @@
 
 import SwiftUI
 
-struct TaskCardView: View {
+struct NoteCardView: View {
     // Environment Objects
     @EnvironmentObject var theme: Theme
-    @EnvironmentObject var viewModel: BoardNoteViewModel
+    @EnvironmentObject var vm: NoteViewModel
 
-    // View Properties
-    @Binding var task: Note
-    @State var taskIsEditable: Bool = false
     @FocusState var focusState: NoteTextFields?
+
+    @Binding var note: Note
+    var onDelete: () -> Void
 
     var body: some View {
         HStack {
-            /// Icon
-            TaskIconView()
-
-            /// Title & Description
             VStack (alignment: .leading, spacing: 2) {
-                if taskIsEditable {
-                    EditableTaskInputs()
+                if vm.taskIsEditable {
+                    HStack {
+                        TaskIconView()
+                        EditableTaskInputs()
+                    }
                 } else {
-                    NavigationLink {
-                        TaskDetailView(task: task)
-                            .environmentObject(viewModel)
-                    } label: {
+                    HStack {
+                        TaskIconView()
                         UnEditableTaskTextView()
                     }
                 }
@@ -43,17 +40,17 @@ struct TaskCardView: View {
         .padding(.horizontal, 9)
         .padding(.vertical, 9)
         .layeredBackground(.white, cornerRadius: 8)
-        .onAppear { taskIsEditable = task.title.isEmpty }
+        .onAppear { vm.taskIsEditable = note.title.isEmpty }
     }
 
     @ViewBuilder
     private func TaskIconView() -> some View {
         VStack {
-            if let emoji = task.emoji {
+            if let emoji = note.emoji {
                 Text(emoji)
                     .font(.title)
             } else {
-                Image(systemName: task.type()?.systemImage ?? NoteType.empty.systemImage)
+                Image(systemName: note.type()?.systemImage ?? NoteType.empty.systemImage)
                     .font(.title)
                     .foregroundColor(theme.mTintColor)
                     .minimumScaleFactor(0.1)
@@ -64,36 +61,40 @@ struct TaskCardView: View {
 
     @ViewBuilder
     private func EditableTaskInputs() -> some View {
-        TextField("Title...", text: $task.title)
-            .font(.subheadline.bold())
-            .multilineTextAlignment(.leading)
-            .focused($focusState, equals: .kanbanTaskTitle)
-            .onSubmit { taskIsEditable = false }
-
-        if !task.description.isEmpty {
-            TextField("Description...", text: $task.description)
-                .font(.footnote)
+        VStack (alignment: .leading, spacing: 2) {
+            TextField("Title...", text: $note.title, axis: .vertical)
+                .font(.subheadline.bold())
                 .multilineTextAlignment(.leading)
                 .focused($focusState, equals: .kanbanTaskTitle)
-                .onSubmit { taskIsEditable = false }
+                .onSubmit { vm.taskIsEditable = false }
+
+            if !note.description.isEmpty {
+                TextField("Description...", text: $note.description)
+                    .font(.footnote)
+                    .multilineTextAlignment(.leading)
+                    .focused($focusState, equals: .kanbanTaskTitle)
+                    .onSubmit { vm.taskIsEditable = false }
+            }
         }
+        .hSpacing(.leading)
     }
 
     @ViewBuilder
     private func UnEditableTaskTextView() -> some View {
         VStack (alignment: .leading, spacing: 2) {
-            Text(task.title)
+            Text(note.title)
                 .font(.subheadline.bold())
                 .multilineTextAlignment(.leading)
                 .foregroundColor(.primary)
 
-            if !task.description.isEmpty {
-                Text(task.description)
+            if !note.description.isEmpty {
+                Text(note.description)
                     .font(.footnote)
                     .multilineTextAlignment(.leading)
                     .foregroundColor(.secondary)
             }
         }
+        .hSpacing(.leading)
     }
 
     @ViewBuilder
@@ -101,14 +102,14 @@ struct TaskCardView: View {
         Menu {
             Button(action: {
                 withAnimation {
-                    //viewModel.delete(kanban)
+                    onDelete()
                 }
             }) {
                 Label("Delete", systemImage: "trash")
             }
 
             Button(action: {
-                taskIsEditable = true
+                vm.taskIsEditable = true
                 focusState = .kanbanTaskTitle
             }) {
                 Label("Edit", systemImage: "pencil")
@@ -128,7 +129,7 @@ struct TaskCardView: View {
         Color.backgroundColor
             .ignoresSafeArea()
 
-        TaskCardView(task: .constant(Mock.note))
+        NoteCardView(note: .constant(Mock.note), onDelete: {})
             .environmentObject(Theme())
             .environmentObject(NoteViewModel(Note.quickNote()))
             .padding(.horizontal, 50)

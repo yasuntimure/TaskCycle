@@ -10,12 +10,12 @@ import Algorithms
 
 struct BoardColumnView: View {
     @EnvironmentObject var theme: Theme
-    @EnvironmentObject var viewModel: BoardNoteViewModel
+    @EnvironmentObject var vm: NoteViewModel
+
+    @Binding var column: BoardColumn
 
     @State var isTargeted: Bool = false
     @FocusState var focusState: NoteTextFields?
-
-    @Binding var column: BoardColumn
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -29,8 +29,10 @@ struct BoardColumnView: View {
                     cornerRadius: 8
                 )
                 .dropDestination(for: Note.self) { droppedTasks, location in
-                    column.tasks += droppedTasks
-                    viewModel.removeDroppedTask(droppedTasks, kanban: column)
+                    var temp = self.column
+                    temp.notes += droppedTasks
+                    self.column = temp
+                    vm.removeDroppedTask(droppedTasks, column: column)
                     return true
                 } isTargeted: { isTargeted in
                     self.isTargeted = isTargeted
@@ -49,7 +51,7 @@ struct BoardColumnView: View {
             Menu {
                 Button(action: {
                     withAnimation {
-                        viewModel.delete(column)
+                        vm.delete(column)
                     }
                 }) {
                     Label("Delete", systemImage: "trash")
@@ -57,7 +59,7 @@ struct BoardColumnView: View {
 
                 Button(action: {
                     withAnimation {
-                        viewModel.duplicate(column)
+                        vm.duplicate(column)
                     }
                 }) {
                     Label("Duplicate", systemImage: "plus.square.on.square")
@@ -77,9 +79,11 @@ struct BoardColumnView: View {
         ScrollView(showsIndicators: false) {
             // Tasks
             VStack (spacing: -12) {
-                ForEach($column.tasks, id: \.id) { $taskCard in
-                    TaskCardView(task: $taskCard)
-                    .draggable(taskCard)
+                ForEach($column.notes, id: \.id) { $noteCard in
+                    NoteCardView(note: $noteCard, onDelete: {
+                        column.notes.removeAll(where: { $0.id == noteCard.id})
+                    })
+                    .draggable(noteCard)
                     .padding(12)
                 }
             }
@@ -89,7 +93,9 @@ struct BoardColumnView: View {
             SecondaryButton(imageName: "plus", title: "Add Task",
                             backgroundColor: theme.mTintColor.opacity(0.15))
             {
-                column.tasks.append(Note())
+                var temp = self.column
+                temp.notes.append(Note())
+                self.column = temp
             }
             .padding(.vertical, 6).padding(.horizontal, 12)
         }
@@ -98,14 +104,6 @@ struct BoardColumnView: View {
 }
 
 #Preview {
-    BoardColumnView(column: .constant(BoardColumn()))
+    BoardColumnView(column: .constant(Mock.column))
         .environmentObject(Theme())
-        .environmentObject(NoteViewModel(Mock.note))
-}
-
-
-protocol BoardColumnActions {
-    func deleteColumn(noteID: String, columnId: String) // header delete column
-    func updateColumn(noteID: String, columnId: String) // when new tasks added
-    func createColumn(noteID: String, columnId: String) // when new addNewColumn
 }

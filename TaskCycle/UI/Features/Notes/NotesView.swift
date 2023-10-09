@@ -10,7 +10,7 @@ import SwiftUI
 struct NotesView: View {
     @EnvironmentObject var theme: Theme
 
-    @ObservedObject var viewModel: NotesViewModel
+    @ObservedObject var vm: NotesViewModel
 
     @State var noteStack: [Note] = []
 
@@ -25,12 +25,10 @@ struct NotesView: View {
                     }
                     .listStyle(.plain)
                     .background(.clear)
-                    .refreshable {
-                        viewModel.fetchNotes()
-                    }
+                    .refreshable { vm.fetchNotes() }
 
                     PlusButton() {
-                        viewModel.saveNewNote { note in
+                        vm.saveNewNote { note in
                             noteStack.append(note)
                         }
                     }
@@ -85,9 +83,9 @@ extension NotesView {
 
     @ViewBuilder
     private func NoteNavigationRow() -> some View {
-        ForEach ($viewModel.notes) { $note in
+        ForEach ($vm.notes) { $note in
             NavigationLink {
-                NoteView(viewModel: NoteViewModel(note))
+                NoteView(vm: NoteViewModel(note))
             } label: {
                 NoteRow(note: $note)
             }
@@ -97,8 +95,8 @@ extension NotesView {
             .layeredBackground(Color.backgroundColor)
             .cornerRadius(20)
         }
-        .onDelete(perform: viewModel.deleteItems(at:))
-        .onMove(perform: viewModel.moveItems(from:to:))
+        .onDelete(perform: vm.deleteItems(at:))
+        .onMove(perform: vm.moveItems(from:to:))
         .listSectionSeparator(.hidden)
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
@@ -109,7 +107,7 @@ extension NotesView {
 struct
 NotesView_Previews: PreviewProvider {
     static var previews: some View {
-        NotesView(viewModel: NotesViewModel())
+        NotesView(vm: NotesViewModel())
             .environmentObject(Theme())
     }
 }

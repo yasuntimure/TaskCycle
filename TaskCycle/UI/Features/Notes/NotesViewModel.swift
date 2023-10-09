@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
 import SwiftKeychainWrapper
-
 
 @MainActor
 class NotesViewModel: ObservableObject {
@@ -30,6 +28,7 @@ class NotesViewModel: ObservableObject {
     func fetchNotes() {
         executeDBOperation(.fetch)
     }
+
 
     func deleteItems(at indexSet: IndexSet) {
         indexSet.forEach { index in

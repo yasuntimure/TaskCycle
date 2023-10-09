@@ -10,18 +10,18 @@ import FirebaseFirestoreSwift
 import UniformTypeIdentifiers
 import FirestoreService
 
-typealias BoardColumns = [BoardColumn]
+public typealias BoardColumns = [BoardColumn]
 
 public struct BoardColumn: FirestoreIdentifiable {
     public var id: String
     public var title: String
-    public var tasks: [Note]
+    public var notes: [Note]
 
     init(id: String = UUID().uuidString,
          title: String = "",
-         tasks: [Note] = []) {
+         notes: [Note] = []) {
         self.id = id
         self.title = title
-        self.tasks = tasks
+        self.notes = notes
     }
 }

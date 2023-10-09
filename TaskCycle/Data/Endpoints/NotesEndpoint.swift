@@ -11,6 +11,7 @@ import FirestoreService
 public enum NotesEndpoint: FirestoreEndpoint {
 
     case getNoteList
+    case getNote(Note)
     case createNote(Note)
     case deleteNote(Note)
     case updateNote(Note)
@@ -18,7 +19,7 @@ public enum NotesEndpoint: FirestoreEndpoint {
     public var path: FirestorePath {
         let notesRef = Firestore.firestore().collection("users").document(userID).collection("notes")
         switch self {
-        case .getNoteList:
+        case .getNoteList, .getNote:
             return .collection(notesRef)
         case .createNote(let note), .deleteNote(let note), .updateNote(let note):
             return .document(notesRef.document(note.id))
@@ -27,7 +28,7 @@ public enum NotesEndpoint: FirestoreEndpoint {
 
     public var method: FirestoreMethod {
         switch self {
-        case .getNoteList:
+        case .getNoteList, .getNote:
             return .get
         case .createNote:
             return .post
@@ -42,7 +43,7 @@ public enum NotesEndpoint: FirestoreEndpoint {
         switch self {
         case .getNoteList, .deleteNote:
             return .requestPlain
-        case .createNote(let note), .updateNote(let note):
+        case .createNote(let note), .updateNote(let note), .getNote(let note):
             return .setDocument(note)
         }
     }

@@ -30,8 +30,7 @@ public class Mock {
     static let note = Note(title: "Mock Title",
                                 description: "Mock Description")
 
-//    static let task = TaskModel(title: "Mock Task",
-//                                description: "Mock Description")
+    static let column = BoardColumn()
 
     static let item = ToDoItem(title: "Mock Item",
                                     description: "Mock Description")

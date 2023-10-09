@@ -24,7 +24,7 @@ struct MainView: View {
                             .foregroundColor(theme.mTintColor)
 
                     }
-                NotesView(viewModel: notesViewModel)
+                NotesView(vm: notesViewModel)
                     .environmentObject(notesViewModel)
                     .environmentObject(theme)
                     .tabItem {

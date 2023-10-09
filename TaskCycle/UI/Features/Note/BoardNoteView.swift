@@ -9,40 +9,46 @@ import SwiftUI
 
 struct BoardNoteView: View {
 
-    @StateObject var viewModel: BoardNoteViewModel
+    @EnvironmentObject var vm: NoteViewModel
 
     var body: some View {
         GeometryReader { geometry in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    LazyVGrid(columns: getGridColumns()) {
-                        ForEach($viewModel.columns, id: \.id) { $kanban in
-                            BoardColumnView(column: $kanban)
+                    LazyVGrid(columns: getGrids()) {
+                        ForEach($vm.columns, id: \.id) { $column in
+                            BoardColumnView(column: $column)
                                 .frame(height: geometry.size.height)
-                                .environmentObject(viewModel)
+                                .environmentObject(vm)
                         }
                         AddColumnButton()
                     }
                 }
                 .padding(.horizontal)
             }
-            .onAppear {
-                viewModel.fetchColumns()
-            }
-            .alert("Error", isPresented: $viewModel.showAlert) {
-                Text(viewModel.errorMessage)
+            .alert("Error", isPresented: $vm.showAlert) {
+                Menu("Error") {
+                    Text(vm.errorMessage)
+                }
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
 
-                    Button(action: { hideKeyboard() },
-                           label: { Image(systemName: "keyboard.chevron.compact.down.fill")
+                    Button(action: {
+                        vm.updateNote()
+                        hideKeyboard()
+                        vm.taskIsEditable = false
+                    }, label: { Image(systemName: "keyboard.chevron.compact.down.fill")
                             .font(.headline)
-                            .tint(.secondary) })
+                        .tint(.secondary) })
 
                     Spacer()
 
-                    Button(action: { }, label: {
+                    Button(action: {
+                        vm.updateNote()
+                        hideKeyboard()
+                        vm.taskIsEditable = false
+                    }, label: {
                         Text("Save")
                             .font(.headline).bold()
                             .tint(.primary)
@@ -53,11 +59,20 @@ struct BoardNoteView: View {
         }
     }
 
+    func getGrids() -> [GridItem] {
+        var grids: [GridItem] = []
+        vm.columns.forEach { _ in
+            grids.append(GridItem(.flexible(minimum: 300, maximum: 600)))
+        }
+        grids.append(GridItem(.flexible(minimum: 300, maximum: 600)))
+        return grids
+    }
+
     @ViewBuilder
     private func AddColumnButton() -> some View {
         Button {
             withAnimation {
-                viewModel.addNewColumn()
+                vm.columns.append(BoardColumn())
             }
         } label: {
             HStack {
@@ -71,18 +86,8 @@ struct BoardNoteView: View {
             .padding(.top, 42).padding(.bottom, 18).padding(.horizontal).padding(.leading, -8)
         }
     }
-
-    func getGridColumns() -> [GridItem] {
-        var columns: [GridItem] = []
-        viewModel.columns.forEach { _ in
-            columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
-        }
-        columns.append(GridItem(.flexible(minimum: 300, maximum: 600)))
-        return columns
-    }
-
 }
 
 #Preview {
-    BoardNoteBuilder.make(id: Mock.note.id)
+    BoardNoteView()
 }

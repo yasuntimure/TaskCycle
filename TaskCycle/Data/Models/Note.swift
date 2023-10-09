@@ -18,13 +18,17 @@ public struct Note: FirestoreIdentifiable, Transferable {
     public var date: String
     public var emoji: String?
     public var noteType: String?
+    public var items: [ToDoItem]
+    public var columns: BoardColumns
 
     init(id: String = UUID().uuidString,
          title: String = "",
          description: String = "",
          date: String = Date().weekdayFormat(),
          emoji: String? = nil,
-         noteType: String? = nil)
+         noteType: String? = nil,
+         items: [ToDoItem] = [],
+         columns: BoardColumns = [BoardColumn(title: "To Do"), BoardColumn(title: "In Progress"), BoardColumn(title: "Done")])
     {
         self.id = id
         self.title = title
@@ -32,6 +36,8 @@ public struct Note: FirestoreIdentifiable, Transferable {
         self.date = date
         self.emoji = emoji
         self.noteType = noteType
+        self.items = items
+        self.columns = columns
     }
 
     func type() -> NoteType? {

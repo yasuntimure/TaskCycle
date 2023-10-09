@@ -9,22 +9,18 @@ import SwiftUI
 
 struct ToDoListView: View {
 
-    @StateObject var viewModel: ToDoListViewModel
+    @EnvironmentObject var vm: NoteViewModel
 
     var body: some View {
         ZStack {
             List {
-                ForEach ($viewModel.items) { $item in
-                    ToDoRow(item: $item.onNewValue {
-                        withAnimation {
-                            viewModel.update(item)
-                        }
-                    })
+                ForEach ($vm.items) { $item in
+                    ToDoRow(item: $item)
                         .padding(.vertical, -5)
                         .hSpacing(.leading)
                 }
-                .onDelete(perform: viewModel.deleteItems(at:))
-                .onMove(perform: viewModel.moveItems(from:to:))
+                .onDelete { vm.items.remove(atOffsets: $0) }
+                //                .onMove(perform: viewModel.moveItems(from:to:))
                 .listSectionSeparator(.hidden)
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
@@ -35,7 +31,7 @@ struct ToDoListView: View {
             }
 
             PlusButton() {
-                viewModel.addNewItem()
+                vm.items.insert(ToDoItem(), at: 0)
             }
             .hSpacing(.trailing).vSpacing(.bottom)
             .padding([.trailing, .bottom], 20)
@@ -44,5 +40,5 @@ struct ToDoListView: View {
 }
 
 #Preview {
-    ToDoListView(viewModel: ToDoListViewModel(service: ToDoNoteService(noteId: Mock.note.id)))
+    ToDoListView()
 }

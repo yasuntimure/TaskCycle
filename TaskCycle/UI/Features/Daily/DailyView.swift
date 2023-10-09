@@ -15,10 +15,6 @@ struct DailyView: View {
         ZStack {
             VStack (alignment: .leading, spacing: 6) {
                 HeaderView()
-                    .onTapGesture {
-                        hideKeyboard()
-                    }
-
                 SliderView()
 
                 List {
@@ -42,6 +38,27 @@ struct DailyView: View {
             .vSpacing(.bottom).hSpacing(.trailing)
             .padding([.trailing,.bottom], 20)
             .padding(3)
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Button(action: {
+                    hideKeyboard()
+                }, label: { 
+                    Image(systemName: "keyboard.chevron.compact.down.fill")
+                        .font(.headline)
+                        .tint(.secondary)
+                })
+
+                Spacer()
+
+                Button(action: {
+                    hideKeyboard()
+                }, label: {
+                    Text("Done")
+                        .font(.headline).bold()
+                        .tint(.primary)
+                })
+            }
         }
         .environmentObject(viewModel)
     }
