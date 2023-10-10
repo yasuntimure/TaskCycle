@@ -40,14 +40,20 @@ struct RegisterView: View {
                 }
 
                 PrimaryButton(title: "Register") {
-                    viewModel.register { dismiss() }
+                    Task {
+                        await viewModel.register()
+                        dismiss()
+                    }
                 }
 
                 SeperatorView()
 
                 // Sign In with Google
                 SignInWithButton(signInType: .google) {
-                    viewModel.signUpWithGoogle { dismiss() }
+                    Task {
+                        await viewModel.signUpWithGoogle()
+                        dismiss()
+                    }
                 }
                 .padding(.bottom, 100)
             }

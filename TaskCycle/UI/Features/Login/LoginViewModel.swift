@@ -9,8 +9,8 @@ import Foundation
 import FirebaseAuth
 import Firebase
 import GoogleSignIn
-import SwiftUI
 import Combine
+import SwiftKeychainWrapper
 
 @MainActor
 class LoginViewModel: ObservableObject {
@@ -60,34 +60,35 @@ class LoginViewModel: ObservableObject {
         GIDSignIn.sharedInstance.configuration = config
 
         // Prepare presenting viewController
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScenes = scenes.first as? UIWindowScene
-        let window = windowScenes?.windows.first
-        guard let rootViewController = window?.rootViewController else { return }
+        let viewController = UIViewController()
+        guard let rootViewController = viewController.root else { return }
 
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] signInResult, error in
-            if let error = error {
-                self?.showAlert(message: "\(error.localizedDescription)")
+        Task {
+            do {
+                let signInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+                guard let email = signInResult.user.profile?.email,
+                      let password = signInResult.user.userID else {
+                    throw NetworkError.googleSignError
+                }
+                self.signIn(withEmail: email, password: password)
+            } catch {
+                showAlert(message: error.localizedDescription)
             }
-
-            guard let email = signInResult?.user.profile?.email,
-                    let password = signInResult?.user.userID else {
-                self?.showAlert(message: "An error occured while fetching data from google!")
-                return
-            }
-
-            self?.signIn(withEmail: email, password: password)
         }
     }
 
     internal func signIn(withEmail: String, password: String) {
-        Auth.auth().signIn(withEmail: withEmail, password: password) { [weak self] result, error in
-            guard let user = result?.user, error == nil else {
-                self?.showAlert(message: error?.localizedDescription ?? "Could not signed in to account!")
-                return
+        Task {
+            do {
+                let authResult = try await Auth.auth().signIn(withEmail: withEmail, password: password)
+                let userId = authResult.user.uid
+                KeychainWrapper.standard.set(userId, forKey: "userIdKey")
+//                self.userLoggedIn = true
+                let displayName: String = authResult.user.displayName ?? "User"
+                print("Success: \(displayName) logged in")
+            } catch {
+                showAlert(message: error.localizedDescription)
             }
-            let displayName = user.displayName ?? "user"
-            print("Success: \(displayName) logged in")
         }
     }
 
@@ -181,3 +182,7 @@ enum Validation: Equatable {
     }
 }
 
+enum NetworkError: String, Error {
+    case googleSignError = "An error occured while fetching data from google!"
+    case registerError = "Could not create a new account!"
+}

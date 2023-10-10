@@ -57,7 +57,7 @@ class RegisterViewModel: ObservableObject {
         }.store(in: &subscription)
     }
     
-    func register(_ completion: @escaping () -> Void) {
+    func register() async {
 
         guard inputs.areValid() else {
            return
@@ -67,7 +67,8 @@ class RegisterViewModel: ObservableObject {
         let email = self.inputs.email.text
         let password = self.inputs.password.text
 
-        self.createUser(withEmail: email, password: password) { [weak self] userId in
+        do {
+            let userId = try await Auth.auth().createUser(withEmail: email, password: password).user.uid
             let newUser = User (
                 id: userId,
                 name: name,
@@ -76,12 +77,15 @@ class RegisterViewModel: ObservableObject {
                 joinDate: Date().timeIntervalSince1970
             )
 
-            self?.insertUserToFirestore(newUser)
-            completion()
+            self.insertUserToFirestore(newUser)
+
+            KeychainWrapper.standard.set(userId, forKey: "userIdKey")
+        } catch {
+            showAlert(message: error.localizedDescription)
         }
     }
 
-    func signUpWithGoogle(completion: @escaping () -> Void) {
+    func signUpWithGoogle() async -> Void {
 
         // Create Google Sign In configuration object.
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -89,26 +93,20 @@ class RegisterViewModel: ObservableObject {
         GIDSignIn.sharedInstance.configuration = config
 
         // Prepare presenting viewController
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScenes = scenes.first as? UIWindowScene
-        let window = windowScenes?.windows.first
-        guard let rootViewController = window?.rootViewController else { return }
+        let viewController = UIViewController()
+        guard let rootViewController = viewController.root else { return }
 
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] signInResult, error in
-            if let error = error {
-                self?.showAlert(message: "\(error.localizedDescription)")
-            }
+        Task {
+            do {
+                let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+                guard let name = result.user.profile?.givenName,
+                        let email = result.user.profile?.email,
+                        let password = result.user.userID else {
+                    throw NetworkError.googleSignError
+                }
 
-            guard let user = signInResult?.user else { return }
+                let userId = try await Auth.auth().createUser(withEmail: email, password: password).user.uid
 
-            guard let name = user.profile?.givenName,
-                    let email = user.profile?.email,
-                    let password = user.userID else {
-                self?.showAlert(message: "An error occured while fetching data from google!")
-                return
-            }
-
-            self?.createUser(withEmail: email, password: password) { [weak self] userId in
                 let newUser = User (
                     id: userId,
                     name: name,
@@ -117,20 +115,11 @@ class RegisterViewModel: ObservableObject {
                     joinDate: Date().timeIntervalSince1970
                 )
 
-                self?.insertUserToFirestore(newUser)
-                completion()
+                self.insertUserToFirestore(newUser)
+                KeychainWrapper.standard.set(userId, forKey: "userIdKey")
+            } catch {
+                showAlert(message: error.localizedDescription)
             }
-        }
-    }
-
-    private func createUser(withEmail: String, password: String, completion: @escaping (String) -> Void) {
-        Auth.auth().createUser(withEmail: withEmail, password: password) { [weak self] result, error in
-            guard let userId = result?.user.uid, error == nil else {
-                self?.showAlert(message: error?.localizedDescription ?? "Could not create a new account!")
-                return
-            }
-            KeychainWrapper.standard.set(userId, forKey: "userIdKey")
-            completion(userId)
         }
     }
 

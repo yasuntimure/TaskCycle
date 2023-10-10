@@ -25,6 +25,7 @@
 		D048A6CF2ACBD00000D5B92E /* BoardNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6CE2ACBD00000D5B92E /* BoardNoteViewModel.swift */; };
 		D048A6D52ACBD4E200D5B92E /* BoardNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6D42ACBD4E200D5B92E /* BoardNoteBuilder.swift */; };
 		D04C5B192AC4C1D6002D4A2A /* FirestoreService in Frameworks */ = {isa = PBXBuildFile; productRef = D04C5B182AC4C1D6002D4A2A /* FirestoreService */; };
+		D05AF8102AD5C12000771FC2 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AF80F2AD5C12000771FC2 /* UIViewControllerExtension.swift */; };
 		D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */; };
 		D06F59202AB8BDF700E2510F /* BoardColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591F2AB8BDF700E2510F /* BoardColumnView.swift */; };
 		D06F59222AB8C02500E2510F /* BoardColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F59212AB8C02500E2510F /* BoardColumn.swift */; };
@@ -129,6 +130,7 @@
 		D048A6CC2ACBCFA300D5B92E /* BoardNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteView.swift; sourceTree = "<group>"; };
 		D048A6CE2ACBD00000D5B92E /* BoardNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteViewModel.swift; sourceTree = "<group>"; };
 		D048A6D42ACBD4E200D5B92E /* BoardNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNoteBuilder.swift; sourceTree = "<group>"; };
+		D05AF80F2AD5C12000771FC2 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D06F591F2AB8BDF700E2510F /* BoardColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumnView.swift; sourceTree = "<group>"; };
 		D06F59212AB8C02500E2510F /* BoardColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumn.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 			isa = PBXGroup;
 			children = (
 				D0ED2EDD2A802D4400828887 /* BindingExtension.swift */,
+				D05AF80F2AD5C12000771FC2 /* UIViewControllerExtension.swift */,
 				D048A6BF2ACB8A1200D5B92E /* FirestoreEndpointExtension.swift */,
 				D0ED2EDC2A802D4400828887 /* EncodableExtension.swift */,
 				D0ED2EDE2A802D4400828887 /* AlignmentExtension.swift */,
@@ -639,6 +642,7 @@
 			files = (
 				D0A3315B2AB4EAC00047FA20 /* LayeredBackground.swift in Sources */,
 				D0267E002A912DDB0079F90E /* NotesViewModel.swift in Sources */,
+				D05AF8102AD5C12000771FC2 /* UIViewControllerExtension.swift in Sources */,
 				D048A6C02ACB8A1200D5B92E /* FirestoreEndpointExtension.swift in Sources */,
 				D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */,
 				D048A6BC2ACB7CC400D5B92E /* NotesService.swift in Sources */,
