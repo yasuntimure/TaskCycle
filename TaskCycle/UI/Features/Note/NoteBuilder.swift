@@ -10,8 +10,8 @@ import SwiftUI
 struct NoteBuilder {
 
     @MainActor
-    static func make(_ noteModel: Note, isCardDetail: Bool = false) -> some View {
-        let viewModel = NoteViewModel(noteModel, isCardDetail: isCardDetail)
+    static func make(_ noteModel: Note) -> some View {
+        let viewModel = NoteViewModel(noteModel)
         return NoteView(vm: viewModel)
     }
 }

@@ -5,8 +5,7 @@
 //  Created by Eyüp on 2023-09-17.
 //
 
-import SwiftUI
-import FirebaseFirestore
+import Foundation
 import Algorithms
 import FirestoreService
 
@@ -27,11 +26,8 @@ class NoteViewModel: ObservableObject {
     @Published var columns: BoardColumns = []
 
     @Published var taskIsEditable: Bool = false
-    var isCardDetail: Bool
 
-    let service: NotesServiceProtocol
-
-    init(_ note: Note, service: NotesServiceProtocol = NotesService(), isCardDetail: Bool = false) {
+    init(_ note: Note) {
         self.id = note.id
         self.title = note.title
         self.description = note.description
@@ -49,9 +45,6 @@ class NoteViewModel: ObservableObject {
         self.columns = note.columns
 
         self.isNoteConfVisible = (note.type() == nil)
-
-        self.service = service
-        self.isCardDetail = isCardDetail
     }
 
     func initialFocusState() -> NoteTextFields? {
@@ -74,16 +67,15 @@ class NoteViewModel: ObservableObject {
     }
 
     func setNoteType(_ type: NoteType) {
-        withAnimation {
-            self.noteType = type
-            self.isNoteConfVisible = false
-        }
+        self.noteType = type
+        self.isNoteConfVisible = false
     }
 
     func updateNote() {
         Task {
             do {
-                try await service.updateNote(self.model())
+                let endpoint = NotesEndpoint.updateNote(self.model())
+                _ = try await FirestoreService.requestDocument(Note.self, endpoint: endpoint)
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -94,7 +86,8 @@ class NoteViewModel: ObservableObject {
     func deleteNote() {
         Task {
             do {
-                try await service.deleteNote(self.model())
+                let endpoint = NotesEndpoint.deleteNote(self.model())
+                _ = try await FirestoreService.requestDocument(Note.self, endpoint: endpoint)
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription

@@ -25,6 +25,10 @@ class MainViewModel: ObservableObject {
             guard let userId = user?.uid else { return }
             KeychainWrapper.standard.set(userId, forKey: "userIdKey")
             self.userLoggedIn = true
+
+            if let email = user?.email {
+                KeychainWrapper.standard.set(email, forKey: "userEmail")
+            }
         }
     }
 

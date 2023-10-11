@@ -7,11 +7,16 @@
 
 import SwiftUI
 import PhotosUI
+import SwiftKeychainWrapper
 
 struct SettingsView: View {
     @EnvironmentObject var theme: Theme
     @EnvironmentObject var viewModel: MainViewModel
     @State var themeColors: [Color] = [.blue, .mint, .indigo, .cyan, .orange, .purple, .yellow, .green, .pink, .black, .brown, .gray, .red]
+
+    var userEmail: String {
+        KeychainWrapper.standard.string(forKey: "userEmail") ?? " . . . "
+    }
 
     var body: some View {
         VStack {
@@ -51,6 +56,11 @@ struct SettingsView: View {
                 Alert(title: Text(viewModel.errorMessage))
             }
             .tint(theme.mTintColor)
+
+            Text(userEmail)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .padding(.bottom)
         }
     }
 

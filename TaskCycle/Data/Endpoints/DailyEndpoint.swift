@@ -6,7 +6,6 @@
 //
 
 import FirestoreService
-import FirebaseFirestore
 
 public enum DailyEndpoint: FirestoreEndpoint {
 
@@ -15,13 +14,13 @@ public enum DailyEndpoint: FirestoreEndpoint {
     case deleteItem(ToDoItem)
     case updateItem(ToDoItem)
 
-    public var path: FirestorePath {
-        let weekdaysRef = Firestore.firestore().collection("users").document(userID).collection("weekdays")
+    public var path: FirestoreReference {
+        let weekdaysRef = firestore.collection("users").document(userID).collection("weekdays")
         switch self {
         case .getItems(let date):
-            return .collection(weekdaysRef.document(date).collection("items"))
+            return weekdaysRef.document(date).collection("items")
         case .createItem(let item), .deleteItem(let item), .updateItem(let item):
-            return .document(weekdaysRef.document(item.date).collection("items").document(item.id))
+            return weekdaysRef.document(item.date).collection("items").document(item.id)
         }
     }
 
@@ -29,21 +28,12 @@ public enum DailyEndpoint: FirestoreEndpoint {
         switch self {
         case .getItems:
             return .get
-        case .createItem:
-            return .post
+        case .createItem(let item):
+            return .post(item)
         case .deleteItem:
             return .delete
-        case .updateItem:
-            return .put
-        }
-    }
-
-    public var task: FirestoreRequestPayload {
-        switch self {
-        case .getItems, .deleteItem:
-            return .requestPlain
-        case .createItem(let item), .updateItem(let item):
-            return .setDocument(item)
+        case .updateItem(let item):
+            return .put(item)
         }
     }
 }

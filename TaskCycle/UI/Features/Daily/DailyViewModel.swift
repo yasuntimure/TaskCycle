@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
+import FirestoreService
 
 @MainActor
 final class DailyViewModel: ObservableObject {
@@ -23,10 +23,7 @@ final class DailyViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    let service: DailyServiceProtocol
-
-    init(service: DailyServiceProtocol = DailyService()) {
-        self.service = service
+    init() {
         selectedDay = WeekDay(date: Date())
         fetchItems()
     }
@@ -120,15 +117,19 @@ extension DailyViewModel {
                 switch action {
                 case .fetch:
                     let date = selectedDay.date.weekdayFormat()
-                    self.items = try await service.getItems(for: date)
+                    let endpoint = DailyEndpoint.getItems(forDate: date)
+                    self.items = try await FirestoreService.requestCollection(ToDoItem.self, endpoint: endpoint)
                     if items.isEmpty { insertAndSaveEmptyItem() }
                     sortItems()
                 case .update(let item):
-                    try await service.updateItem(item)
+                    let endpoint = DailyEndpoint.updateItem(item)
+                    _ = try await FirestoreService.requestDocument(ToDoItem.self, endpoint: endpoint)
                 case .save(let item):
-                    try await service.createItem(item)
+                    let endpoint = DailyEndpoint.createItem(item)
+                    _ = try await FirestoreService.requestDocument(ToDoItem.self, endpoint: endpoint)
                 case .delete(let item):
-                    try await service.deleteItem(item)
+                    let endpoint = DailyEndpoint.deleteItem(item)
+                    _ = try await FirestoreService.requestDocument(ToDoItem.self, endpoint: endpoint)
                 }
             } catch {
                 showAlert = true

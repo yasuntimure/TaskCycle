@@ -85,7 +85,9 @@ struct NoteView: View {
     private func NoteConfigurationView() -> some View {
         VStack (alignment: .leading, spacing: 25) {
             CustomButton("Empty Page", image: "plus") {
-                vm.setNoteType(.empty)
+                withAnimation {
+                    vm.setNoteType(.empty)
+                }
             }
             
             VStack (alignment: .leading, spacing: 10) {
@@ -95,10 +97,8 @@ struct NoteView: View {
                 CustomButton("To Do List", image: "checkmark.square") {
                     vm.setNoteType(.todo)
                 }
-                if !vm.isCardDetail {
-                    CustomButton("Kanban Board", image: "tablecells") {
-                        vm.setNoteType(.board)
-                    }
+                CustomButton("Kanban Board", image: "tablecells") {
+                    vm.setNoteType(.board)
                 }
             }
         }.padding()

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftKeychainWrapper
+import FirestoreService
 
 @MainActor
 class NotesViewModel: ObservableObject {
@@ -18,17 +19,13 @@ class NotesViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    let service: NotesServiceProtocol
-
-    init(service: NotesServiceProtocol = NotesService()) {
-        self.service = service
+    init() {
         self.fetchNotes()
     }
 
     func fetchNotes() {
         executeDBOperation(.fetch)
     }
-
 
     func deleteItems(at indexSet: IndexSet) {
         indexSet.forEach { index in
@@ -59,15 +56,18 @@ class NotesViewModel: ObservableObject {
             do {
                 switch action {
                 case .fetch:
-                    self.notes = try await service.getNoteList()
+                    let endpoint = NotesEndpoint.getNoteList
+                    self.notes = try await FirestoreService.requestCollection(Note.self, endpoint: endpoint)
                     if notes.isEmpty {
                         self.addTemplateNote()
                         self.fetchNotes()
                     }
                 case .save(let note):
-                    try await service.createNote(note)
+                    let endpoint = NotesEndpoint.createNote(note)
+                    _ = try await FirestoreService.requestDocument(Note.self, endpoint: endpoint)
                 case .delete(let note):
-                    try await service.deleteNote(note)
+                    let endpoint = NotesEndpoint.deleteNote(note)
+                    _ = try await FirestoreService.requestDocument(Note.self, endpoint: endpoint)
                 }
             } catch {
                 showAlert = true

@@ -5,7 +5,6 @@
 //  Created by Eyüp on 2023-09-26.
 //
 
-import FirebaseFirestore
 import FirestoreService
 
 public enum NotesEndpoint: FirestoreEndpoint {
@@ -16,13 +15,13 @@ public enum NotesEndpoint: FirestoreEndpoint {
     case deleteNote(Note)
     case updateNote(Note)
 
-    public var path: FirestorePath {
-        let notesRef = Firestore.firestore().collection("users").document(userID).collection("notes")
+    public var path: FirestoreReference {
+        let notesRef = firestore.collection("users").document(userID).collection("notes")
         switch self {
         case .getNoteList, .getNote:
-            return .collection(notesRef)
+            return notesRef
         case .createNote(let note), .deleteNote(let note), .updateNote(let note):
-            return .document(notesRef.document(note.id))
+            return notesRef.document(note.id)
         }
     }
 
@@ -30,21 +29,12 @@ public enum NotesEndpoint: FirestoreEndpoint {
         switch self {
         case .getNoteList, .getNote:
             return .get
-        case .createNote:
-            return .post
+        case .createNote(let note):
+            return .post(note)
         case .deleteNote:
             return .delete
-        case .updateNote:
-            return .put
-        }
-    }
-
-    public var task: FirestoreRequestPayload {
-        switch self {
-        case .getNoteList, .deleteNote:
-            return .requestPlain
-        case .createNote(let note), .updateNote(let note), .getNote(let note):
-            return .setDocument(note)
+        case .updateNote(let note):
+            return .put(note)
         }
     }
 }

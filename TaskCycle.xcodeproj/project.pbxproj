@@ -16,7 +16,6 @@
 		D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C12A8AF128007F121C /* AppDelegate.swift */; };
 		D036B4C42A8AF590007F121C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036B4C32A8AF590007F121C /* MainView.swift */; };
 		D04005002ABA6C1200A9DEE2 /* NoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04004FF2ABA6C1200A9DEE2 /* NoteCardView.swift */; };
-		D048A6BC2ACB7CC400D5B92E /* NotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6BB2ACB7CC400D5B92E /* NotesService.swift */; };
 		D048A6BE2ACB81F500D5B92E /* DailyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */; };
 		D048A6C02ACB8A1200D5B92E /* FirestoreEndpointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6BF2ACB8A1200D5B92E /* FirestoreEndpointExtension.swift */; };
 		D048A6C22ACB9C1600D5B92E /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048A6C12ACB9C1600D5B92E /* TaskModel.swift */; };
@@ -29,7 +28,6 @@
 		D06F591E2AB7DB6D00E2510F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */; };
 		D06F59202AB8BDF700E2510F /* BoardColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F591F2AB8BDF700E2510F /* BoardColumnView.swift */; };
 		D06F59222AB8C02500E2510F /* BoardColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F59212AB8C02500E2510F /* BoardColumn.swift */; };
-		D0907A552AB108FE00353AAA /* DailyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0907A542AB108FE00353AAA /* DailyService.swift */; };
 		D092C5CD2AC335A6000EFD71 /* NotesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */; };
 		D098D8192A84330D005E534C /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D8182A84330D005E534C /* OffsetKey.swift */; };
 		D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098D81A2A843570005E534C /* DailyViewModel.swift */; };
@@ -122,7 +120,6 @@
 		D036B4C12A8AF128007F121C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D036B4C32A8AF590007F121C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D04004FF2ABA6C1200A9DEE2 /* NoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCardView.swift; sourceTree = "<group>"; };
-		D048A6BB2ACB7CC400D5B92E /* NotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesService.swift; sourceTree = "<group>"; };
 		D048A6BD2ACB81F500D5B92E /* DailyEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyEndpoint.swift; sourceTree = "<group>"; };
 		D048A6BF2ACB8A1200D5B92E /* FirestoreEndpointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreEndpointExtension.swift; sourceTree = "<group>"; };
 		D048A6C12ACB9C1600D5B92E /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
@@ -134,7 +131,6 @@
 		D06F591D2AB7DB6D00E2510F /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		D06F591F2AB8BDF700E2510F /* BoardColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumnView.swift; sourceTree = "<group>"; };
 		D06F59212AB8C02500E2510F /* BoardColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumn.swift; sourceTree = "<group>"; };
-		D0907A542AB108FE00353AAA /* DailyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyService.swift; sourceTree = "<group>"; };
 		D092C5CC2AC335A6000EFD71 /* NotesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEndpoint.swift; sourceTree = "<group>"; };
 		D098D8182A84330D005E534C /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
 		D098D81A2A843570005E534C /* DailyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewModel.swift; sourceTree = "<group>"; };
@@ -242,15 +238,6 @@
 				D0267DF52A8F09490079F90E /* MainViewModel.swift */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		D048A6BA2ACB7C5600D5B92E /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				D048A6BB2ACB7CC400D5B92E /* NotesService.swift */,
-				D0907A542AB108FE00353AAA /* DailyService.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		D0907A532AB1073100353AAA /* Models */ = {
@@ -482,7 +469,6 @@
 		D0ED2EE42A802D7800828887 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				D048A6BA2ACB7C5600D5B92E /* Services */,
 				D092C5CB2AC3359A000EFD71 /* Endpoints */,
 				D0907A532AB1073100353AAA /* Models */,
 			);
@@ -645,7 +631,6 @@
 				D05AF8102AD5C12000771FC2 /* UIViewControllerExtension.swift in Sources */,
 				D048A6C02ACB8A1200D5B92E /* FirestoreEndpointExtension.swift in Sources */,
 				D036B4C22A8AF128007F121C /* AppDelegate.swift in Sources */,
-				D048A6BC2ACB7CC400D5B92E /* NotesService.swift in Sources */,
 				D0DCCE532AB76F2400276F1D /* NoteView.swift in Sources */,
 				D0ED2ED42A802C4600828887 /* RegisterViewModel.swift in Sources */,
 				D04005002ABA6C1200A9DEE2 /* NoteCardView.swift in Sources */,
@@ -688,7 +673,6 @@
 				D0C996932A86D74B0085481B /* KeyboardButton.swift in Sources */,
 				D0267DF92A9073EA0079F90E /* NotesView.swift in Sources */,
 				D098D81B2A843570005E534C /* DailyViewModel.swift in Sources */,
-				D0907A552AB108FE00353AAA /* DailyService.swift in Sources */,
 				D0ED2EE32A802D4400828887 /* PreferenceKeyExtension.swift in Sources */,
 				D0ED2EF82A81A86600828887 /* ViewExtension.swift in Sources */,
 				D06F59202AB8BDF700E2510F /* BoardColumnView.swift in Sources */,
