@@ -57,17 +57,17 @@ class NotesViewModel: ObservableObject {
                 switch action {
                 case .fetch:
                     let endpoint = NotesEndpoint.getNoteList
-                    self.notes = try await FirestoreService.requestCollection(Note.self, endpoint: endpoint)
+                    self.notes = try await FirestoreService.request(endpoint)
                     if notes.isEmpty {
                         self.addTemplateNote()
                         self.fetchNotes()
                     }
                 case .save(let note):
                     let endpoint = NotesEndpoint.createNote(note)
-                    _ = try await FirestoreService.requestDocument(Note.self, endpoint: endpoint)
+                    try await FirestoreService.request(endpoint)
                 case .delete(let note):
                     let endpoint = NotesEndpoint.deleteNote(note)
-                    _ = try await FirestoreService.requestDocument(Note.self, endpoint: endpoint)
+                    try await FirestoreService.request(endpoint)
                 }
             } catch {
                 showAlert = true

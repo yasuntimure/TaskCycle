@@ -15,13 +15,36 @@ struct TaskCycleApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
+    @State private var errorWrapper: ErrorWrapper?
+
     var body: some Scene {
         WindowGroup {
             MainView()
                 .preferredColorScheme(.light)
+                .environment (\.showError) { error, message in
+                    errorWrapper = ErrorWrapper(error: error, message: message)
+                }
+                .sheet(item: $errorWrapper) { errorWrapper in
+                    Text(errorWrapper.error.localizedDescription)
+                }
         }
     }
 }
+
+struct ErrorWrapper: Identifiable {
+    let id: UUID
+    let error: Error
+    let message: String
+
+    init(id: UUID = UUID(),
+         error: Error,
+         message: String = "") {
+        self.id = id
+        self.error = error
+        self.message = message
+    }
+}
+
 
 public class Mock {
 

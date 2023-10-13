@@ -980,8 +980,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yasuntimure/FirestoreService.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		D0A3315C2AB5058B0047FA20 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {

@@ -75,7 +75,7 @@ class NoteViewModel: ObservableObject {
         Task {
             do {
                 let endpoint = NotesEndpoint.updateNote(self.model())
-                _ = try await FirestoreService.requestDocument(Note.self, endpoint: endpoint)
+                try await FirestoreService.request(endpoint)
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription
@@ -87,7 +87,7 @@ class NoteViewModel: ObservableObject {
         Task {
             do {
                 let endpoint = NotesEndpoint.deleteNote(self.model())
-                _ = try await FirestoreService.requestDocument(Note.self, endpoint: endpoint)
+                try await FirestoreService.request(endpoint)
             } catch {
                 showAlert = true
                 errorMessage = error.localizedDescription

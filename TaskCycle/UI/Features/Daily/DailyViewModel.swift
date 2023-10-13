@@ -118,18 +118,18 @@ extension DailyViewModel {
                 case .fetch:
                     let date = selectedDay.date.weekdayFormat()
                     let endpoint = DailyEndpoint.getItems(forDate: date)
-                    self.items = try await FirestoreService.requestCollection(ToDoItem.self, endpoint: endpoint)
+                    self.items = try await FirestoreService.request(endpoint)
                     if items.isEmpty { insertAndSaveEmptyItem() }
                     sortItems()
                 case .update(let item):
                     let endpoint = DailyEndpoint.updateItem(item)
-                    _ = try await FirestoreService.requestDocument(ToDoItem.self, endpoint: endpoint)
+                    try await FirestoreService.request(endpoint)
                 case .save(let item):
                     let endpoint = DailyEndpoint.createItem(item)
-                    _ = try await FirestoreService.requestDocument(ToDoItem.self, endpoint: endpoint)
+                    try await FirestoreService.request(endpoint)
                 case .delete(let item):
                     let endpoint = DailyEndpoint.deleteItem(item)
-                    _ = try await FirestoreService.requestDocument(ToDoItem.self, endpoint: endpoint)
+                    try await FirestoreService.request(endpoint)
                 }
             } catch {
                 showAlert = true

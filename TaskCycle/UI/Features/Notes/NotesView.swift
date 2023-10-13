@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NotesView: View {
     @EnvironmentObject var theme: Theme
+    @Environment(\.showError) private var showError
 
     @ObservedObject var vm: NotesViewModel
 
