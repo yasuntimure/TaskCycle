@@ -67,7 +67,6 @@ extension NotesView {
                     EditButton()
                         .foregroundColor(.clear)
                 }
-
             }
             .padding([.top, .horizontal])
 

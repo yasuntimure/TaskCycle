@@ -15,9 +15,11 @@ struct ToDoRow: View {
 
     var body: some View {
         HStack (spacing: 0) {
-            ToggleButton()
-                .frame(width: 30, height: 30)
-                .padding()
+            Button {
+                item.isDone.toggle()
+            } label: {
+                ToggleButton()
+            }
 
             TextField("Write something . . .", text: $item.title, axis: .vertical)
                 .font(.headline)
@@ -34,30 +36,21 @@ struct ToDoRow: View {
 
     @ViewBuilder
     private func ToggleButton() -> some View {
-        Button {
-            item.isDone.toggle()
-        } label: {
-            ZStack (alignment: .center) {
-                // Empty Circle
-                Circle()
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(theme.mTintColor)
-                // Checked Circle
-                if item.isDone {
-                    GeometryReader { proxy in
-                        ZStack {
-                            Circle()
-                                .foregroundColor(theme.mTintColor)
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.white)
-                                .font(.system(size: proxy.size.width/2))
-                                .bold()
-                        }
-                    }
-                    .scaledToFit()
-                }
+        ZStack (alignment: .center) {
+            // Empty Circle
+            Circle()
+                .fill(item.isDone ? theme.mTintColor : .clear)
+                .stroke(theme.mTintColor, lineWidth: 2)
+            // Checked Circle
+            if item.isDone {
+                Image(systemName: "checkmark")
+                    .foregroundColor(.white)
+                    .font(.subheadline)
+                    .bold()
             }
         }
+        .frame(width: 30, height: 30)
+        .padding()
     }
 }
 
@@ -66,7 +59,11 @@ struct ToDoRow_Previews: PreviewProvider {
     static let item = ToDoItem(title: "Drink Water")
 
     static var previews: some View {
-        ToDoRow(item: .constant(item))
-            .environmentObject(Theme())
+        Stateful(value: item) { $item in
+            ToDoRow(item: $item)
+                .environmentObject(Theme())
+                .padding()
+        }
+
     }
 }

@@ -25,7 +25,6 @@ final class DailyViewModel: ObservableObject {
 
     init() {
         selectedDay = WeekDay(date: Date())
-        fetchItems()
     }
 }
 
@@ -119,7 +118,6 @@ extension DailyViewModel {
                     let date = selectedDay.date.weekdayFormat()
                     let endpoint = DailyEndpoint.getItems(forDate: date)
                     self.items = try await FirestoreService.request(endpoint)
-                    if items.isEmpty { insertAndSaveEmptyItem() }
                     sortItems()
                 case .update(let item):
                     let endpoint = DailyEndpoint.updateItem(item)

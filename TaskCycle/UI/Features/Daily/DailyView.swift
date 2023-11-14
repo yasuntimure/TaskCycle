@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DailyView: View {
 
+    @EnvironmentObject var themeColor: Theme
     @ObservedObject var viewModel: DailyViewModel
 
     var body: some View {
@@ -16,13 +17,24 @@ struct DailyView: View {
             VStack (alignment: .leading, spacing: 6) {
                 HeaderView()
                 SliderView()
-
+                if !viewModel.items.isEmpty {
+                    EditButton()
+                        .hSpacing(.trailing).padding(.trailing, 20)
+                }
                 List {
                     ListRow()
                 }
                 .listStyle(.plain)
-                .refreshable {
-                    viewModel.fetchItems()
+                .overlay {
+                    if viewModel.items.isEmpty {
+                        ContentUnavailableView {
+                            Label("Add a New Task", systemImage: "tray.fill")
+                        } description: {
+                            Text("There is no task set for the day!")
+                        }
+                        .padding(.bottom, 50)
+                        .opacity(0.8)
+                    }
                 }
             }
             .hSpacing(.leading)
@@ -59,6 +71,9 @@ struct DailyView: View {
                         .tint(.primary)
                 })
             }
+        }
+        .onAppear {
+            viewModel.fetchItems()
         }
         .environmentObject(viewModel)
     }
