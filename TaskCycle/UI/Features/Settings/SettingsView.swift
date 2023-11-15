@@ -11,7 +11,7 @@ import SwiftKeychainWrapper
 
 struct SettingsView: View {
     @EnvironmentObject var theme: Theme
-    @EnvironmentObject var viewModel: MainViewModel
+    @EnvironmentObject var vm: MainViewModel
     @State var themeColors: [Color] = [.blue, .mint, .indigo, .cyan, .orange, .purple, .yellow, .green, .pink, .black, .brown, .gray, .red]
 
     var userEmail: String {
@@ -43,7 +43,7 @@ struct SettingsView: View {
                 Row(title: "Give us feedback", image: "star") { }
 
                 Row(title: "Logout", image: "xmark.circle") {
-                    viewModel.logout()
+                    vm.logout()
                 }
                 .font(.title3)
                 .bold()
@@ -52,8 +52,8 @@ struct SettingsView: View {
             .padding(.horizontal)
             .vSpacing(.top)
             .padding(.top)
-            .alert(isPresented: $viewModel.showAlert) {
-                Alert(title: Text(viewModel.errorMessage))
+            .alert(isPresented: $vm.showAlert) {
+                Alert(title: Text(vm.errorMessage))
             }
             .tint(theme.mTintColor)
 

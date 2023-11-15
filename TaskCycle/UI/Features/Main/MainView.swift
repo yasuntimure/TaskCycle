@@ -18,7 +18,7 @@ struct MainView: View {
     var body: some View {
         if viewModel.userLoggedIn {
             TabView {
-                DailyView(viewModel: dailyViewModel)
+                DailyView(vm: dailyViewModel)
                     .tabItem {
                         Label("Daily", systemImage: "calendar")
                             .foregroundColor(theme.mTintColor)

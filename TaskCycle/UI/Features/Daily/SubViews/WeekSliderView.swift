@@ -10,22 +10,22 @@ import SwiftUI
 struct WeekSliderView: View {
     @EnvironmentObject var theme: Theme
 
-    @EnvironmentObject var viewModel: DailyViewModel
+    @EnvironmentObject var vm: DailyViewModel
 
     var body: some View {
-        TabView(selection: $viewModel.weekIndex) {
-            ForEach(viewModel.weeks.indices, id: \.self) { index in
-                let week = viewModel.weeks[index]
+        TabView(selection: $vm.weekIndex) {
+            ForEach(vm.weeks.indices, id: \.self) { index in
+                let week = vm.weeks[index]
                 WeekView(week)
                     .padding(.horizontal, 15)
                     .tag(index)
             }
         }
-        .onChange(of: viewModel.weekIndex) { newValue in
+        .onChange(of: vm.weekIndex) { newValue in
             /// Creating When it reaches first/last Page
-            viewModel.createWeek = (newValue == 0 || newValue == (viewModel.weeks.count - 1))
+            vm.createWeek = (newValue == 0 || newValue == (vm.weeks.count - 1))
         }
-        .onAppear { viewModel.setWeekData() }
+        .onAppear { vm.setWeekData() }
     }
 
 
@@ -34,14 +34,14 @@ struct WeekSliderView: View {
     func WeekView(_ week: [WeekDay]) -> some View {
         HStack(spacing: 10) {
             ForEach(week) { day in
-                WeekColumn(date: day.date, isSelected: viewModel.isSelected(day))
+                WeekColumn(date: day.date, isSelected: vm.isSelected(day))
                     .hSpacing(.center)
                     .onTapGesture {
                         /// Updating Selected Day
                         withAnimation {
                             hideKeyboard()
-                            viewModel.selectedDay = day
-                            viewModel.fetchItems()
+                            vm.selectedDay = day
+                            vm.fetchItems()
                             print("Selected Day: ",day.date.weekdayFormat())
                         }
                     }
@@ -54,10 +54,10 @@ struct WeekSliderView: View {
                         .preference(key: OffsetKey.self, value: minX)
                         .onPreferenceChange(OffsetKey.self) { value in
                             /// When the Offset reaches 15 and if the createWeek is toggled then simply generating next set of week
-                            if value.rounded() == 15 && viewModel.createWeek {
+                            if value.rounded() == 15 && vm.createWeek {
                                 withAnimation {
-                                    viewModel.paginateWeek()
-                                    viewModel.createWeek = false
+                                    vm.paginateWeek()
+                                    vm.createWeek = false
                                 }
                             }
                         }

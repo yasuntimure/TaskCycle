@@ -10,7 +10,7 @@ import SwiftUI
 struct DailyView: View {
 
     @EnvironmentObject var themeColor: Theme
-    @ObservedObject var viewModel: DailyViewModel
+    @ObservedObject var vm: DailyViewModel
 
     @State var showAlert = false
 
@@ -19,7 +19,7 @@ struct DailyView: View {
             VStack (alignment: .leading, spacing: 6) {
                 HeaderView()
                 SliderView()
-                if !viewModel.items.isEmpty {
+                if !vm.items.isEmpty {
                     EditButton()
                         .hSpacing(.trailing).padding(.trailing, 20)
                 }
@@ -28,7 +28,7 @@ struct DailyView: View {
                 }
                 .listStyle(.plain)
                 .overlay {
-                    if viewModel.items.isEmpty {
+                    if vm.items.isEmpty {
                         ContentUnavailableView {
                             Label("Add a New Task", systemImage: "tray.fill")
                         } description: {
@@ -45,10 +45,10 @@ struct DailyView: View {
 
             PlusButton() {
                 withAnimation {
-                    viewModel.insertAndSaveEmptyItem()
+                    vm.insertAndSaveEmptyItem()
                 }
             }
-            .disabled(viewModel.items.contains(where: { $0.title.isEmpty }))
+            .disabled(vm.items.contains(where: { $0.title.isEmpty }))
             .vSpacing(.bottom).hSpacing(.trailing)
             .padding([.trailing,.bottom], 20)
             .padding(3)
@@ -75,9 +75,9 @@ struct DailyView: View {
             }
         }
         .onAppear {
-            viewModel.fetchItems()
+            vm.fetchItems()
         }
-        .environmentObject(viewModel)
+        .environmentObject(vm)
         .alert("Comming Soon!", isPresented: $showAlert) {}
     }
 
@@ -108,18 +108,18 @@ struct DailyView: View {
 
     @ViewBuilder
     private func ListRow() -> some View {
-        ForEach ($viewModel.items) { $rowItem in
+        ForEach ($vm.items) { $rowItem in
             ToDoRow(item: $rowItem)
                 .padding(.vertical, -5)
                 .hSpacing(.leading)
                 .onChange(of: rowItem) { item in
                     withAnimation {
-                        viewModel.update(item)
+                        vm.update(item)
                     }
                 }
         }
-        .onDelete(perform: viewModel.deleteItems(at:))
-        .onMove(perform: viewModel.moveItems(from:to:))
+        .onDelete(perform: vm.deleteItems(at:))
+        .onMove(perform: vm.moveItems(from:to:))
         .listSectionSeparator(.hidden)
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
@@ -128,7 +128,7 @@ struct DailyView: View {
 
 struct DailyView_Previews: PreviewProvider {
     static var previews: some View {
-        DailyView(viewModel: DailyViewModel())
+        DailyView(vm: DailyViewModel())
             .environmentObject(MainViewModel())
             .environmentObject(Theme())
     }

@@ -99,11 +99,11 @@ class NoteViewModel: ObservableObject {
 extension NoteViewModel {
 
     func delete(_ column: BoardColumn) {
-//        var temp = self.columns
-//        for (i, item) in temp.enumerated() where item.id == column.id {
-//            temp.remove(at: i)
-//        }
-//        self.columns = temp
+        var temp = self.columns
+        for (i, item) in temp.enumerated() where item.id == column.id {
+            temp.remove(at: i)
+        }
+        self.columns = temp
     }
 
     func addNewNote(to column: BoardColumn) {

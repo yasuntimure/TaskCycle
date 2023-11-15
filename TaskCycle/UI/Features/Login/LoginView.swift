@@ -17,7 +17,7 @@ struct LoginView: View {
         case email, password
     }
 
-    @StateObject var viewModel = LoginViewModel()
+    @StateObject var vm = LoginViewModel()
 
     @FocusState private var focusedField: Fields?
 
@@ -38,31 +38,31 @@ struct LoginView: View {
                     .padding(.horizontal)
                     .frame(maxWidth: Constants.buttonMaxWidth)
 
-                TextFieldView(input: $viewModel.email)
+                TextFieldView(input: $vm.email)
                     .focused($focusedField, equals: .email)
                     .onSubmit(of: .text) {
                         focusedField = (focusedField == .email) ? .password : nil
                     }
                     .padding(.bottom, -15)
 
-                TextFieldView(input: $viewModel.password, isSecure: true)
+                TextFieldView(input: $vm.password, isSecure: true)
                     .focused($focusedField, equals: .password)
 
                 PrimaryButton(title: "Login") {
-                    viewModel.login()
+                    vm.login()
                 }
 
                 SeperatorView()
 
                 // Sign In with Google
                 SignInWithButton(signInType: .google) {
-                    viewModel.signInWithGoogle()
+                    vm.signInWithGoogle()
                 }
 
                 VStack (spacing: 5) {
                     Text("New around here?")
                     Button("Create An Account") {
-                        viewModel.isRegisterPresented = true
+                        vm.isRegisterPresented = true
                     }
                     .bold()
                     .foregroundColor(theme.mTintColor.opacity(0.9))
@@ -70,12 +70,12 @@ struct LoginView: View {
                 .padding(.bottom, 100)
                 
             }
-            .sheet(isPresented: $viewModel.isRegisterPresented) {
+            .sheet(isPresented: $vm.isRegisterPresented) {
                 RegisterView()
                     .presentationDetents([.large])
             }
-            .alert(isPresented: $viewModel.showAlert) {
-                Alert(title: Text(viewModel.errorMessage))
+            .alert(isPresented: $vm.showAlert) {
+                Alert(title: Text(vm.errorMessage))
             }
         }
     }
@@ -126,7 +126,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(viewModel: LoginViewModel())
+        LoginView(vm: LoginViewModel())
             .environmentObject(Theme())
     }
 }
