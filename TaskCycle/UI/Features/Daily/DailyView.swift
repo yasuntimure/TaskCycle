@@ -12,6 +12,8 @@ struct DailyView: View {
     @EnvironmentObject var themeColor: Theme
     @ObservedObject var viewModel: DailyViewModel
 
+    @State var showAlert = false
+
     var body: some View {
         ZStack {
             VStack (alignment: .leading, spacing: 6) {
@@ -76,13 +78,21 @@ struct DailyView: View {
             viewModel.fetchItems()
         }
         .environmentObject(viewModel)
+        .alert("Comming Soon!", isPresented: $showAlert) {}
     }
 
     @ViewBuilder
     private func HeaderView() -> some View {
         CustomDateView()
             .hSpacing(.topLeading)
-            .overlay(alignment: .topTrailing) { ProfileImage() }
+            .overlay(alignment: .topTrailing) {
+                Image(systemName: "calendar")
+                    .font(.largeTitle)
+                    .foregroundStyle(.secondary)
+                    .onTapGesture {
+                        showAlert = true
+                    }
+            }
             .padding(.horizontal)
             .padding(.top)
     }
