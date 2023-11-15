@@ -42,7 +42,7 @@ struct MainView: View {
             .environmentObject(theme)
             .dismissKeyboard()
         } else {
-            LoginView(viewModel: LoginViewModel())
+            LoginView()
                 .environmentObject(theme)
                 .dismissKeyboard()
         }

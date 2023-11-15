@@ -46,10 +46,10 @@ class LoginViewModel: ObservableObject {
     func login() {
         validateEmail()
         validatePassword()
-//        guard email.validation == .email(.approved) && password.validation == .password(.approved) else {
-//            self.showAlert(message: "Email or Password not approved!")
-//            return
-//        }
+        guard email.validation == .email(.approved) && password.validation == .password(.approved) else {
+            self.showAlert(message: "Email or Password not approved!")
+            return
+        }
         signIn(withEmail: email.text, password: password.text)
     }
 
