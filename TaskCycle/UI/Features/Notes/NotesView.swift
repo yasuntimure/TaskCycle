@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NotesView: View {
     @EnvironmentObject var theme: Theme
+    @State var isEditing: Bool = false
     @Environment(\.showError) private var showError
 
     @ObservedObject var vm: NotesViewModel
@@ -24,6 +25,8 @@ struct NotesView: View {
                     List {
                         NoteNavigationRow()
                     }
+                    .environment(\.editMode, .constant(isEditing ? EditMode.active : EditMode.inactive))
+                    .animation(.spring, value: isEditing)
                     .listStyle(.plain)
                     .background(.clear)
                     .refreshable { vm.fetchNotes() }
@@ -58,15 +61,14 @@ extension NotesView {
                     .hSpacing(.leading)
                     .foregroundColor(theme.mTintColor)
 
-                // Edit Button
-                ZStack {
-                    Image(systemName: "slider.horizontal.3")
+                Button(action: { self.isEditing.toggle() }) {
+                    Image(systemName: isEditing ? "square.3.layers.3d.slash" : "square.3.layers.3d")
                         .resizable()
                         .foregroundColor(.secondary)
                         .frame(width: 24, height: 24)
-                    EditButton()
-                        .foregroundColor(.clear)
                 }
+
+
             }
             .padding([.top, .horizontal])
 
